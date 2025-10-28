@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/registrar.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login-card">
+    <div class="logo">🏅</div>
+    <h2>EduScrum Awards</h2>
+    <p>Plataforma gamificada para avaliação de projetos Scrum</p>
+
+    <form id="loginForm">
+      <input type="text" id="username"  placeholder="Nome de Utilizador" required>
+
+      <input type="email" id="email" placeholder="seu.email@university.edu" required>
+      <input type="password" id="password" placeholder="********" required>
+      
+      <div class="user-type">
+        <span>Tipo de Utilizador</span>
+        <label><input type="radio" name="tipo" value="estudante" checked> Estudante</label>
+        <label><input type="radio" name="tipo" value="docente"> Docente</label>
+      </div>
+
+      <button type="button" id="btnVoltar" class="Registrar">Registrar</button>
+      <button type="submit" id="btnRegistrar" class="entrar">Entrar</button>
+    </form>
+
+    <p class="demo">email/password</p>
+
+  </div>
+
+  <script>
+    document.getElementById('btnRegistrar').addEventListener('click', () => {
+      window.location.href = '/registrar'; // Redirige a la página de registro
+    });
+    document.getElementById('btnVoltar').addEventListener('click', () => {
+      window.location.href = '/login'; // Vuelve al login
+    });
+  </script>
+</body>
+</html>
