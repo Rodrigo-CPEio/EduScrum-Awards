@@ -22,6 +22,10 @@ app.get('/registrar', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'registrar.html'));
 });
 
+// Ruta de registro
+app.get('/dashboardE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Estudante.html'));
+});
 // Ruta de usuarios
 app.use('/usuarios', userRoutes);
 
