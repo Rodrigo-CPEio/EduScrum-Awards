@@ -22,15 +22,32 @@ app.get('/registrar', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'registrar.html'));
 });
 
-// Ruta de registro
+// Rota para a dashboard do estudante
 app.get('/dashboardE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Estudante.html'));
 });
 
-// Ruta de registro
+// rota para a dashboard do Professor
 app.get('/dashboardP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Professor.html'));
 });
+
+// Rota para os cursos do professor
+app.get('/cursoP', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'curso_Professor.html'));
+});
+
+// Rota para as cadeiras do professor
+app.get('/cadeirasP', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'cadeiras_Professor.html'));
+});
+
+// Rota para os projetos do professor
+app.get('/projetosP', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'projetos_Professor.html'));
+});
+
+
 
 // Ruta de usuarios
 app.use('/usuarios', userRoutes);

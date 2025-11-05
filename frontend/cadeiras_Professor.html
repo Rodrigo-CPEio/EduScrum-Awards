@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduScrum Awards - Cadeiras Professor</title>
+  <link rel="stylesheet" href="css/curso_Professor.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M8 14l-2 6 6-3 6 3-2-6"/>
+          </svg>
+        </div>
+        <h2>EduScrum Awards</h2>
+      </div>
+
+      <hr class="divider">
+
+      <div class="user-info">
+        <div class="user-top">
+          <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil">
+          <div class="user-details">
+            <h3>Prof. Maria Silva</h3>
+            <p>Docente</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <nav class="menu">
+        <ul>
+          <li>Dashboard</li>
+          <li class="active">Cursos</li>
+          <li>Equipas</li>
+          <li>Prémios</li>
+          <li>Rankings</li>
+          <li>Notificações <span class="badge">2</span></li>
+        </ul>
+      </nav>
+
+      <div class="bottom-menu">
+        <ul>
+          <li>Definições</li>
+          <li>Sair</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <button class="voltar-btn" onclick="window.location.href='curso_Professor.html'">⬅️ Voltar</button>
+
+      <header class="header">
+        <div class="header-left">
+          <h1>Gestão de Cadeiras</h1>
+          <p>Coordene as suas cadeiras</p>
+        </div>
+      </header>
+
+      <button class="novo-curso-btn" onclick="abrirModal()">+ Nova Cadeira</button>
+
+      <section class="courses-section">
+        <h3>Cadeira - Engenharia Informática</h3>
+        <p>Lista de todas as cadeiras deste curso</p>
+
+        <table class="courses-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Estudantes</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Laboratório de Tecnologias Web</td>
+              <td>Desenvolver interfaces web.</td>
+              <td>👥43</td>
+              <td>
+                <button class="ver-projetos-btn" onclick="window.location.href='projetos_Professor.html'">Ver Projetos</button>
+                <button class="editar-btn">✏️</button>
+                <button class="apagar-btn">🗑️</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Compiladores</td>
+              <td>Compiladores: teoria, prática e otimização</td>
+              <td>👥36</td>
+              <td>
+                <button class="ver-projetos-btn" onclick="window.location.href='projetos_Professor.html'">Ver Projetos</button>
+                <button class="editar-btn">✏️</button>
+                <button class="apagar-btn">🗑️</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Inteligência Artificial</td>
+              <td>Fundamentos e aplicações práticas da inteligência artificial</td>
+              <td>👥45</td>
+              <td>
+                <button class="ver-projetos-btn" onclick="window.location.href='projetos_Professor.html'">Ver Projetos</button>
+                <button class="editar-btn">✏️</button>
+                <button class="apagar-btn">🗑️</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="empty-section"></section>
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalCriarCadeira">
+    <div class="modal">
+      <button class="close-btn" onclick="fecharModal()">×</button>
+      <h2>Criar Nova Cadeira</h2>
+      <p class="sub">Preencha as informações da cadeira</p>
+
+      <form>
+        <label>Nome da Cadeira</label>
+        <input type="text" placeholder="ex: Laboratório de Tecnologias Web">
+
+        <label>Descrição</label>
+        <textarea placeholder="Breve descrição da cadeira"></textarea>
+
+        <div class="actions">
+          <button type="button" class="btn cancelar" onclick="fecharModal()">Cancelar</button>
+          <button type="submit" class="btn criar">Criar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function abrirModal() {
+      document.getElementById('modalCriarCadeira').classList.add('ativo');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModal() {
+      document.getElementById('modalCriarCadeira').classList.remove('ativo');
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>

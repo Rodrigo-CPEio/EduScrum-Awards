@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduScrum Awards - Curso Professor</title>
+  <link rel="stylesheet" href="css/curso_Professor.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M8 14l-2 6 6-3 6 3-2-6"/>
+          </svg>
+        </div>
+        <h2>EduScrum Awards</h2>
+      </div>
+
+      <hr class="divider">
+
+      <div class="user-info">
+        <div class="user-top">
+          <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil">
+          <div class="user-details">
+            <h3>Prof. Maria Silva</h3>
+            <p>Docente</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <nav class="menu">
+        <ul>
+          <li>Dashboard</li>
+          <li class="active">Cursos</li>
+          <li>Equipas</li>
+          <li>Prémios</li>
+          <li>Rankings</li>
+          <li>Notificações <span class="badge">2</span></li>
+        </ul>
+      </nav>
+
+      <div class="bottom-menu">
+        <ul>
+          <li>Definições</li>
+          <li>Sair</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <header class="header">
+        <div class="header-left">
+          <h1>Gestão de Cursos</h1>
+          <p>Crie e gira os seus cursos</p>
+        </div>
+      </header>
+
+      <button class="novo-curso-btn" onclick="abrirModal()">+ Novo Curso</button>
+
+      <section class="courses-section">
+        <h3>Cursos Ativos</h3>
+        <p>Lista de todos os seus cursos</p>
+
+        <table class="courses-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Estudantes</th>
+              <th>Criado em</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Engenharia Informática</td>
+              <td>Desenvolvimento de software e sistemas inteligentes.</td>
+              <td>👥113</td>
+              <td><span class="date-badge">05/09/2023</span></td>
+              <td>
+                <button class="ver-projetos-btn">Ver Cadeiras</button>
+                <button class="editar-btn">✏️</button>
+                <button class="apagar-btn">🗑️</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Engenharia e Gestão Industrial</td>
+              <td>Otimização de processos e gestão eficiente.</td>
+              <td>👥94</td>
+              <td><span class="date-badge">14/09/2020</span></td>
+              <td>
+                <button class="ver-projetos-btn">Ver Cadeiras</button>
+                <button class="editar-btn">✏️</button>
+                <button class="apagar-btn">🗑️</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Direito</td>
+              <td>Estudo das leis e práticas jurídicas.</td>
+              <td>👥61</td>
+              <td><span class="date-badge">01/08/2021</span></td>
+              <td>
+                <button class="ver-projetos-btn">Ver Cadeiras</button>
+                <button class="editar-btn">✏️</button>
+                <button class="apagar-btn">🗑️</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="empty-section"></section>
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalCriarCurso">
+    <div class="modal">
+      <button class="close-btn" onclick="fecharModal()">×</button>
+      <h2>Criar Novo Curso</h2>
+      <p class="sub">Preencha as informações do curso</p>
+
+      <form>
+        <label>Nome do Curso</label>
+        <input type="text" placeholder="ex: Engenharia de Software">
+
+        <label>Descrição</label>
+        <textarea placeholder="Breve descrição do curso"></textarea>
+
+        <div class="actions">
+          <button type="button" class="btn cancelar" onclick="fecharModal()">Cancelar</button>
+          <button type="submit" class="btn criar">Criar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // --- ABRIR / FECHAR MODAL ---
+    function abrirModal() {
+      document.getElementById('modalCriarCurso').classList.add('ativo');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModal() {
+      document.getElementById('modalCriarCurso').classList.remove('ativo');
+      document.body.style.overflow = '';
+    }
+
+    // --- REDIRECIONAR PARA CADEIRAS ---
+    document.querySelectorAll(".ver-projetos-btn").forEach(botao => {
+      botao.addEventListener("click", () => {
+        window.location.href = "cadeiras_Professor.html";
+      });
+    });
+  </script>
+</body>
+</html>
