@@ -51,6 +51,11 @@ app.get('/projetosP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'projetos_Professor.html'));
 });
 
+// Rota para as equipas do professor
+app.get('/equipasP', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'equipas_Professor.html'));
+});
+
 // Rotas de API
 app.use('/usuarios', userRoutes);
 

@@ -1,0 +1,574 @@
+/* ==============================
+   BASE GERAL (mantido do teu CSS original)
+   ============================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: #f8f9fb;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar fixa */
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #3056d3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 10px 0;
+}
+
+/* User section */
+.user-info {
+  padding: 0 20px;
+}
+
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-top img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+}
+
+.user-details h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+}
+
+.user-details p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Caixinha de pontos mais à direita */
+.user-points {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding: 0 5px;
+}
+
+.user-points .label {
+  font-size: 13px;
+  color: #666;
+}
+
+.points-box {
+  background: #f2f3f6;
+  border-radius: 6px;
+  padding: 5px 12px;
+  display: inline-block;
+}
+
+.points-box strong {
+  color: #333;
+  font-size: 14px;
+}
+
+/* Menus */
+.menu ul,
+.bottom-menu ul {
+  list-style: none;
+  padding: 0 20px;
+}
+
+.menu li,
+.bottom-menu li {
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}
+
+.menu li:hover,
+.bottom-menu li:hover {
+  background-color: #f2f3f6;
+}
+
+.menu .active {
+  background-color: #eef2ff;
+  color: #3056d3;
+  font-weight: 600;
+}
+
+.badge {
+  background-color: #d93025;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  position: absolute;
+  right: 10px;
+}
+
+.bottom-menu {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+/* Main Content */
+.main {
+  flex: 1;
+  padding: 30px 40px;
+  background-color: #fff;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.header span {
+  color: #3056d3;
+}
+
+.header p {
+  color: #777;
+  margin-top: 4px;
+  margin-bottom: 30px;
+}
+
+/* ==============================
+   SEÇÃO DAS EQUIPAS (ADICIONADA)
+   ============================== */
+
+.teams {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.team-card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-3px);
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.team-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+.team-header .points {
+  background: #3056d3;
+  color: #fff;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.members {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.progress-text {
+  font-size: 13px;
+  color: #777;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #f1f3f8;
+  border-radius: 4px;
+  margin: 6px 0;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #3056d3, #1ca65a);
+  border-radius: 4px;
+}
+
+.percent {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.member-list {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.member-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.member-list img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.member-list .circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #3056d3;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.role {
+  background: #eef2ff;
+  color: #3056d3;
+  border-radius: 6px;
+  font-size: 12px;
+  padding: 2px 6px;
+  margin-left: auto;
+}
+
+/* ==============================
+   PERFORMANCE SECTION
+   ============================== */
+
+.performance {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.performance h2 {
+  color: #222;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.performance .subtitle {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.compare {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.compare-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.compare-item .label {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.compare-item .bar {
+  height: 8px;
+  background: #f1f3f8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.compare-item .fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3056d3, #1ca65a);
+  border-radius: 4px;
+}
+
+.score {
+  color: #555;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ==============================
+   RESPONSIVO
+   ============================== */
+@media (max-width: 900px) {
+  .teams {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ==============================
+   CABEÇALHO E BOTÃO NOVA EQUIPA
+   ============================== */
+
+.header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.header-top h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.header-top p {
+  color: #777;
+  font-size: 14px;
+}
+
+.btn-nova-equipa {
+  background-color: #3056d3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+  margin-left: auto;
+}
+
+.btn-nova-equipa:hover {
+  background-color: #2748b8;
+  transform: translateY(-2px);
+}
+
+.btn-nova-equipa:active {
+  transform: translateY(0);
+}
+
+
+/* === BOTÃO NOVA EQUIPA === */
+.btn-nova-equipa {
+  background-color: #4c6ef5;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-nova-equipa:hover {
+  background-color: #3b5bdb;
+}
+
+/* === MODAL (caixa flutuante) === */
+.modal {
+  display: none; /* escondido até ser aberto pelo JS */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4); /* fundo escurecido */
+  justify-content: center;
+  align-items: center;
+}
+
+/* === CONTEÚDO DO MODAL === */
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  padding: 24px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+}
+
+/* === BOTÃO FECHAR === */
+.modal-content .close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 24px;
+  color: #777;
+  cursor: pointer;
+}
+
+.modal-content .close:hover {
+  color: #000;
+}
+
+/* === FORMULÁRIO === */
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.modal-content label {
+  font-weight: 500;
+  color: #333;
+}
+
+.btn-criar {
+  background-color: #4c6ef5;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-criar:hover {
+  background-color: #3b5bdb;
+}
+
+/* === MEMBROS DINÂMICOS === */
+.membro-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f7f8fa;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e2e2;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  padding: 24px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+
+  /* --- ESSAS 3 LINHAS SÃO A CHAVE --- */
+  max-height: 90vh;      /* impede o modal de sair da tela */
+  overflow-y: auto;      /* ativa o scroll interno */
+  scrollbar-width: thin; /* scroll discreto (Firefox) */
+}
+
+/* scroll bar mais bonita (Chrome, Edge, Safari) */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+

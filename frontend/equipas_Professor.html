@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EduScrum Awards - Equipas</title>
+  <link rel="stylesheet" href="css/equipas_Professor.css">
+</head>
+<body>
+  <div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo" style="padding-left:18px;">
+        <div class="logo-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M8 14l-2 6 6-3 6 3-2-6"/>
+          </svg>
+        </div>
+        <h2>EduScrum Awards</h2>
+      </div>
+
+      <hr class="divider">
+
+      <div class="user-info" style="display:flex; align-items:center; gap:12px; padding: 0 18px;">
+        <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil" style="width:55px; height:55px; border-radius:50%; object-fit:cover;">
+        <div class="user-details">
+          <h3>Prof. Maria Silva</h3>
+          <p>Docente</p>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <nav class="menu" aria-label="Navegação principal">
+        <ul>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 13h8V3H3zM13 21h8v-8h-8zM13 3v8h8V3zM3 21h8v-8H3z"/>
+            </svg>
+            <a href="dashboard_Professor.html">Dashboard</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/>
+              <path d="M22 3h-8a2 2 0 0 0-2 2v16a2 2 0 0 1 2-2h8z"/>
+            </svg>
+            <a href="curso_Professor.html">Cursos</a>
+          </li>
+
+          <li class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" >
+              <circle cx="9" cy="7" r="4"/>
+              <circle cx="17" cy="7" r="4"/>
+              <path d="M5 21v-2a4 4 0 0 1 8 0v2"/>
+              <path d="M13 21v-2a4 4 0 0 1 8 0v2"/>
+            </svg>
+            <a href="equipas_Professor.html">Equipas</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M8 2h8v4H8z"/>
+              <path d="M6 6h12v2a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5V6z"/>
+              <path d="M9 18h6"/>
+              <path d="M12 14v4"/>
+            </svg>
+            <a href="#">Prémios</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="4" y1="20" x2="4" y2="14"/>
+              <line x1="9" y1="20" x2="9" y2="10"/>
+              <line x1="14" y1="20" x2="14" y2="16"/>
+              <line x1="19" y1="20" x2="19" y2="8"/>
+            </svg>
+            <a href="#">Rankings</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <a href="#">Notificações <span class="badge">2</span></a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="bottom-menu">
+        <ul>
+          <li><a href="#">Definições</a></li>
+          <li><a href="#">Sair</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- Cabeçalho e botão à direita -->
+      <header class="header-top">
+        <div class="header-text">
+          <h1>Equipas</h1>
+          <p>Gira e acompanhe o desempenho das equipas</p>
+        </div>
+        <button class="btn-nova-equipa" id="btnAbrirModal">+ Nova Equipa</button>
+      </header>
+
+      <!-- SEÇÃO EQUIPAS -->
+      <section class="teams">
+        <div class="team-card">
+          <div class="team-header">
+            <h2>Team Alpha</h2>
+            <div class="points">🏆 2450</div>
+          </div>
+          <p class="members">3 membros</p>
+          <p class="progress-text">Tarefas Completadas</p>
+          <div class="progress-bar"><div class="progress" style="width: 100%;"></div></div>
+          <p class="percent">100% completo — 24/24</p>
+
+          <h3>Membros da Equipa</h3>
+          <ul class="member-list">
+            <li><div class="circle">JS</div><span>João Santos</span><span class="role">Scrum Master</span></li>
+            <li><div class="circle">AC</div><span>Ana Costa</span><span class="role">Product Owner</span></li>
+            <li><div class="circle">PO</div><span>Pedro Oliveira</span><span class="role">Developer</span></li>
+          </ul>
+        </div>
+
+        <div class="team-card">
+          <div class="team-header">
+            <h2>Team Beta</h2>
+            <div class="points">🏆 1890</div>
+          </div>
+          <p class="members">3 membros</p>
+          <p class="progress-text">Tarefas Completadas</p>
+          <div class="progress-bar"><div class="progress" style="width: 58%;"></div></div>
+          <p class="percent">58% completo — 14/24</p>
+
+          <h3>Membros da Equipa</h3>
+          <ul class="member-list">
+            <li><div class="circle">SM</div><span>Sofia Martins</span><span class="role">Scrum Master</span></li>
+            <li><div class="circle">RP</div><span>Ricardo Pereira</span><span class="role">Product Owner</span></li>
+            <li><div class="circle">CR</div><span>Carla Rodrigues</span><span class="role">Developer</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SEÇÃO PERFORMANCE -->
+      <section class="performance">
+        <h2>Comparação de Performance</h2>
+        <p class="subtitle">Desempenho relativo das equipas</p>
+
+        <div class="compare">
+          <div class="compare-item">
+            <span class="label">#1 Team Alpha</span>
+            <div class="bar"><div class="fill" style="width:100%;"></div></div>
+            <div class="compare-footer">
+              <span>18/24 tarefas</span><span>🏆 2450</span>
+            </div>
+          </div>
+
+          <div class="compare-item">
+            <span class="label">#2 Team Beta</span>
+            <div class="bar"><div class="fill" style="width:75%;"></div></div>
+            <div class="compare-footer">
+              <span>14/24 tarefas</span><span>🏆 1890</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL NOVA EQUIPA -->
+  <div id="modalNovaEquipa" class="modal">
+    <div class="modal-content">
+      <span class="close" id="fecharModal">&times;</span>
+      <h2>Nova Equipa</h2>
+      <form id="formNovaEquipa">
+        <label>Nome da Equipa:</label>
+        <input type="text" name="nomeEquipa" required>
+
+        <label>Número de Tarefas:</label>
+        <input type="text" name="nomeEquipa" required>
+
+        <label>Número de Membros:</label>
+        <input type="number" id="numMembros" name="numMembros" min="1" max="10" required>
+
+        <div id="membrosContainer"></div>
+
+        <button type="submit" class="btn-criar">Criar Equipa</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Abre o modal
+    const btnAbrirModal = document.getElementById("btnAbrirModal");
+    const modal = document.getElementById("modalNovaEquipa");
+    const fechar = document.getElementById("fecharModal");
+    const numMembrosInput = document.getElementById("numMembros");
+    const membrosContainer = document.getElementById("membrosContainer");
+
+    btnAbrirModal.addEventListener("click", () => modal.style.display = "flex");
+    fechar.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", (e) => { if (e.target === modal) modal.style.display = "none"; });
+
+    // Gera campos dinamicamente para membros
+    numMembrosInput.addEventListener("input", () => {
+      membrosContainer.innerHTML = "";
+      const qtd = parseInt(numMembrosInput.value);
+      for (let i = 1; i <= qtd; i++) {
+        membrosContainer.innerHTML += `
+          <div class="membro-item">
+            <label>Membro ${i}:</label>
+            <input type="text" name="membroNome${i}" placeholder="Nome do membro ${i}" required>
+            <select name="membroFuncao${i}" required>
+              <option value="">Função...</option>
+              <option>Scrum Master</option>
+              <option>Product Owner</option>
+              <option>Developer</option>
+            </select>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
