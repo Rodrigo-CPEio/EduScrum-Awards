@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Prémios - EduScrum</title>
+  <link rel="stylesheet" href="css/premios_professor.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+   <div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo" style="padding-left:18px;">
+        <div class="logo-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M8 14l-2 6 6-3 6 3-2-6"/>
+          </svg>
+        </div>
+        <h2>EduScrum Awards</h2>
+      </div>
+
+      <hr class="divider">
+
+      <div class="user-info" style="display:flex; align-items:center; gap:12px; padding: 0 18px;">
+        <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil" style="width:55px; height:55px; border-radius:50%; object-fit:cover;">
+        <div class="user-details">
+          <h3>Prof. Maria Silva</h3>
+          <p>Docente</p>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <nav class="menu" aria-label="Navegação principal">
+        <ul>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 13h8V3H3zM13 21h8v-8h-8zM13 3v8h8V3zM3 21h8v-8H3z"/>
+            </svg>
+            <a href="dashboard_Professor.html">Dashboard</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/>
+              <path d="M22 3h-8a2 2 0 0 0-2 2v16a2 2 0 0 1 2-2h8z"/>
+            </svg>
+            <a href="curso_Professor.html">Cursos</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" >
+              <circle cx="9" cy="7" r="4"/>
+              <circle cx="17" cy="7" r="4"/>
+              <path d="M5 21v-2a4 4 0 0 1 8 0v2"/>
+              <path d="M13 21v-2a4 4 0 0 1 8 0v2"/>
+            </svg>
+            <a href="equipas_Professor.html">Equipas</a>
+          </li>
+
+          <li class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M8 2h8v4H8z"/>
+              <path d="M6 6h12v2a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5V6z"/>
+              <path d="M9 18h6"/>
+              <path d="M12 14v4"/>
+            </svg>
+            <a href="premios_Professor.html">Prémios</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="4" y1="20" x2="4" y2="14"/>
+              <line x1="9" y1="20" x2="9" y2="10"/>
+              <line x1="14" y1="20" x2="14" y2="16"/>
+              <line x1="19" y1="20" x2="19" y2="8"/>
+            </svg>
+            <a href="#">Rankings</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <a href="#">Notificações <span class="badge">2</span></a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="bottom-menu">
+        <ul>
+          <li><a href="#">Definições</a></li>
+          <li><a href="#">Sair</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main">
+
+    <div class="header-top">
+      <div>
+        <h1>Gestão de <span>Prémios</span></h1>
+        <p>Crie e configure prémios para motivar os estudantes e equipas</p>
+      </div>
+      <button class="btn-nova-equipa" id="abrirModalPremio">
+        <i class="fa-solid fa-plus"></i> Novo Prémio
+      </button>
+    </div>
+
+    <!-- Tabs principais -->
+    <div class="tabs">
+      <button class="tab active" data-tab="estudantes">🎓 Estudantes</button>
+      <button class="tab" data-tab="equipas">👥 Equipas</button>
+    </div>
+
+    <!-- ============ TAB ESTUDANTES ============ -->
+    <div id="tab-estudantes" class="tab-content active">
+      <div class="subtabs">
+        <button class="subtab active" data-filter="todos">Todos</button>
+        <button class="subtab" data-filter="automaticos">Automáticos</button>
+        <button class="subtab" data-filter="manuais">Manuais</button>
+      </div>
+
+      <div class="premio-grid">
+        <div class="premio-card automatico">
+          <h3>Perfect Score</h3>
+          <p>Alcançar 100% na avaliação de projeto</p>
+          <div class="premio-info"><span>+200 pontos</span><span class="tipo auto">Automático</span></div>
+        </div>
+        <div class="premio-card automatico">
+          <h3>Sprint Finisher</h3>
+          <p>Completar todas as tarefas da sprint no prazo</p>
+          <div class="premio-info"><span>+150 pontos</span><span class="tipo auto">Automático</span></div>
+        </div>
+        <div class="premio-card manual">
+          <h3>Team Leader</h3>
+          <p>Excelência em liderança de equipa</p>
+          <div class="premio-info"><span>+180 pontos</span><span class="tipo manual">Manual</span></div>
+        </div>
+        <div class="premio-card manual">
+          <h3>Colaborador Exemplar</h3>
+          <p>Contribuição notável no projeto</p>
+          <div class="premio-info"><span>+100 pontos</span><span class="tipo manual">Manual</span></div>
+        </div>
+        <div class="premio-card automatico">
+          <h3>Innovation Star</h3>
+          <p>Propor ideias inovadoras para o projeto</p>
+          <div class="premio-info"><span>+120 pontos</span><span class="tipo auto">Automático</span></div>
+        </div>
+        <div class="premio-card manual">
+          <h3>Extra Mile</h3>
+          <p>Superar expectativas e ajudar colegas</p>
+          <div class="premio-info"><span>+130 pontos</span><span class="tipo manual">Manual</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TAB EQUIPAS ============ -->
+    <div id="tab-equipas" class="tab-content">
+      <div class="subtabs">
+        <button class="subtab active" data-filter="todos">Todos</button>
+        <button class="subtab" data-filter="automaticos">Automáticos</button>
+        <button class="subtab" data-filter="manuais">Manuais</button>
+      </div>
+
+      <div class="premio-grid">
+        <div class="premio-card automatico">
+          <h3>Sprint Champions</h3>
+          <p>Equipa completa todas as tarefas da sprint</p>
+          <div class="premio-info"><span>+250 pontos</span><span class="tipo auto">Automático</span></div>
+        </div>
+        <div class="premio-card automatico">
+          <h3>Quality Masters</h3>
+          <p>Manter qualidade acima de 95%</p>
+          <div class="premio-info"><span>+200 pontos</span><span class="tipo auto">Automático</span></div>
+        </div>
+        <div class="premio-card manual">
+          <h3>Best Presentation</h3>
+          <p>Melhor apresentação de projeto</p>
+          <div class="premio-info"><span>+180 pontos</span><span class="tipo manual">Manual</span></div>
+        </div>
+        <div class="premio-card manual">
+          <h3>Collaboration Heroes</h3>
+          <p>Maior cooperação entre membros</p>
+          <div class="premio-info"><span>+140 pontos</span><span class="tipo manual">Manual</span></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== MODAL NOVO PRÉMIO ===== -->
+<div id="modalPremio" class="modal">
+  <div class="modal-content">
+    <span class="close" id="fecharModalPremio">&times;</span>
+    <h2>Criar Novo Prémio</h2>
+    <p class="modal-subtitle">Configure um prémio manual ou automático</p>
+
+    <form id="formPremio">
+      <label for="nome">Nome do Prémio</label>
+      <input type="text" id="nome" placeholder="ex: Sprint Champion" required>
+
+      <label for="descricao">Descrição</label>
+      <input type="text" id="descricao" placeholder="Breve descrição do prémio" required>
+
+      <div class="input-row">
+        <div class="input-half">
+          <label for="icone">Ícone</label>
+          <select id="icone" required>
+            <option value="🏆">🏆 Troféu</option>
+            <option value="⭐">⭐ Estrela</option>
+            <option value="🌟">🌟 Destaque</option>
+            <option value="👑">👑 Coroa</option>
+            <option value="🎯">🎯 Alvo</option>
+            <option value="💎">💎 Diamante</option>
+            <option value="🔥">🔥 Fogo</option>
+            <option value="⚡">⚡ Raio</option>
+          </select>
+        </div>
+
+        <div class="input-half">
+          <label for="pontos">Pontos</label>
+          <input type="number" id="pontos" placeholder="100" required>
+        </div>
+      </div>
+
+      <label for="tipo">Tipo</label>
+      <select id="tipo" required>
+        <option value="Manual" selected>Manual</option>
+        <option value="Automático">Automático</option>
+      </select>
+
+      <div id="condicaoField" class="hidden">
+        <label for="condicao">Condição</label>
+        <input type="text" id="condicao" placeholder="ex: Score >= 80%">
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancelar" id="cancelarPremio">Cancelar</button>
+        <button type="submit" class="btn-criar">Criar Prémio</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Troca de tabs principais
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`#tab-${tab.dataset.tab}`).classList.add('active');
+    });
+  });
+
+  // Subtabs (filtros)
+  document.querySelectorAll('.subtab').forEach(subtab => {
+    subtab.addEventListener('click', () => {
+      const content = subtab.closest('.tab-content');
+      const filter = subtab.dataset.filter;
+      content.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
+      subtab.classList.add('active');
+      content.querySelectorAll('.premio-card').forEach(card => {
+        const show = filter === 'todos' ||
+          (filter === 'automaticos' && card.classList.contains('automatico')) ||
+          (filter === 'manuais' && card.classList.contains('manual'));
+        card.style.display = show ? 'block' : 'none';
+      });
+    });
+  });
+
+  // Modal Novo Prémio
+  const modal = document.getElementById('modalPremio');
+  const abrir = document.getElementById('abrirModalPremio');
+  const fechar = document.getElementById('fecharModalPremio');
+  const cancelar = document.getElementById('cancelarPremio');
+  abrir.onclick = () => modal.style.display = 'flex';
+  fechar.onclick = () => modal.style.display = 'none';
+  cancelar.onclick = () => modal.style.display = 'none';
+  window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
+
+  // Mostrar ou esconder campo "Condição"
+  const tipoSelect = document.getElementById('tipo');
+  const condicaoField = document.getElementById('condicaoField');
+  tipoSelect.addEventListener('change', () => {
+    if (tipoSelect.value === "Automático") {
+      condicaoField.classList.remove('hidden');
+    } else {
+      condicaoField.classList.add('hidden');
+    }
+  });
+</script>
+
+
+</body>
+</html>
