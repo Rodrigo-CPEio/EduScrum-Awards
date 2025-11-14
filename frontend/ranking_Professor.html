@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rankings - EduScrum</title>
+  <link rel="stylesheet" href="css/ranking_professor.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+   <div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo" style="padding-left:18px;">
+        <div class="logo-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M8 14l-2 6 6-3 6 3-2-6"/>
+          </svg>
+        </div>
+        <h2>EduScrum Awards</h2>
+      </div>
+
+      <hr class="divider">
+
+      <div class="user-info" style="display:flex; align-items:center; gap:12px; padding: 0 18px;">
+        <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil" style="width:55px; height:55px; border-radius:50%; object-fit:cover;">
+        <div class="user-details">
+          <h3>Prof. Maria Silva</h3>
+          <p>Docente</p>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <nav class="menu" aria-label="Navegação principal">
+        <ul>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 13h8V3H3zM13 21h8v-8h-8zM13 3v8h8V3zM3 21h8v-8H3z"/>
+            </svg>
+            <a href="dashboard_Professor.html">Dashboard</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/>
+              <path d="M22 3h-8a2 2 0 0 0-2 2v16a2 2 0 0 1 2-2h8z"/>
+            </svg>
+            <a href="curso_Professor.html">Cursos</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" >
+              <circle cx="9" cy="7" r="4"/>
+              <circle cx="17" cy="7" r="4"/>
+              <path d="M5 21v-2a4 4 0 0 1 8 0v2"/>
+              <path d="M13 21v-2a4 4 0 0 1 8 0v2"/>
+            </svg>
+            <a href="equipas_Professor.html">Equipas</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M8 2h8v4H8z"/>
+              <path d="M6 6h12v2a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5V6z"/>
+              <path d="M9 18h6"/>
+              <path d="M12 14v4"/>
+            </svg>
+            <a href="premios_Professor.html">Prémios</a>
+          </li>
+
+          <li class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="4" y1="20" x2="4" y2="14"/>
+              <line x1="9" y1="20" x2="9" y2="10"/>
+              <line x1="14" y1="20" x2="14" y2="16"/>
+              <line x1="19" y1="20" x2="19" y2="8"/>
+            </svg>
+            <a href="ranking_Professor.html">Rankings</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <a href="notificacoes_Professor.html">Notificações <span class="badge">2</span></a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="bottom-menu">
+        <ul>
+          <li><a href="#">Definições</a></li>
+          <li><a href="#">Sair</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main">
+
+    <div class="header-top">
+      <div>
+        <h1>Rankings</span></h1>
+        <p>Acompanhe o desenvolvimento dos estudantes e das equipas!!</p>
+      </div>
+    </div>
+
+    <!-- Tabs principais -->
+    <div class="tabs">
+      <button class="tab active" data-tab="estudantes">🎓 Estudantes</button>
+      <button class="tab" data-tab="equipas">👥 Equipas</button>
+    </div>
+
+    <!-- ============ TAB ESTUDANTES ============ -->
+    <div id="tab-estudantes" class="tab-content active">
+
+      <!-- TOP 3 CARDS (com iniciais em círculo) -->
+      <section class="top3">
+        <div class="top3-grid">
+          <article class="top-card gold">
+            <div class="medal">🏆</div>
+            <div class="avatar initials">AC</div>
+            <h3>Ana Costa</h3>
+            <p class="role">1580 pontos</p>
+            <div class="meta"><span class="big">1580</span><span>pontos</span></div>
+          </article>
+
+          <article class="top-card silver">
+            <div class="medal">🥈</div>
+            <div class="avatar initials">JS</div>
+            <h3>João Santos</h3>
+            <p class="role">1250 pontos</p>
+            <div class="meta"><span class="big">1250</span><span>pontos</span></div>
+          </article>
+
+          <article class="top-card bronze">
+            <div class="medal">🥉</div>
+            <div class="avatar initials">PO</div>
+            <h3>Pedro Oliveira</h3>
+            <p class="role">980 pontos</p>
+            <div class="meta"><span class="big">980</span><span>pontos</span></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- RANKING LIST (5 alunos ativos) -->
+      <section class="ranking-list-section">
+        <div class="box">
+          <h2>Ranking Completo</h2>
+          <p class="subtitle">Classificação de todos os estudantes</p>
+
+          <div class="list">
+            <!-- item 1 -->
+            <div class="list-item top">
+              <div class="list-left">
+                <div class="badge-icon">🏆</div>
+                <div class="avatar initials">AC</div>
+                <div class="info">
+                  <div class="name">Ana Costa</div>
+                  <div class="small">1 badge</div>
+                </div>
+              </div>
+              <div class="points-col"><div class="points-num">1580</div><div class="small">pontos</div></div>
+            </div>
+
+            <!-- item 2 -->
+            <div class="list-item">
+              <div class="list-left">
+                <div class="badge-icon subdued">🥈</div>
+                <div class="avatar initials">JS</div>
+                <div class="info">
+                  <div class="name">João Santos</div>
+                  <div class="small">2 badges</div>
+                </div>
+              </div>
+              <div class="points-col"><div class="points-num">1250</div><div class="small">pontos</div></div>
+            </div>
+
+            <!-- item 3 -->
+            <div class="list-item">
+              <div class="list-left">
+                <div class="badge-icon subdued">🥉</div>
+                <div class="avatar initials">PO</div>
+                <div class="info">
+                  <div class="name">Pedro Oliveira</div>
+                  <div class="small">0 badges</div>
+                </div>
+              </div>
+              <div class="points-col"><div class="points-num">980</div><div class="small">pontos</div></div>
+            </div>
+
+            <!-- item 4 -->
+            <div class="list-item">
+              <div class="list-left">
+                <div class="badge-icon muted">4</div>
+                <div class="avatar initials">SM</div>
+                <div class="info">
+                  <div class="name">Sofia Martins</div>
+                  <div class="small">1 badge</div>
+                </div>
+              </div>
+              <div class="points-col"><div class="points-num">820</div><div class="small">pontos</div></div>
+            </div>
+
+            <!-- item 5 -->
+            <div class="list-item last">
+              <div class="list-left">
+                <div class="badge-icon muted">5</div>
+                <div class="avatar initials">TF</div>
+                <div class="info">
+                  <div class="name">Tiago Freitas</div>
+                  <div class="small">0 badges</div>
+                </div>
+              </div>
+              <div class="points-col"><div class="points-num">799</div><div class="small">pontos</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOTTOM METRIC CARDS -->
+      <section class="metrics">
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-icon">🏆</div>
+            <div class="metric-info">
+              <div class="metric-title">Média de Pontos</div>
+              <div class="metric-value">1086</div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon">🎖️</div>
+            <div class="metric-info">
+              <div class="metric-title">Total de Badges</div>
+              <div class="metric-value">4</div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon">📈</div>
+            <div class="metric-info">
+              <div class="metric-title">Estudantes Ativos</div>
+              <div class="metric-value">5</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+      
+
+    <!-- ============ TAB EQUIPAS ============ -->
+    <div id="tab-equipas" class="tab-content">
+      <!-- RANKING LIST (5 alunos ativos) -->
+      <section class="ranking-list-section">
+        <div class="box">
+          <h2>Ranking das Equipas</h2>
+          <p class="subtitle">Classificação por pontuação total das equipas</p>
+
+          <div class="list">
+            <!-- item 1 -->
+            <div class="list-item top">
+              <div class="list-left">
+                <div class="badge-icon">🏆</div>
+                <div class="avatar initials">TA</div>
+                <div class="info">
+                  <div class="name">Team Alpha</div>
+                  <div class="small">3 membros</div>
+                </div>
+              </div>
+              <div class="points-col"><div class="points-num">2450</div><div class="small">pontos</div></div>
+            </div>
+
+            <!-- item 2 -->
+            <div class="list-item">
+              <div class="list-left">
+                <div class="badge-icon subdued">🥈</div>
+                <div class="avatar initials">TB</div>
+                <div class="info">
+                  <div class="name">Team Beta</div>
+                  <div class="small">5 membros</div>
+                </div>
+              </div>
+              <div class="points-col"><div class="points-num">1890</div><div class="small">pontos</div></div>
+            </div>
+
+            <!-- item 3 -->
+            <div class="list-item">
+              <div class="list-left">
+                <div class="badge-icon subdued">🥉</div>
+                <div class="avatar initials">TG</div>
+                <div class="info">
+                  <div class="name">Team Gamma</div>
+                  <div class="small">4 membros</div>
+                </div>
+              </div>
+              <div class="points-col"><div class="points-num">1650</div><div class="small">pontos</div></div>
+            </div>
+      </section>
+  </main>
+</div>
+
+<script>
+  // Troca de tabs principais
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`#tab-${tab.dataset.tab}`).classList.add('active');
+    });
+  });
+
+  // Subtabs (filtros)
+  document.querySelectorAll('.subtab').forEach(subtab => {
+    subtab.addEventListener('click', () => {
+      const content = subtab.closest('.tab-content');
+      const filter = subtab.dataset.filter;
+      content.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
+      subtab.classList.add('active');
+      content.querySelectorAll('.premio-card').forEach(card => {
+        const show = filter === 'todos' ||
+          (filter === 'automaticos' && card.classList.contains('automatico')) ||
+          (filter === 'manuais' && card.classList.contains('manual'));
+        card.style.display = show ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>

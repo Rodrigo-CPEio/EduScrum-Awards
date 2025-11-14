@@ -1,0 +1,295 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: #f8f9fb;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #3056d3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 10px 0;
+}
+
+/* USER INFO */
+.user-info {
+  padding: 0 20px;
+}
+
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-top img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+}
+
+.user-details h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+}
+
+.user-details p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* MENU */
+.menu ul,
+.bottom-menu ul {
+  list-style: none;
+  padding: 0 20px;
+}
+
+.menu li,
+.bottom-menu li {
+  padding: 12px 10px !important;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}
+
+.menu li:hover,
+.bottom-menu li:hover {
+  background-color: #f2f3f6;
+}
+
+.menu .active {
+  background-color: #eef2ff;
+  color: #3056d3;
+  font-weight: 600;
+}
+
+.badge {
+  background-color: #d93025;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  position: absolute;
+  right: 10px;
+}
+
+.bottom-menu {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 30px 40px;
+  background-color: #fff;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* HEADER CORRIGIDO */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-text h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.header-text p {
+  color: #777;
+  margin-top: 4px;
+}
+
+/* BOTÃO */
+.mark-all {
+  background: #3056d3;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.mark-all:hover {
+  background: #2748b8;
+}
+
+/* CARDS SUPERIORES */
+.notif-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 CARDS IGUAIS */
+  gap: 18px;
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+.notif-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.notif-card .icon {
+  font-size: 22px;
+}
+
+.notif-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+.notif-card p {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.total { background: #eef2ff; }
+.unread { background: #fff4e6; }
+.read { background: #e6ffe9; }
+
+/* LISTA DE NOTIFICAÇÕES */
+.lista-notificacoes h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.notificacao {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  margin-bottom: 18px;
+}
+
+.azul { background: #eef5ff; }
+.verde { background: #eaffef; }
+.laranja { background: #fff4e6; }
+
+.conteudo h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.conteudo p {
+  color: #555;
+  margin: 6px 0 10px;
+}
+
+.marcar {
+  color: #3056d3;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.data {
+  text-align: right;
+  color: #444;
+  font-size: 13px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #0050ff;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-top: 5px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .notif-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .notificacao {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .data {
+    text-align: left;
+  }
+}
+
+
