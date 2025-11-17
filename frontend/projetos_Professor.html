@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduScrum Awards - Projetos Professor</title>
+  <link rel="stylesheet" href="css/projetos_Professor.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M8 14l-2 6 6-3 6 3-2-6"/>
+          </svg>
+        </div>
+        <h2>EduScrum Awards</h2>
+      </div>
+
+      <hr class="divider">
+
+      <div class="user-info">
+        <div class="user-top">
+          <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil">
+          <div class="user-details">
+            <h3>Prof. Maria Silva</h3>
+            <p>Docente</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <nav class="menu">
+        <ul>
+           <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 13h8V3H3zM13 21h8v-8h-8zM13 3v8h8V3zM3 21h8v-8H3z"/>
+            </svg>
+            <a href="dashboard_Professor.html">Dashboard</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/>
+              <path d="M22 3h-8a2 2 0 0 0-2 2v16a2 2 0 0 1 2-2h8z"/>
+            </svg>
+            <a href="curso_Professor.html">Cursos</a>
+          </li>
+
+          <li class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" >
+              <circle cx="9" cy="7" r="4"/>
+              <circle cx="17" cy="7" r="4"/>
+              <path d="M5 21v-2a4 4 0 0 1 8 0v2"/>
+              <path d="M13 21v-2a4 4 0 0 1 8 0v2"/>
+            </svg>
+            <a href="equipas_Professor.html">Equipas</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M8 2h8v4H8z"/>
+              <path d="M6 6h12v2a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5V6z"/>
+              <path d="M9 18h6"/>
+              <path d="M12 14v4"/>
+            </svg>
+            <a href="premios_Professor.html">Prémios</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="4" y1="20" x2="4" y2="14"/>
+              <line x1="9" y1="20" x2="9" y2="10"/>
+              <line x1="14" y1="20" x2="14" y2="16"/>
+              <line x1="19" y1="20" x2="19" y2="8"/>
+            </svg>
+            <a href="ranking_Professor.html">Rankings</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <a href="notificacoes_Professor.html">Notificações <span class="badge">2</span></a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="bottom-menu">
+        <ul>
+          <li>Definições</li>
+          <li>Sair</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Botão voltar -->
+      <div class="back-row">
+        <button id="btnVoltar" class="btn-back">⬅️ Voltar</button>
+      </div>
+
+      <header class="header">
+        <h1>Laboratório de Tecnologias Web</h1>
+        <p>Desenvolvimento de interfaces web</p>
+      </header>
+
+      <!-- Cards -->
+      <section class="top-cards">
+        <div class="card">
+          <div class="card-icon"></div>
+          <div class="card-info">
+            <h4>Projetos</h4>
+            <p class="value">2</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon green"></div>
+          <div class="card-info">
+            <h4>Estudantes</h4>
+            <p class="value">2</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon blue"></div>
+          <div class="card-info">
+            <h4>Equipas</h4>
+            <p class="value">2</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projetos -->
+      <section class="projetos-curso">
+        <div class="projetos-header">
+          <h2>Projetos do Curso</h2>
+          <button id="btnNovoProjeto" class="btn-novo"><span>+</span> Novo Projeto</button>
+        </div>
+
+        <div id="projetosContainer">
+          <!-- PROJETO 1 -->
+          <div class="project-card">
+            <div class="project-header">
+              <div class="header-top">
+                <h3>Sistema de Gestão de um Posto de Combustivel<span class="status ativo">Ativo</span></h3>
+                <div class="actions">
+                  <button class="btn-ico">✎</button>
+                  <button class="btn-ico">🗑</button>
+                </div>
+              </div>
+              <p>Desenvolvimento de uma plataforma para gestão de Postos de Combustivel</p>
+            </div>
+
+            <div class="datas">
+              <p>📅 <strong>Início:</strong> 03/03/2025</p>
+              <p>📅 <strong>Fim:</strong> 17/05/2025</p>
+            </div>
+
+            <div class="progress-wrapper">
+              <p class="progress-label">Progresso</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 50%;"></div>
+              </div>
+              <p class="progress-text">2/4 sprints</p>
+            </div>
+
+            <div class="sprints">
+              <div class="sprint-header">
+                <h4>🌀 Sprints (4)</h4>
+                <button class="btn-sprint btn-add-sprint">+ Sprint</button>
+              </div>
+
+              <div class="sprint concluido">
+                <p><strong>Sprint 1 - Planeamento</strong> <span class="badge concluido">Concluído</span></p>
+                <p>03/03/2025 - 10/03/2025</p>
+                <p>3 objetivos</p>
+                <button class="btn-ico">🗑</button>
+              </div>
+
+              <div class="sprint concluido">
+                <p><strong>Sprint 2 - Desenvolvimento Base</strong> <span class="badge concluido">Concluído</span></p>
+                <p>11/03/2025 - 25/03/2025</p>
+                <p>5 objetivos</p>
+                <button class="btn-ico">🗑</button>
+              </div>
+
+              <div class="sprint ativo">
+                <p><strong>Sprint 3 - Funcionalidades Core</strong> <span class="badge ativo">Ativo</span></p>
+                <p>26/03/2025 - 26/04/2025</p>
+                <p>10 objetivos</p>
+                <button class="btn-ico">🗑</button>
+              </div>
+
+              <div class="sprint em-espera">
+                <p><strong>Sprint 4 - Conclusão</strong> <span class="badge ativo">Em espera</span></p>
+                <p>27/04/2025 - 17/05/2025</p>
+                <p>8 objetivos</p>
+                <button class="btn-ico">🗑</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROJETO 2 -->
+          <div class="project-card">
+            <div class="project-header">
+              <div class="header-top">
+                <h3>Portfólio<span class="status ativo">Ativo</span></h3>
+                <div class="actions">
+                  <button class="btn-ico">✎</button>
+                  <button class="btn-ico">🗑</button>
+                </div>
+              </div>
+              <p>Desenvolvimento de um portfólio pessoal</p>
+            </div>
+
+            <div class="datas">
+              <p>📅 <strong>Início:</strong> 18/05/2025</p>
+              <p>📅 <strong>Fim:</strong> 02/06/2025</p>
+            </div>
+
+            <div class="progress-wrapper">
+              <p class="progress-label">Progresso</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 100%;"></div>
+              </div>
+              <p class="progress-text">2/2 sprints</p>
+            </div>
+
+            <div class="sprints">
+              <div class="sprint-header">
+                <h4>🌀 Sprints (2)</h4>
+                <button class="btn-sprint btn-add-sprint">+ Sprint</button>
+              </div>
+
+              <div class="sprint concluido">
+                <p><strong>Sprint 1 - Planeamento</strong> <span class="badge concluido">Concluído</span></p>
+                <p>18/05/2025 - 22/05/2025</p>
+                <p>3 objetivos</p>
+                <button class="btn-ico">🗑</button>
+              </div>
+
+              <div class="sprint concluido">
+                <p><strong>Sprint 2 - Desenvolvimento</strong> <span class="badge concluido">Concluído</span></p>
+                <p>23/05/2025 - 02/06/2025</p>
+                <p>12 objetivos</p>
+                <button class="btn-ico">🗑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="empty-section"></section>
+    </main>
+  </div>
+
+  <!-- MODAL CRIAR PROJETO -->
+  <div class="modal-overlay" id="modalNovoProjeto" aria-hidden="true">
+    <div class="modal">
+      <button class="close-btn" data-close>×</button>
+      <h2>Criar Novo Projeto</h2>
+      <p class="sub">Preencha as informações do projeto</p>
+
+      <form id="formNovoProjeto">
+        <label>Nome do Projeto</label>
+        <input type="text" id="projNome" required placeholder="ex: Sistema de Gestão">
+
+        <label>Descrição</label>
+        <textarea id="projDesc" placeholder="Breve descrição do projeto" required></textarea>
+
+        <div class="row">
+          <div>
+            <label>Data Início</label>
+            <input type="date" id="projInicio" required>
+          </div>
+          <div>
+            <label>Data Fim</label>
+            <input type="date" id="projFim" required>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn cancelar" data-close>Cancelar</button>
+          <button type="submit" class="btn criar">Criar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL CRIAR SPRINT -->
+  <div class="modal-overlay" id="modalNovoSprint" aria-hidden="true">
+    <div class="modal">
+      <button class="close-btn" data-close>×</button>
+      <h2>Criar Novo Sprint</h2>
+      <p class="sub">Adiciona um sprint ao projeto</p>
+
+      <form id="formNovoSprint">
+        <label>Nome do Sprint</label>
+        <input type="text" id="sprintNome" required placeholder="ex: Sprint 4 - Integração">
+
+        <div class="row">
+          <div>
+            <label>Data Início</label>
+            <input type="date" id="sprintInicio" required>
+          </div>
+          <div>
+            <label>Data Fim</label>
+            <input type="date" id="sprintFim" required>
+          </div>
+        </div>
+
+        <label>Nº Objetivos</label>
+        <input type="number" id="sprintObjetivos" min="1" value="3" required>
+
+        <div class="actions">
+          <button type="button" class="btn cancelar" data-close>Cancelar</button>
+          <button type="submit" class="btn criar">Adicionar Sprint</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const btnVoltar = document.getElementById('btnVoltar');
+      btnVoltar?.addEventListener('click', () => {
+        window.location.href = 'cadeiras_Professor.html';
+      });
+
+      const modalNovoProjeto = document.getElementById('modalNovoProjeto');
+      const modalNovoSprint  = document.getElementById('modalNovoSprint');
+      const btnNovoProjeto   = document.getElementById('btnNovoProjeto');
+      const projetosContainer = document.getElementById('projetosContainer');
+      let sprintTargetProject = null;
+
+      btnNovoProjeto.addEventListener('click', () => openModal(modalNovoProjeto));
+
+      projetosContainer.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-add-sprint')) {
+          sprintTargetProject = e.target.closest('.project-card');
+          openModal(modalNovoSprint);
+        }
+      });
+
+      document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', closeAllModals));
+      document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) closeAllModals(); }));
+
+      function openModal(m){ m.classList.add('ativo'); document.body.style.overflow='hidden'; }
+      function closeAllModals(){ document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('ativo')); document.body.style.overflow=''; sprintTargetProject=null; }
+
+      const formNovoProjeto = document.getElementById('formNovoProjeto');
+      formNovoProjeto.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nome = projNome.value.trim();
+        const desc = projDesc.value.trim();
+        const inicio = projInicio.value;
+        const fim = projFim.value;
+        if (!nome || !desc || !inicio || !fim) return;
+        const newProject = createProjectCardDOM({ nome, desc, inicio, fim });
+        projetosContainer.appendChild(newProject);
+        formNovoProjeto.reset();
+        closeAllModals();
+      });
+
+      const formNovoSprint = document.getElementById('formNovoSprint');
+      formNovoSprint.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!sprintTargetProject) return;
+        const nome = sprintNome.value.trim();
+        const inicio = sprintInicio.value;
+        const fim = sprintFim.value;
+        const objetivos = sprintObjetivos.value;
+        if (!nome || !inicio || !fim || !objetivos) return;
+        const sprintEl = createSprintDOM({ nome, inicio, fim, objetivos });
+        sprintTargetProject.querySelector('.sprints').appendChild(sprintEl);
+        formNovoSprint.reset();
+        closeAllModals();
+      });
+
+      function createProjectCardDOM({ nome, desc, inicio, fim }) {
+        const wrap = document.createElement('div');
+        wrap.className = 'project-card';
+        wrap.innerHTML = `
+          <div class="project-header">
+            <div class="header-top">
+              <h3>${escapeHtml(nome)} <span class="status ativo">Ativo</span></h3>
+              <div class="actions">
+                <button class="btn-ico">✎</button>
+                <button class="btn-ico">🗑</button>
+              </div>
+            </div>
+            <p>${escapeHtml(desc)}</p>
+          </div>
+          <div class="datas">
+            <p>📅 <strong>Início:</strong> ${formatDateForDisplay(inicio)}</p>
+            <p>📅 <strong>Fim:</strong> ${formatDateForDisplay(fim)}</p>
+          </div>
+          <div class="progress-wrapper">
+            <p class="progress-label">Progresso</p>
+            <div class="progress-bar"><div class="progress" style="width:0%;"></div></div>
+            <p class="progress-text">0/0 sprints</p>
+          </div>
+          <div class="sprints">
+            <div class="sprint-header">
+              <h4>🌀 Sprints (0)</h4>
+              <button class="btn-sprint btn-add-sprint">+ Sprint</button>
+            </div>
+          </div>`;
+        return wrap;
+      }
+
+      function createSprintDOM({ nome, inicio, fim, objetivos }) {
+        const div = document.createElement('div');
+        div.className = 'sprint';
+        div.innerHTML = `
+          <p><strong>${escapeHtml(nome)}</strong></p>
+          <p>${formatDateForDisplay(inicio)} - ${formatDateForDisplay(fim)}</p>
+          <p>${escapeHtml(objetivos)} objetivos</p>
+          <button class="btn-ico">🗑</button>`;
+        return div;
+      }
+
+      function formatDateForDisplay(dateStr){ if(!dateStr)return'';const p=dateStr.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:dateStr; }
+      function escapeHtml(t){return t.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+      // apagar sprint ou projeto
+      document.addEventListener('click', (e) => {
+        if (e.target.matches('.sprint .btn-ico')) {
+          const sprint = e.target.closest('.sprint');
+          if (sprint) sprint.remove();
+        }
+        if (e.target.closest('.project-card .actions .btn-ico')) {
+          const buttons = Array.from(e.target.closest('.actions').querySelectorAll('.btn-ico'));
+          const index = buttons.indexOf(e.target);
+          if (index === 1) {
+            const projectCard = e.target.closest('.project-card');
+            if (projectCard) projectCard.remove();
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

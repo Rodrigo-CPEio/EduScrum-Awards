@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificações - Professor</title>
+    <link rel="stylesheet" href="css/notificacoes_Professor.css">
+</head>
+
+<body>
+   <div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo" style="padding-left:18px;">
+        <div class="logo-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M8 14l-2 6 6-3 6 3-2-6"/>
+          </svg>
+        </div>
+        <h2>EduScrum Awards</h2>
+      </div>
+
+      <hr class="divider">
+
+      <div class="user-info" style="display:flex; align-items:center; gap:12px; padding: 0 18px;">
+        <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil" style="width:55px; height:55px; border-radius:50%; object-fit:cover;">
+        <div class="user-details">
+          <h3>Prof. Maria Silva</h3>
+          <p>Docente</p>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <nav class="menu" aria-label="Navegação principal">
+        <ul>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 13h8V3H3zM13 21h8v-8h-8zM13 3v8h8V3zM3 21h8v-8H3z"/>
+            </svg>
+            <a href="dashboard_Professor.html">Dashboard</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/>
+              <path d="M22 3h-8a2 2 0 0 0-2 2v16a2 2 0 0 1 2-2h8z"/>
+            </svg>
+            <a href="curso_Professor.html">Cursos</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" >
+              <circle cx="9" cy="7" r="4"/>
+              <circle cx="17" cy="7" r="4"/>
+              <path d="M5 21v-2a4 4 0 0 1 8 0v2"/>
+              <path d="M13 21v-2a4 4 0 0 1 8 0v2"/>
+            </svg>
+            <a href="equipas_Professor.html">Equipas</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M8 2h8v4H8z"/>
+              <path d="M6 6h12v2a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5V6z"/>
+              <path d="M9 18h6"/>
+              <path d="M12 14v4"/>
+            </svg>
+            <a href="premios_Professor.html">Prémios</a>
+          </li>
+
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="4" y1="20" x2="4" y2="14"/>
+              <line x1="9" y1="20" x2="9" y2="10"/>
+              <line x1="14" y1="20" x2="14" y2="16"/>
+              <line x1="19" y1="20" x2="19" y2="8"/>
+            </svg>
+            <a href="ranking_Professor.html">Rankings</a>
+          </li>
+
+          <li class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <a href="notificacoes_Professor.html">Notificações <span class="badge">2</span></a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="bottom-menu">
+        <ul>
+          <li><a href="#">Definições</a></li>
+          <li><a href="#">Sair</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ============================
+            MAIN CONTENT
+    ============================ -->
+    <main class="main">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-text">
+            <h1>Notificações</h1>
+            <p>Acompanhe as atualizações e avisos importantes</p>
+        </div>
+        <button class="mark-all">✔ Marcar todas como lidas</button>
+    </div>
+
+    <!-- TOP CARDS -->
+    <div class="notif-cards">
+        <div class="notif-card total">
+            <span class="icon">🔔</span>
+            <h3>Total</h3>
+            <p>3</p>
+        </div>
+
+        <div class="notif-card unread">
+            <span class="icon">🔔</span>
+            <h3>Não lidas</h3>
+            <p>2</p>
+        </div>
+
+        <div class="notif-card read">
+            <span class="icon">✔</span>
+            <h3>Lidas</h3>
+            <p>1</p>
+        </div>
+    </div>
+
+    <!-- LISTA DE NOTIFICAÇÕES -->
+    <section class="lista-notificacoes">
+
+        <h2>Todas as notificações</h2>
+
+        <!-- Notificação Azul -->
+        <div class="notificacao box azul unread-notif">
+            <div class="conteudo">
+                <h3>Nova Sprint Iniciada</h3>
+                <p>A Sprint 3 começou para o Sistema de Gestão Académica.</p>
+                <a href="#" class="marcar">Marcar como lida</a>
+            </div>
+            <div class="data">
+                <span>15/10, 09:00</span>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <!-- Notificação Verde -->
+        <div class="notificacao box verde unread-notif">
+            <div class="conteudo">
+                <h3>Prémio Conquistado!</h3>
+                <p>Recebeste o prémio "Campeão da Sprint"! +100 pontos</p>
+                <a href="#" class="marcar">Marcar como lida</a>
+            </div>
+            <div class="data">
+                <span>14/10, 16:30</span>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <!-- Notificação Laranja -->
+        <div class="notificacao box laranja read-notif">
+            <div class="conteudo">
+                <h3>Prazo a Aproximar</h3>
+                <p>A Sprint 2 termina em 2 dias.</p>
+            </div>
+            <div class="data">
+                <span>12/10, 10:00</span>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+</div>
+
+
+
+</body>
+</html>
