@@ -1,0 +1,535 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden; /* bloqueia toda a rolagem da página */
+}
+
+body {
+  background-color: #f8f9fb;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar fixa */
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh; /* altura total da viewport */
+  overflow: hidden; /* impede scroll interno */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #3056d3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo h2 {
+  font-size: 18px; /* título maior */
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 10px 0;
+}
+
+/* User section */
+.user-info {
+  padding: 0 20px;
+}
+
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-top img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+}
+
+.user-details h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+}
+
+.user-details p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Caixinha de pontos mais à direita */
+.user-points {
+  display: flex;
+  justify-content: space-between; /* empurra box para a direita */
+  align-items: center;
+  margin-top: 12px;
+  padding: 0 5px;
+}
+
+.user-points .label {
+  font-size: 13px;
+  color: #666;
+}
+
+.points-box {
+  background: #f2f3f6;
+  border-radius: 6px;
+  padding: 5px 12px;
+  display: inline-block;
+}
+
+.points-box strong {
+  color: #333;
+  font-size: 14px;
+}
+
+/* Menus */
+.menu ul,
+.bottom-menu ul {
+  list-style: none;
+  padding: 0 20px;
+}
+
+.menu li,
+.bottom-menu li {
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}
+
+.menu li:hover,
+.bottom-menu li:hover {
+  background-color: #f2f3f6;
+}
+
+.menu .active {
+  background-color: #eef2ff;
+  color: #3056d3;
+  font-weight: 600;
+}
+
+.badge {
+  background-color: #d93025;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  position: absolute;
+  right: 10px;
+}
+
+.bottom-menu {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+/* Main Content */
+.main {
+  flex: 1;
+  padding: 30px 40px;
+  background-color: #fff;
+  overflow-y: auto; /* permite rolagem apenas no conteúdo principal */
+  height: 100vh;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.header span {
+  color: #3056d3;
+}
+
+.header p {
+  color: #777;
+  margin-top: 4px;
+  margin-bottom: 30px;
+}
+
+/* Top Cards */
+.top-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+/* Ícones minimalistas com mais espaço */
+.card-icon {
+  background: #f6f7fb;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30px; /* ainda mais espaço entre ícone e conteúdo */
+}
+
+.card-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.card-icon.purple svg {
+  stroke: #7e3ff2;
+}
+
+.card-icon.blue svg {
+  stroke: #3080d3;
+}
+
+.card-icon.green svg {
+  stroke: #1ca65a;
+}
+
+.card-info h4 {
+  font-size: 14px;
+  color: #555;
+}
+
+.card-info .value {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 4px 0;
+}
+
+.card-info .extra {
+  font-size: 13px;
+  color: #888;
+}
+
+.empty-section {
+  height: 100%;
+  margin-top: 40px;
+  background: #fff;
+}
+
+/**------------------------------------------------ **/
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: #f8f9fb;
+  color: #333;
+}
+
+/* MAIN CONTENT */
+.main {
+  flex: 1;
+  padding: 40px 50px;
+  overflow-y: auto;
+}
+
+.header h1 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.header p {
+  margin-top: 4px;
+  color: #666;
+}
+
+/* ------------------------------------------------ */
+/* PROFILE SECTION */
+/* ------------------------------------------------ */
+
+.profile-section {
+  margin-top: 25px;
+}
+
+/* O título e subtítulo agora ficam dentro do card */
+.profile-card .section-title,
+.notifications-card .section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.profile-card .subtitle,
+.notifications-card .subtitle {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* PROFILE CARD */
+.profile-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 30px;
+  border: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;   /* layout vertical */
+  gap: 25px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Linha divisória interna */
+.profile-divider {
+  width: 100%;
+  height: 1px;
+  background: #eee;
+  margin: 10px 0 5px 0;
+}
+
+/* FOTO DO PERFIL */
+.photo-area {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-area img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+/* ------------------------------------------------ */
+/* BOTÕES – todos a preto */
+/* ------------------------------------------------ */
+
+.save-btn,
+.notif-save,
+.btn-upload {
+  width: fit-content;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.save-btn:hover,
+.notif-save:hover,
+.btn-upload:hover {
+  background: #222;
+}
+
+/* ------------------------------------------------ */
+/* FORMULÁRIO */
+/* ------------------------------------------------ */
+
+.profile-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.profile-form label {
+  font-weight: 600;
+}
+
+.profile-form input {
+  padding: 12px;
+  border-radius: 10px;
+  background: #f4f4f6;
+  border: none;
+  font-size: 15px;
+}
+
+/* ------------------------------------------------ */
+/* NOTIFICAÇÕES */
+/* ------------------------------------------------ */
+
+.notifications-section {
+  margin-top: 45px;
+}
+
+.notifications-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 30px;
+  border: 1px solid #e5e5e5;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.notif-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.notif-item h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.notif-item p {
+  font-size: 14px;
+  color: #777;
+}
+
+/* SWITCH */
+.switch {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  display: inline-block;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #d3d6df;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px; width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.switch input:checked + .slider {
+  background-color: #000;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* Espaçamento entre todos os cards */
+.profile-card,
+.notifications-card {
+    margin-bottom: 40px;   /* ajusta o valor se quiseres mais/menos espaço */
+}
+
+/**------------------------------------------------ **/
+/* ===== EXPORTAR DADOS (Último Card) ===== */
+
+.export-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 30px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.export-card .card-header {
+  margin-bottom: 20px;
+}
+
+.export-card .card-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.export-card .card-header p {
+  color: #777;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.export-card .card-footer {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.export-card .btn-export {
+  padding: 12px 22px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.export-card .btn-export:hover {
+  background: #222;
+}

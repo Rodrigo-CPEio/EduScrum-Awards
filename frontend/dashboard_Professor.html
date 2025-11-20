@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduScrum Awards - Dashboard Estudante</title>
-  <link rel="stylesheet" href="css/dashboard_Estudante.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EduScrum Awards - Dashboard Professor</title>
+  <link rel="stylesheet" href="css/dashboard_Professor.css">
 </head>
 <body>
   <div class="container">
-    <!-- Sidebar -->
+    <!-- SIDEBAR (mantido igual ao padrão que usaste) -->
     <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+      <div class="logo" style="padding-left:18px;">
+        <div class="logo-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
             <circle cx="12" cy="8" r="4"/>
             <path d="M8 14l-2 6 6-3 6 3-2-6"/>
           </svg>
@@ -22,13 +22,11 @@
 
       <hr class="divider">
 
-      <div class="user-info">
-        <div class="user-top">
-          <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil">
-          <div class="user-details">
-            <h3>Prof. Maria Silva</h3>
-            <p>Docente</p>
-          </div>
+      <div class="user-info" style="display:flex; align-items:center; gap:12px; padding: 0 18px;">
+        <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Foto de perfil" style="width:55px; height:55px; border-radius:50%; object-fit:cover;">
+        <div class="user-details">
+          <h3>Prof. Maria Silva</h3>
+          <p>Docente</p>
         </div>
       </div>
 
@@ -42,7 +40,6 @@
             </svg>
             <a href="dashboard_Professor.html">Dashboard</a>
           </li>
-
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/>
@@ -50,8 +47,7 @@
             </svg>
             <a href="curso_Professor.html">Cursos</a>
           </li>
-
-          <li class="active">
+          <li>
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" >
               <circle cx="9" cy="7" r="4"/>
               <circle cx="17" cy="7" r="4"/>
@@ -60,7 +56,6 @@
             </svg>
             <a href="equipas_Professor.html">Equipas</a>
           </li>
-
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M8 2h8v4H8z"/>
@@ -70,7 +65,6 @@
             </svg>
             <a href="premios_Professor.html">Prémios</a>
           </li>
-
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <line x1="4" y1="20" x2="4" y2="14"/>
@@ -80,7 +74,6 @@
             </svg>
             <a href="ranking_Professor.html">Rankings</a>
           </li>
-
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
@@ -93,101 +86,178 @@
 
       <div class="bottom-menu">
         <ul>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c0 .69.28 1.36.77 1.85.49.49 1.16.77 1.85.77h.09a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-            </svg>
-            Definições
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-            Sair
-          </li>
+          <li class="active"><a href="definicoes_Professor.html">Definições</a></li>
+          <li><a href="#">Sair</a></li>
         </ul>
       </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- MAIN CONTENT -->
     <main class="main">
-      <header class="header">
-        <h1>Dashboard</h1>
-        <p>Visão geral das suas atividades e estatísticas</p>
+      <!-- Header -->
+      <header class="header-top">
+        <div class="header-text">
+          <h1>Dashboard</h1>
+          <p>Visão geral: progresso dos alunos e métricas das equipas</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-primary">Novo Projeto</button>
+        </div>
       </header>
 
-    <section class="top-cards">
-        <div class="card">
-        <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#3056d3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/>
-                <path d="M22 3h-8a2 2 0 0 0-2 2v16a2 2 0 0 1 2-2h8z"/>
-            </svg>
+      <!-- ROW: Top 3 destaque (os "cards" pediste noutros pedidos) -->
+      <section class="winners">
+        <div class="winner-card gold">
+          <div class="place">1º</div>
+          <div class="who">Ana C.</div>
+          <div class="score">🏆 1580</div>
         </div>
-        <div class="card-info">
-            <h4>Cursos Ativos</h4>
-            <p class="value">2</p>
-            <p class="extra">+2 este mês</p>
+        <div class="winner-card silver">
+          <div class="place">2º</div>
+          <div class="who">João S.</div>
+          <div class="score">🏅 1250</div>
         </div>
+        <div class="winner-card bronze">
+          <div class="place">3º</div>
+          <div class="who">Alpha (Team)</div>
+          <div class="score">🏅 2450</div>
         </div>
-
-
-       <div class="card">
-       <div class="card-icon" style="color: #22c55e;">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 19V5" />
-                <path d="M5 12l7-7 7 7" />
-            </svg>
-        </div>
-        <div class="card-info">
-            <h4>Projetos</h4>
-            <p class="value">2</p>
-            <p class="extra">1 em progresso</p>
-        </div>
-        </div>
-
-
-        <div class="card">
-            <div class="card-icon blue">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#3080d3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M17 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-                    <path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/>
-                    <path d="M14 17h4a4 4 0 0 1 4 4v0"/>
-                </svg>
-            </div>
-            <div class="card-info">
-                <h4>Equipas</h4>
-                <p class="value">2</p>
-                <p class="extra">43 estudantes</p>
-            </div>
-        </div>
-
-
-      <div class="card">
-        <div class="card-icon orange">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 21h8" />
-                <path d="M12 17v4" />
-                <path d="M7 4h10a1 1 0 0 1 1 1v2a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V5a1 1 0 0 1 1-1z" />
-                <path d="M5 5H3v2a5 5 0 0 0 5 5" />
-                <path d="M19 5h2v2a5 5 0 0 1-5 5" />
-            </svg>
-        </div>
-        <div class="card-info">
-            <h4>Prémios Atribuídos</h4>
-            <p class="value">126</p>
-            <p class="extra">+15 esta semana</p>
-        </div>
-    </div>
-
       </section>
 
-      <section class="empty-section"></section>
+      <!-- GRID: Charts -->
+      <section class="charts-grid">
+        <!-- Line chart (esquerda) -->
+        <div class="card chart-card">
+          <div class="card-header">
+            <h3>Evolução de Pontos (últimos sprints)</h3>
+            <small>Linhas representam médias por sprint</small>
+          </div>
+
+          <div class="chart-line" aria-hidden="true">
+            <!-- SVG Line chart: pontos fictícios -->
+            <svg viewBox="0 0 300 120" preserveAspectRatio="none">
+              <!-- grid -->
+              <g class="grid">
+                <line x1="0" y1="10" x2="300" y2="10"></line>
+                <line x1="0" y1="40" x2="300" y2="40"></line>
+                <line x1="0" y1="70" x2="300" y2="70"></line>
+                <line x1="0" y1="100" x2="300" y2="100"></line>
+              </g>
+
+              <!-- area fill -->
+              <polyline class="area" points="0,90 30,70 80,50 130,60 180,40 230,30 300,20 300,120 0,120"></polyline>
+
+              <!-- line -->
+              <polyline class="line" points="0,90 30,70 80,50 130,60 180,40 230,30 300,20"></polyline>
+
+              <!-- dots -->
+              <circle cx="0" cy="90" r="3"></circle>
+              <circle cx="30" cy="70" r="3"></circle>
+              <circle cx="80" cy="50" r="3"></circle>
+              <circle cx="130" cy="60" r="3"></circle>
+              <circle cx="180" cy="40" r="3"></circle>
+              <circle cx="230" cy="30" r="3"></circle>
+              <circle cx="300" cy="20" r="3"></circle>
+            </svg>
+
+            <div class="chart-legend">
+              <span>Sprint 1</span>
+              <span>...</span>
+              <span>Sprint 7</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar chart (direita) -->
+        <div class="card chart-card">
+          <div class="card-header">
+            <h3>Tarefas Concluídas por Equipa</h3>
+            <small>Comparação entre equipas</small>
+          </div>
+
+          <div class="chart-bars" aria-hidden="true">
+            <!-- bars built with divs (acesse via CSS) -->
+            <div class="bars">
+              <div class="bar-item">
+                <div class="bar-label">Team Alpha</div>
+                <div class="bar-wrap"><div class="bar" style="height:78%"></div></div>
+                <div class="bar-value">78%</div>
+              </div>
+
+              <div class="bar-item">
+                <div class="bar-label">Team Beta</div>
+                <div class="bar-wrap"><div class="bar" style="height:58%"></div></div>
+                <div class="bar-value">58%</div>
+              </div>
+
+              <div class="bar-item">
+                <div class="bar-label">Team Sigma</div>
+                <div class="bar-wrap"><div class="bar" style="height:68%"></div></div>
+                <div class="bar-value">68%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pie chart (linha 2, ocupa metade ou centro) -->
+        <div class="card chart-card fullwidth">
+          <div class="card-header">
+            <h3>Distribuição de Pontos</h3>
+            <small>Alunos vs Equipas (simplificado)</small>
+          </div>
+
+          <div class="chart-pie">
+            <div class="pie" role="img" aria-label="Distribuição de pontos">
+              <!-- conic-gradient para o pie -->
+              <div class="pie-visual" title="Alunos 60% / Equipas 40%"></div>
+              <div class="pie-center">
+                <div class="pie-total">60%</div>
+                <div class="pie-sub">Alunos</div>
+              </div>
+            </div>
+
+            <div class="pie-legend">
+              <div><span class="legend-swatch student"></span>Alunos — 60%</div>
+              <div><span class="legend-swatch team"></span>Equipas — 40%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- baixo: caixas informativas (3) -->
+      <section class="info-row">
+        <div class="info-card">
+          <h4>Atividades Pendentes</h4>
+          <p>12 tarefas aguardam revisão</p>
+        </div>
+        <div class="info-card">
+          <h4>Último Sprint</h4>
+          <p>Concluído com média de 78%</p>
+        </div>
+        <div class="info-card">
+          <h4>Próxima Entrega</h4>
+          <p>05/12/2025 — Projeto Final</p>
+        </div>
+      </section>
     </main>
   </div>
+
+  <!-- Pequeno script para animação simples das barras/draw da linha -->
+  <script>
+    // anima barras: crescer ao carregar
+    document.querySelectorAll('.bar').forEach((el) => {
+      const h = el.style.height;
+      el.style.height = '6px';
+      setTimeout(() => el.style.height = h, 150);
+    });
+
+    // anima linha SVG: desenhar stroke
+    const line = document.querySelector('.chart-line svg .line');
+    if (line) {
+      line.style.strokeDasharray = line.getTotalLength();
+      line.style.strokeDashoffset = line.getTotalLength();
+      setTimeout(() => { line.style.transition = 'stroke-dashoffset 1s ease'; line.style.strokeDashoffset = '0'; }, 200);
+    }
+  </script>
 </body>
 </html>
