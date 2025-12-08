@@ -4,68 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
-    <title>Document</title>
+    <title>Login - EduScrum Awards</title>
 </head>
 <body>
     <div class="login-card">
-    <div class="logo">🏅</div>
-    <h2>EduScrum Awards</h2>
-    <p>Plataforma gamificada para avaliação de projetos Scrum</p>
-
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="seu.email@university.edu" required>
-      <input type="password" id="password" placeholder="********" required>
-
-      <div class="user-type">
-        <span>Tipo de Utilizador</span>
-        <label><input type="radio" name="tipo" value="estudante" checked> Estudante</label>
-        <label><input type="radio" name="tipo" value="docente"> Docente</label>
-      </div>
-
-      <button type="submit" id="btnVoltar" class="entrar">Entrar</button>
-      <button type="button" id="btnRegistrar" class="Registrar">Registrar</button>
-    </form>
-
-    <p class="demo">email/password</p>
-  </div>
-
-  <script>
-    const form = document.getElementById('loginForm');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Evita recarregar a página
-
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const tipo = document.querySelector('input[name="tipo"]:checked').value;
-
-      try {
-        const response = await fetch('/usuarios/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password, tipo })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          alert('Login bem-sucedido! 🎉');
-          // Redirecionar conforme o tipo de utilizador
-          if (tipo === 'estudante') window.location.href = '/dashboardE';
-          else window.location.href = '/dashboardP';
-        } else {
-          alert(data.error || 'Erro ao fazer login');
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Erro de conexão com o servidor');
-      }
-    });
-
-    document.getElementById('btnRegistrar').addEventListener('click', () => {
-      window.location.href = '/registrar';
-    });
-</script>
-  
+        <div class="logo">🏅</div>
+        <h2>EduScrum Awards</h2>
+        <p>Plataforma gamificada para avaliação de projetos Scrum</p>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="seu.email@university.edu" required>
+            <input type="password" id="password" placeholder="********" required>
+            <div class="user-type">
+                <span>Tipo de Utilizador</span>
+                <label><input type="radio" name="tipo" value="estudante" checked> Estudante</label>
+                <label><input type="radio" name="tipo" value="docente"> Docente</label>
+            </div>
+            <button type="submit" class="entrar">Entrar</button>
+            <button type="button" id="btnRegistrar" class="Registrar">Registrar</button>
+        </form>
+        <p class="demo">email/password</p>
+    </div>
+    <script src="/js/login.js"></script>
 </body>
 </html>
