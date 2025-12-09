@@ -1,23 +1,24 @@
 const express = require('express');
 const path = require('path');
-const userRoutes = require('./routes/userRoutes');
 require('./config/db'); // inicia conexão ao MySQL
+
+const userRoutes = require('./routes/userRoutes');
+const cursosRoutes = require('./routes/cursoRoutes'); // rotas de cursos
 
 const app = express();
 const PORT = 3000;
 
-// Middleware para processar JSON (necessário para POST com body)
+// Middleware para processar JSON (necessário para POST, PUT, DELETE com body)
 app.use(express.json());
 
 // Servir ficheiros do frontend
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
-// Rota principal — só mostra mensagem no navegador
+// ==================== PÁGINAS FRONTEND ====================
 app.get('/', (req, res) => {
   res.send('Servidor Node.js funcionando corretamente 🚀');
 });
 
-// Outras páginas
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'login.html'));
 });
@@ -26,55 +27,43 @@ app.get('/registrar', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'registrar.html'));
 });
 
-// Rota para a dashboard do Estudante
+// Dashboards
 app.get('/dashboardE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Estudante.html'));
 });
 
-// Rota para a dashboard do Professor
 app.get('/dashboardP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Professor.html'));
 });
 
-// Rota para os cursos do professor
+// Professor - Cursos, Cadeiras, Projetos, Equipas, Prémios, Ranking, Notificações
 app.get('/cursoP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'curso_Professor.html'));
 });
-
-// Rota para as cadeiras do professor
 app.get('/cadeirasP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'cadeiras_Professor.html'));
 });
-
-// Rota para os projetos do professor
 app.get('/projetosP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'projetos_Professor.html'));
 });
-
-// Rota para as equipas do professor
 app.get('/equipasP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'equipas_Professor.html'));
 });
-
-// Rota para os prémios do professor
 app.get('/premiosP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'premios_Professor.html'));
 });
-
-// Rota para o ranking do professor
 app.get('/rankingP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'ranking_Professor.html'));
 });
-
-// Rota para as notificações do professor
 app.get('/notificacoesP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Professor.html'));
 });
 
-// Rotas de API
+// ==================== ROTAS DE API ====================
 app.use('/usuarios', userRoutes);
+app.use('/cursos', cursosRoutes); // <-- aqui registramos as rotas de cursos
 
-// Iniciar servidor
+// ==================== INICIAR SERVIDOR ====================
 app.listen(PORT, () => {
   console.log(`🔥 Servidor rodando em: http://localhost:${PORT}`);
 });

@@ -1,122 +1,126 @@
-// frontend/javascript/curso_Professor.js
-
+let userData = null;
 let teacherId = null;
-let cursoEditandoId = null;
+let cursoEditando = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  inicializar();
-  carregarDadosUsuario();
-  configurarBotaoSair();
+  if (!verificarAutenticacao()) return;
+  carregarPerfilSidebar();
+  carregarCursos();
+  configurarFormularioModal();
 });
 
-// ==================== INICIALIZAR ====================
-function inicializar() {
+// ==================== AUTENTICAÇÃO ====================
+function verificarAutenticacao() {
   const userStr = localStorage.getItem('user');
-  
   if (!userStr) {
     window.location.href = '/login';
-    return;
+    return false;
   }
-  
+
   const user = JSON.parse(userStr);
-  
   if (user.tipo !== 'docente') {
-    alert('Acesso negado. Apenas professores podem aceder a esta página.');
+    alert('Acesso negado. Apenas professores podem acessar esta página.');
     window.location.href = '/login';
-    return;
+    return false;
   }
-  
+
+  userData = user;
   teacherId = user.teacherId;
-  carregarCursos();
-  configurarFormulario();
+  return true;
 }
 
-// ==================== CARREGAR DADOS DO USUÁRIO (SIDEBAR) ====================
-function carregarDadosUsuario() {
-  const userStr = localStorage.getItem('user');
-  if (!userStr) return;
-  
-  const user = JSON.parse(userStr);
-  
-  // Atualiza nome na sidebar
-  const nomeElements = document.querySelectorAll('.user-details h3');
-  nomeElements.forEach(el => {
-    el.textContent = user.nome || 'Professor';
-  });
-  
-  // Atualiza tipo
-  const tipoElements = document.querySelectorAll('.user-details p');
-  tipoElements.forEach(el => {
-    el.textContent = user.tipo === 'docente' ? 'Docente' : 'Estudante';
-  });
-  
-  // Remove imagem e cria avatar
-  const imgElements = document.querySelectorAll('.user-info img');
-  imgElements.forEach(imgElement => {
-    const inicial = (user.nome || 'P')[0].toUpperCase();
-    imgElement.style.display = 'none';
-    
-    const existingAvatar = imgElement.parentNode.querySelector('.avatar-inicial');
-    if (!existingAvatar) {
-      const avatar = document.createElement('div');
-      avatar.className = 'avatar-inicial';
-      avatar.style.cssText = `
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        flex-shrink: 0;
-      `;
-      avatar.textContent = inicial;
-      imgElement.parentNode.insertBefore(avatar, imgElement);
-    }
-  });
+// ==================== CARREGAR SIDEBAR ====================
+function carregarPerfilSidebar() {
+  const sidebarUserInfo = document.querySelector('.sidebar .user-info .user-top');
+  if (!sidebarUserInfo) return;
+
+  const img = sidebarUserInfo.querySelector('img');
+  let avatar = sidebarUserInfo.querySelector('.avatar-placeholder');
+
+  if (avatar) avatar.remove();
+
+  avatar = document.createElement('div');
+  avatar.className = 'avatar-placeholder';
+  avatar.style.cssText = `
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  `;
+
+  sidebarUserInfo.insertBefore(avatar, img);
+
+  if (userData.foto) {
+    img.src = userData.foto;
+    img.style.display = 'block';
+    avatar.style.display = 'none';
+  } else {
+    img.style.display = 'none';
+    avatar.style.display = 'flex';
+    avatar.textContent = (userData.nome || 'U')[0].toUpperCase();
+  }
+
+  const nameEl = sidebarUserInfo.querySelector('.user-details h3');
+  const typeEl = sidebarUserInfo.querySelector('.user-details p');
+  if (nameEl) nameEl.textContent = userData.nome;
+  if (typeEl) typeEl.textContent = 'Docente';
 }
 
 // ==================== CARREGAR CURSOS ====================
 async function carregarCursos() {
+  if (!teacherId) return;
+
   try {
-    const response = await fetch(`/cursos/list/${teacherId}`);
-    const data = await response.json();
-    
+    const res = await fetch(`/cursos/professor/${teacherId}`);
+    const text = await res.text();
+
+    let data;
+    try { data = JSON.parse(text); } 
+    catch (err) { 
+      console.error('Resposta inválida:', text);
+      alert('Erro ao carregar cursos');
+      return;
+    }
+
     if (data.success) {
       renderizarCursos(data.cursos);
     } else {
-      console.error('Erro ao carregar cursos');
+      alert(data.error || 'Erro ao carregar cursos');
     }
   } catch (err) {
-    console.error('❌ Erro:', err);
+    console.error(err);
     alert('Erro ao carregar cursos');
   }
 }
 
-// ==================== RENDERIZAR TABELA ====================
+// ==================== RENDERIZAR CURSOS ====================
 function renderizarCursos(cursos) {
   const tbody = document.querySelector('.courses-table tbody');
-  
-  if (cursos.length === 0) {
+  if (!tbody) return;
+
+  if (!cursos || cursos.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" style="text-align: center; padding: 2rem; color: #666;">
+        <td colspan="5" style="text-align:center; padding:40px; color:#999;">
           Nenhum curso criado ainda. Clique em "+ Novo Curso" para começar.
         </td>
       </tr>
     `;
     return;
   }
-  
+
   tbody.innerHTML = cursos.map(curso => `
-    <tr>
-      <td>${curso.nome}</td>
-      <td>${curso.descricao || 'Sem descrição'}</td>
-      <td>👥 ${curso.num_estudantes || 0}</td>
-      <td><span class="date-badge">${curso.criado_em || 'N/A'}</span></td>
+    <tr data-curso-id="${curso.id}">
+      <td><strong>${curso.nome}</strong></td>
+      <td>${curso.descricao}</td>
+      <td>👥 ${curso.totalEstudantes || 0}</td>
+      <td><span class="date-badge">${curso.criadoEm || 'N/A'}</span></td>
       <td>
         <button class="ver-projetos-btn" onclick="verCadeiras(${curso.id})">Ver Cadeiras</button>
         <button class="editar-btn" onclick="editarCurso(${curso.id})">✏️</button>
@@ -126,133 +130,163 @@ function renderizarCursos(cursos) {
   `).join('');
 }
 
-// ==================== ABRIR/FECHAR MODAL ====================
+// ==================== MODAL ====================
 function abrirModal() {
-  cursoEditandoId = null;
-  document.querySelector('.modal h2').textContent = 'Criar Novo Curso';
-  document.querySelector('form').reset();
-  document.getElementById('modalCriarCurso').classList.add('ativo');
+  cursoEditando = null;
+  const modal = document.getElementById('modalCriarCurso');
+  if (!modal) return;
+
+  modal.classList.add('ativo');
   document.body.style.overflow = 'hidden';
+
+  const form = modal.querySelector('form');
+  if (form) form.reset();
+
+  const title = modal.querySelector('h2');
+  if (title) title.textContent = 'Criar Novo Curso';
+
+  const btnCriar = modal.querySelector('.btn.criar');
+  if (btnCriar) btnCriar.textContent = 'Criar';
 }
 
 function fecharModal() {
-  document.getElementById('modalCriarCurso').classList.remove('ativo');
+  const modal = document.getElementById('modalCriarCurso');
+  if (!modal) return;
+  modal.classList.remove('ativo');
   document.body.style.overflow = '';
-  cursoEditandoId = null;
+  cursoEditando = null;
 }
 
-// ==================== CONFIGURAR FORMULÁRIO ====================
-function configurarFormulario() {
+// ==================== CONFIGURAR FORMULÁRIO MODAL ====================
+function configurarFormularioModal() {
   const form = document.querySelector('.modal form');
-  
+  if (!form) return;
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     const nome = form.querySelector('input[type="text"]').value.trim();
     const descricao = form.querySelector('textarea').value.trim();
-    
-    if (!nome) {
-      alert('Por favor, preencha o nome do curso');
+
+    if (!nome || !descricao) {
+      alert('Preencha todos os campos do curso.');
       return;
     }
-    
-    try {
-      let response;
-      
-      if (cursoEditandoId) {
-        // EDITAR
-        response = await fetch(`/cursos/update/${cursoEditandoId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nome, descricao })
-        });
-      } else {
-        // CRIAR
-        response = await fetch('/cursos/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nome, descricao, teacherId })
-        });
-      }
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        alert(data.message);
-        fecharModal();
-        carregarCursos();
-      } else {
-        alert(data.error || 'Erro ao salvar curso');
-      }
-    } catch (err) {
-      console.error('❌ Erro:', err);
-      alert('Erro ao salvar curso');
+
+    if (cursoEditando) {
+      await atualizarCurso(cursoEditando, nome, descricao);
+    } else {
+      await criarCurso(nome, descricao);
     }
   });
 }
 
-// ==================== EDITAR CURSO ====================
-async function editarCurso(id) {
+// ==================== CRUD ====================
+async function criarCurso(nome, descricao) {
   try {
-    const response = await fetch(`/cursos/${id}`);
-    const data = await response.json();
-    
+    const res = await fetch('/cursos', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ nome, descricao, professorId: teacherId })
+    });
+
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } 
+    catch { alert('Erro: resposta inválida do servidor'); return; }
+
     if (data.success) {
-      cursoEditandoId = id;
-      document.querySelector('.modal h2').textContent = 'Editar Curso';
-      document.querySelector('input[type="text"]').value = data.curso.nome;
-      document.querySelector('textarea').value = data.curso.descricao || '';
-      document.getElementById('modalCriarCurso').classList.add('ativo');
-      document.body.style.overflow = 'hidden';
-    }
+      alert('✅ Curso criado com sucesso!');
+      fecharModal();
+      carregarCursos();
+    } else alert(data.error || 'Erro ao criar curso');
   } catch (err) {
-    console.error('❌ Erro:', err);
-    alert('Erro ao carregar dados do curso');
+    console.error(err);
+    alert('Erro ao criar curso');
   }
 }
 
-// ==================== APAGAR CURSO ====================
-async function apagarCurso(id) {
-  if (!confirm('Tem certeza que deseja apagar este curso? Esta ação não pode ser desfeita.')) {
-    return;
-  }
-  
+async function editarCurso(cursoId) {
   try {
-    const response = await fetch(`/cursos/delete/${id}`, {
-      method: 'DELETE'
-    });
-    
-    const data = await response.json();
-    
-    if (data.success) {
-      alert(data.message);
-      carregarCursos();
-    } else {
-      alert(data.error || 'Erro ao apagar curso');
-    }
+    const res = await fetch(`/cursos/${cursoId}`);
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } 
+    catch { alert('Erro: resposta inválida'); return; }
+
+    if (!data.success) { alert('Erro ao carregar curso'); return; }
+
+    const curso = data.curso;
+    cursoEditando = cursoId;
+
+    const modal = document.getElementById('modalCriarCurso');
+    if (!modal) return;
+
+    const form = modal.querySelector('form');
+    form.querySelector('input[type="text"]').value = curso.nome;
+    form.querySelector('textarea').value = curso.descricao;
+
+    modal.querySelector('h2').textContent = 'Editar Curso';
+    modal.querySelector('.btn.criar').textContent = 'Salvar';
+
+    modal.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
   } catch (err) {
-    console.error('❌ Erro:', err);
+    console.error(err);
+    alert('Erro ao carregar curso');
+  }
+}
+
+async function atualizarCurso(cursoId, nome, descricao) {
+  try {
+    const res = await fetch(`/cursos/${cursoId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ nome, descricao, professorId: teacherId })
+    });
+
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } 
+    catch { alert('Erro: resposta inválida'); return; }
+
+    if (data.success) {
+      alert('✅ Curso atualizado com sucesso!');
+      fecharModal();
+      carregarCursos();
+    } else alert(data.error || 'Erro ao atualizar curso');
+  } catch (err) {
+    console.error(err);
+    alert('Erro ao atualizar curso');
+  }
+}
+
+async function apagarCurso(cursoId) {
+  if (!confirm('Tem certeza que deseja apagar este curso?')) return;
+
+  try {
+    const res = await fetch(`/cursos/${cursoId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ professorId: teacherId })
+    });
+
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } 
+    catch { alert('Erro: resposta inválida'); return; }
+
+    if (data.success) {
+      alert('✅ Curso apagado com sucesso!');
+      carregarCursos();
+    } else alert(data.error || 'Erro ao apagar curso');
+  } catch (err) {
+    console.error(err);
     alert('Erro ao apagar curso');
   }
 }
 
 // ==================== VER CADEIRAS ====================
 function verCadeiras(cursoId) {
-  localStorage.setItem('cursoSelecionado', cursoId);
+  localStorage.setItem('cursoAtual', cursoId);
   window.location.href = 'cadeiras_Professor.html';
-}
-
-// ==================== CONFIGURAR BOTÃO SAIR ====================
-function configurarBotaoSair() {
-  const botaoSair = document.querySelector('.bottom-menu li:last-child a');
-  if (botaoSair) {
-    botaoSair.addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      if (confirm('Tem certeza que deseja sair?')) {
-        localStorage.removeItem('user');
-        window.location.href = '/login';
-      }
-    });
-  }
 }
