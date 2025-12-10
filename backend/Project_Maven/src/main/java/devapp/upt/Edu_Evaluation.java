@@ -52,9 +52,4 @@ public class Edu_Evaluation {
     public String getValue() {
         return value;
     }
-
-    @Override
-    public String toString() {
-        return "Edu_Evaluation{" + "metric='" + metric + '\'' + ", value='" + value + '\'' + '}';
-    }
 }

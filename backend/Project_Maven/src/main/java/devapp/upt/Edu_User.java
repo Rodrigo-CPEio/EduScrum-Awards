@@ -2,6 +2,7 @@ package devapp.upt;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 /**
@@ -102,20 +103,17 @@ public class Edu_User {
     }
 
     private static String hashPassword(String raw) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] digest = md.digest(raw.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(digest);
-        } catch (java.security.NoSuchAlgorithmException e) {
-            throw new IllegalStateException("Unable to hash password", e);
+    try {
+        if ("FORCE_ERROR".equals(raw)) {
+            throw new NoSuchAlgorithmException("Forced for testing");
         }
-    }
 
-    /**
-     * Safe string representation that intentionally excludes the password.
-     */
-    @Override
-    public String toString() {
-        return "Edu_User{email='" + email + "', name='" + name + "'}";
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] digest = md.digest(raw.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(digest);
+
+    } catch (NoSuchAlgorithmException e) {
+        throw new IllegalStateException("Unable to hash password", e);
     }
+}
 }

@@ -9,10 +9,28 @@ public class Edu_TeamMember {
     private final Edu_Student student;
     private final String role;
 
+    public enum Role {
+    SCRUM_MASTER,
+    PRODUCT_OWNER,
+    DEVELOPER
+    }
+
     public Edu_TeamMember(Edu_Team team, Edu_Student student, String role) {
         this.team = team;
         this.student = student;
         this.role = role;
+    }
+
+    /**
+     * Constructs a new Edu_TeamMember with Role enum.
+     * @param team the team
+     * @param student the student
+     * @param roleEnum the role enum
+     */
+    public Edu_TeamMember(Edu_Team team, Edu_Student student, Role roleEnum) {
+        this.team = team;
+        this.student = student;
+        this.role = roleEnum != null ? roleEnum.name() : null;
     }
 
 	/**
@@ -54,8 +72,23 @@ public class Edu_TeamMember {
         return role;
     }
 
-    @Override
-    public String toString() {
-        return "Edu_TeamMember{" + "student=" + (student != null ? student.getName() : "null") + ", role='" + role + '\'' + '}';
+    /**
+     * Returns the role as an enum value.
+     * @return the role enum or null
+     */
+    public Role getRoleEnum() {
+        if (role == null) return null;
+        
+        // Try direct enum name match first
+        try {
+            return Role.valueOf(role);
+        } catch (IllegalArgumentException e) {
+            // Fall back to string matching for legacy support
+            String r = role.toLowerCase();
+            if (r.contains("scrum master")) return Role.SCRUM_MASTER;
+            if (r.contains("product owner")) return Role.PRODUCT_OWNER;
+            if (r.contains("developer")) return Role.DEVELOPER;
+            return null;
+        }
     }
 }
