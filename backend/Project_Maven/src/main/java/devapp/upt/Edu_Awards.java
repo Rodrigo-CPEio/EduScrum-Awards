@@ -74,9 +74,4 @@ public class Edu_Awards {
     public Edu_Teacher getTeacher() {
         return teacher;
     }
-
-    @Override
-    public String toString() {
-        return "Edu_Awards{" + "name='" + name + '\'' + ", points=" + points + '}';
-    }
 }

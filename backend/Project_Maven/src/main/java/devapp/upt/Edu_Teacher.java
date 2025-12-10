@@ -1,5 +1,6 @@
 package devapp.upt;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -125,9 +126,23 @@ public class Edu_Teacher extends Edu_User {
     }
 
     /**
-     * Create a new course and assign to this teacher
+     * Create a new course managed by this teacher
+     * 
+     * @param courseName the name of the course
+     * @param description the course description
+     * @return the created Edu_Course instance
+     * @throws IllegalArgumentException if a course with the same name already exists
+     * 
      */
     public Edu_Course createCourse(String courseName, String description) {
+
+        boolean exists = courses.stream()
+                .anyMatch(c -> c.getName().equalsIgnoreCase(courseName));
+
+        if (exists) {
+            throw new IllegalArgumentException("Course already exists");
+        }
+
         Edu_Course course = new Edu_Course(courseName, description, this);
         courses.add(course);
         return course;
@@ -158,17 +173,54 @@ public class Edu_Teacher extends Edu_User {
      * Assign roles to students in a Scrum team
      */
     public void assignRole(Edu_Team team, Edu_Student student, String role) {
-        team.addMember(student, role);
+        // Convert string role to enum if valid, preserving original string for backwards compatibility
+        Edu_TeamMember.Role roleEnum;
+        try {
+            String enumName = role.toUpperCase().replace(" ", "_");
+            roleEnum = Edu_TeamMember.Role.valueOf(enumName);
+        } catch (IllegalArgumentException e) {
+            roleEnum = Edu_TeamMember.Role.DEVELOPER; // default
+        }
+        team.addMember(student, roleEnum);
     }
 
-    @Override
-    public String toString() {
-        return "Edu_Teacher{"
-                + "name='" + getName() + '\''
-                + ", email='" + getEmail() + '\''
-                + ", institution='" + institution + '\''
-                + ", departments=" + departments
-                + ", courses=" + courses.size()
-                + '}';
+    // ============================================================
+    // AWARDS (Manual & Automatic)
+    // ============================================================
+    public Edu_AwardsAssigment assignAwardToStudent(Edu_Awards award, Edu_Student student, String reason) {
+        Edu_AwardsAssigment a = new Edu_AwardsAssigment(award, this, student, null, LocalDateTime.now(), reason);
+        student.addAward(a);
+        return a;
+    }
+
+    public Edu_AwardsAssigment assignAwardToTeam(Edu_Awards award, Edu_Team team, String reason) {
+        Edu_AwardsAssigment a = new Edu_AwardsAssigment(award, this, null, team, LocalDateTime.now(), reason);
+        team.addAward(a);
+        return a;
+    }
+
+    public List<Edu_AwardsAssigment> assignAutomaticAwardsByScore(Edu_Course course, Edu_Awards award, long minScore) {
+        List<Edu_AwardsAssigment> list = new ArrayList<>();
+        for (Edu_Student s : course.getStudents()) {
+            if (s.getTotalScore() >= minScore) {
+                list.add(assignAwardToStudent(award, s, "Automatic score-based award"));
+            }
+        }
+        return list;
+    }
+
+    // ============================================================
+    // SPRINTS & EVALUATIONS
+    // ============================================================
+    public Edu_Sprint createSprint(Edu_Project project, LocalDateTime start, LocalDateTime end, String objectives) {
+        Edu_Sprint sprint = new Edu_Sprint(start, end, objectives, project);
+        project.addSprint(sprint);
+        return sprint;
+    }
+
+    public Edu_Evaluation evaluateTeam(Edu_Sprint sprint, Edu_Team team, String metric, String value) {
+        Edu_Evaluation e = new Edu_Evaluation(sprint, team, metric, value);
+        sprint.getProject().addEvaluation(e);
+        return e;
     }
 }
