@@ -69,10 +69,35 @@ app.get('/notificacoesP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Professor.html'));
 });
 
+// ==================== Estudante====================
+app.get('/projetosE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'projeto_Estudante.html'));
+});
+
+app.get('/EquipaE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'equipa_Estudante.html'));
+});
+
+app.get('/PremiosE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'premios_estudante.html'));
+});
+app.get('/RankingsE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'ranking_Estudiante.html'));
+});
+app.get('/RankingsE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'ranking_Estudiante.html'));
+});
+
+
 app.get('/definicoesP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Professor.html'));
 });
-
+app.get('/definicoesE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Estudiante.html'));
+});
+app.get('/notificacoesE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Estudiante.html'));
+});
 // ==================== ROTAS DE API ====================
 app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);

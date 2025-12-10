@@ -4,6 +4,161 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
+/* ---------- MENÚ LATERAL BONITO ---------- */
+.menu ul,
+.bottom-menu ul {
+  list-style: none;
+  padding: 0 20px;
+  margin: 0;
+}
+
+/* Cada línea del menú */
+.menu li,
+.bottom-menu li {
+  margin-bottom: 4px;
+  position: relative; /* para la badge de notificações */
+}
+
+/* Link dentro del li */
+.menu li a,
+.bottom-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #374151;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.12s ease;
+}
+
+/* Iconos */
+.sidebar .icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+/* Hover: fondo suave y un pelín de movimiento */
+.menu li a:hover,
+.bottom-menu li a:hover {
+  background-color: #f3f4f6;
+  transform: translateX(2px);
+}
+
+/* Item activo (li tiene class="active") */
+.menu li.active a {
+  background-color: #eef2ff;
+  color: #3056d3;
+  font-weight: 600;
+}
+
+/* Menú inferior */
+.bottom-menu {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.bottom-menu li a {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* Badge de notificações */
+.badge {
+  background-color: #d93025;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 2px 8px;
+  position: absolute;
+  right: 12px;
+}
+.menu ul,
+.bottom-menu ul {
+  list-style: none;
+  padding: 0 20px;
+  margin: 0;
+}
+
+/* Cada línea del menú */
+.menu li,
+.bottom-menu li {
+  margin-bottom: 4px;
+  position: relative; /* para la badge de notificações */
+}
+
+/* Link dentro del li */
+.menu li a,
+.bottom-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #374151;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.12s ease;
+}
+
+/* Iconos */
+.sidebar .icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+/* Hover: fondo suave y un pelín de movimiento */
+.menu li a:hover,
+.bottom-menu li a:hover {
+  background-color: #f3f4f6;
+  transform: translateX(2px);
+}
+
+/* Item activo (li tiene class="active") */
+.menu li.active a {
+  background-color: #eef2ff;
+  color: #3056d3;
+  font-weight: 600;
+}
+
+/* Menú inferior */
+.bottom-menu {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.bottom-menu li a {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* Badge de notificações */
+.badge {
+  background-color: #d93025;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 2px 8px;
+  position: absolute;
+  right: 12px;
+}
 
 html, body {
   height: 100%;

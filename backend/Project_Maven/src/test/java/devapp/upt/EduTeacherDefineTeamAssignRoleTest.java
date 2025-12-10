@@ -32,6 +32,6 @@ public class EduTeacherDefineTeamAssignRoleTest {
         assertEquals(1, members.size());
         Edu_TeamMember tm = members.get(0);
         assertEquals(student, tm.getStudent());
-        assertEquals("Developer", tm.getRole());
+        assertEquals("DEVELOPER", tm.getRole());
     }
 }

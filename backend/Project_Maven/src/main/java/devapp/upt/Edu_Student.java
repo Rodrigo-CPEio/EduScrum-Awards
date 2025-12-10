@@ -1,5 +1,9 @@
 package devapp.upt;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Represents an educational student.
  *
@@ -13,6 +17,10 @@ public class Edu_Student extends Edu_User {
     // Student-specific attributes
     private Year year;
     private StudentClass studentClass;
+
+    // Gamification / Awards / Teams
+    private final List<Edu_AwardsAssigment> awardHistory = new ArrayList<>();
+    private final List<Edu_Team> teams = new ArrayList<>();
 
     // Default constants (user defaults reused pattern from EduTeacher)
     private static final String DEFAULT_EMAIL = "unknown@upt.pt";
@@ -161,4 +169,72 @@ public class Edu_Student extends Edu_User {
         return getEmail().equals(email) && verifyPassword(password);
     }
 
+    // ============================================================
+    // GAMIFICATION / SCORING
+    // ============================================================
+    public void addAward(Edu_AwardsAssigment award) {
+        if (award != null) {
+            awardHistory.add(award);
+        }
+    }
+
+    public List<Edu_AwardsAssigment> getAwardHistory() {
+        return Collections.unmodifiableList(awardHistory);
+    }
+
+    public long getTotalScore() {
+        return awardHistory.stream()
+                .mapToLong(a -> a.getAward().getPoints())
+                .sum();
+    }
+
+    /**
+     * Allows a student to join an existing team as a Developer.
+     * @param team
+     */
+    public void joinTeam(Edu_Team team) {
+        if (team == null) {
+            return;
+        }
+
+        if (teams.contains(team)) {
+            throw new IllegalArgumentException("Student already in this team");
+        }
+
+        teams.add(team);
+        team.addMember(this, Edu_TeamMember.Role.DEVELOPER);
+    }
+
+    public List<Edu_Team> getTeams() {
+        return Collections.unmodifiableList(teams);
+    }
+
+    public double compareWithCourseAverage(Edu_Course course) {
+        if (course == null || course.getStudents().isEmpty()) {
+            return 0;
+        }
+        return getTotalScore() - course.getAverageScoreOfStudents();
+    }
+
+    /**
+     * Allows a student to create a new Scrum team inside a project.
+     *
+     * @param project the project where the new team will be created
+     * @param teamName the name of the team
+     * @return the created team
+     */
+    public Edu_Team createTeam(Edu_Project project, String teamName) {
+        if (project == null || teamName == null || teamName.isBlank()) {
+            throw new IllegalArgumentException("Project and team name must be valid.");
+        }
+
+        Edu_Team team = new Edu_Team(teamName, project);
+        project.addTeam(team);
+
+        // automatically add the student as Developer and join the team
+        team.addMember(this, Edu_TeamMember.Role.DEVELOPER);
+        teams.add(team);
+
+        return team;
+    }
 }

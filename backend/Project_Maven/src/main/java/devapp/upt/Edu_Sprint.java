@@ -55,9 +55,4 @@ public class Edu_Sprint {
     public Edu_Project getProject() {
         return project;
     }
-
-    @Override
-    public String toString() {
-        return "Edu_Sprint{" + "start=" + startDate + ", end=" + endDate + ", objectives='" + objectives + '\'' + '}';
-    }
 }

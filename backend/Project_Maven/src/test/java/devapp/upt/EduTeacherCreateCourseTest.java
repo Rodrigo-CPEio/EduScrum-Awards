@@ -1,28 +1,34 @@
 package devapp.upt;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class EduTeacherCreateCourseTest {
 
-    private Edu_Teacher teacher;
+    @Test
+    void createCourseShouldAddCourseToTeacherCourses() {
+        Edu_Teacher teacher = new Edu_Teacher();
 
-    @BeforeEach
-    public void setup() {
-        teacher = new Edu_Teacher();
+        Edu_Course course = teacher.createCourse("SQ", "Software Quality");
+
+        assertNotNull(course);
+        assertEquals("SQ", course.getName());
+        assertEquals(teacher, course.getTeacher());
+        assertTrue(teacher.getCourses().contains(course));
     }
 
     @Test
-    public void testCreateCourse() {
-        Edu_Course course = teacher.createCourse("Software Quality", "Intro to SQ");
-        assertNotNull(course);
-        assertEquals("Software Quality", course.getName());
-        assertEquals(teacher, course.getTeacher());
-        List<Edu_Course> courses = teacher.getCourses();
-        assertTrue(courses.contains(course));
+    void createCourseShouldNotAllowDuplicateCourseNames() {
+        Edu_Teacher teacher = new Edu_Teacher();
+
+        teacher.createCourse("SQ", "Software Quality");
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> teacher.createCourse("SQ", "Software Quality")
+        );
     }
 }

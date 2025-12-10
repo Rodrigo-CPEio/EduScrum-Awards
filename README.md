@@ -25,3 +25,42 @@ EduScrum Awards should:
 • Version control (e.g., GitHub or GitLab);
 • Unit, integration, and performance testing on your own system;
 • Present results through dashboards and ranking visualizations.
+
+
+## Testes e Cobertura
+
+Foram implementados testes unitários com JUnit, incidindo na lógica de negócio
+localizada no pacote `devapp.upt`.
+
+A cobertura de testes foi analisada com o plugin JaCoCo, apresentando valores
+elevados no domínio da aplicação (aproximadamente de 91% de instruções e 97% de ramos/branches).
+
+Os relatórios HTML gerados pelo JaCoCo não se encontram incluídos no repositório,
+por corresponderem a artefactos criados automaticamente durante o processo de
+compilação.
+
+Os endpoints da API (controllers e services) foram validados através de testes
+de integração realizados com o Postman. A coleção Postman utilizada encontra-se
+disponível na pasta `/backend/Project_Maven/postman`.
+
+
+## Testes de Performance
+
+Foram definidos testes de performance utilizando o Apache JMeter, organizados
+num plano geral que inclui cenários de autenticação e de consulta de rankings.
+
+Os cenários de 50 e 100 utilizadores foram utilizados como testes intermédios
+de validação, com duração reduzida, permitindo verificar o comportamento inicial
+do sistema sob carga moderada.
+
+O cenário final de autenticação foi executado com 500 utilizadores concorrentes,
+utilizando um ramp-up progressivo de 60 segundos, conforme solicitado, de forma
+a simular uma carga realista.
+
+Nos cenários intermédios foram utilizadas múltiplas iterações por utilizador,
+de forma a obter resultados estáveis em testes de curta duração. No cenário de
+500 utilizadores foi utilizada apenas uma iteração por utilizador, de modo a
+respeitar o limite temporal definido e a analisar o impacto do aumento de carga.
+
+Os restantes endpoints foram testados com carga intermédia, com o objetivo de
+validar a consistência dos tempos de resposta do sistema.
