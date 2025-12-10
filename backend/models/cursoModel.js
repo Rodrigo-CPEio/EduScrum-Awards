@@ -1,119 +1,85 @@
-// backend/models/cursoModel.js
 const db = require('../config/db');
 
-const Curso = {
-  // Listar cursos de um professor
+const Course = {
   listarPorProfessor: (teacherId, callback) => {
     const sql = `
       SELECT 
-        d.D_ID as id,
-        d.D_Name as nome,
-        d.D_Description as descricao,
-        d.D_T_ID as professorId,
-        COUNT(DISTINCT sc.SC_S_ID) as totalEstudantes,
-        DATE_FORMAT(d.D_Created_At, '%d/%m/%Y') as criadoEm
-      FROM discipline d
-      LEFT JOIN studentcourse sc ON d.D_ID = sc.SC_D_ID
-      WHERE d.D_T_ID = ?
-      GROUP BY d.D_ID
-      ORDER BY d.D_Created_At DESC
+        c.C_ID AS id,
+        c.C_Name AS nome,
+        c.C_Description AS descricao,
+        c.C_T_ID AS professorId,
+        DATE_FORMAT(c.C_Created_At, '%d/%m/%Y') AS criadoEm,
+        (SELECT COUNT(DISTINCT sc.SC_S_ID)
+           FROM discipline d
+           LEFT JOIN studentcourse sc ON d.D_ID = sc.SC_D_ID
+           WHERE d.D_C_ID = c.C_ID) AS totalEstudantes
+      FROM course c
+      WHERE c.C_T_ID = ?
+      ORDER BY c.C_Created_At DESC
     `;
-    
-    db.query(sql, [teacherId], (err, results) => {
-      callback(err, results);
-    });
+    db.query(sql, [teacherId], callback);
   },
 
-  // Criar novo curso
-  criar: (nome, descricao, professorId, callback) => {
-    const sql = 'INSERT INTO discipline (D_Name, D_Description, D_T_ID, D_Created_At) VALUES (?, ?, ?, NOW())';
-    
-    db.query(sql, [nome, descricao, professorId], (err, result) => {
-      if (err) return callback(err);
-      callback(null, { id: result.insertId, nome, descricao, professorId });
-    });
-  },
-
-  // Verificar se professor existe
   verificarProfessor: (teacherId, callback) => {
     db.query('SELECT T_ID FROM teacher WHERE T_ID = ?', [teacherId], (err, results) => {
       callback(err, results.length > 0);
     });
   },
 
-  // Verificar se curso existe com mesmo nome para o professor
-  verificarNomeDuplicado: (nome, professorId, cursoId, callback) => {
-    let sql = 'SELECT D_ID FROM discipline WHERE D_Name = ? AND D_T_ID = ?';
-    let params = [nome, professorId];
-    
-    if (cursoId) {
-      sql += ' AND D_ID != ?';
-      params.push(cursoId);
+  verificarNomeDuplicado: (nome, professorId, courseId, callback) => {
+    let sql = 'SELECT C_ID FROM course WHERE C_Name = ? AND C_T_ID = ?';
+    const params = [nome, professorId];
+    if (courseId) {
+      sql += ' AND C_ID != ?';
+      params.push(courseId);
     }
-    
-    db.query(sql, params, (err, results) => {
+    db.query(sql, params, (err, results) => callback(err, results.length > 0));
+  },
+
+  criar: (nome, descricao, professorId, callback) => {
+    const sql = 'INSERT INTO course (C_Name, C_Description, C_T_ID, C_Created_At) VALUES (?, ?, ?, NOW())';
+    db.query(sql, [nome, descricao, professorId], (err, result) => {
+      if (err) return callback(err);
+      callback(null, { id: result.insertId, nome, descricao, professorId });
+    });
+  },
+
+  obterPorId: (courseId, callback) => {
+    const sql = `
+      SELECT 
+        c.C_ID AS id,
+        c.C_Name AS nome,
+        c.C_Description AS descricao,
+        c.C_T_ID AS professorId,
+        u.U_Name AS professorNome,
+        DATE_FORMAT(c.C_Created_At, '%d/%m/%Y') AS criadoEm
+      FROM course c
+      INNER JOIN teacher t ON c.C_T_ID = t.T_ID
+      INNER JOIN user u ON t.T_U_ID = u.U_ID
+      WHERE c.C_ID = ?
+    `;
+    db.query(sql, [courseId], (err, results) => callback(err, results[0]));
+  },
+
+  verificarPropriedade: (courseId, professorId, callback) => {
+    db.query('SELECT C_ID FROM course WHERE C_ID = ? AND C_T_ID = ?', [courseId, professorId], (err, results) => {
       callback(err, results.length > 0);
     });
   },
 
-  // Obter curso por ID
-  obterPorId: (cursoId, callback) => {
-    const sql = `
-      SELECT 
-        d.D_ID as id,
-        d.D_Name as nome,
-        d.D_Description as descricao,
-        d.D_T_ID as professorId,
-        u.U_Name as professorNome,
-        COUNT(DISTINCT sc.SC_S_ID) as totalEstudantes,
-        DATE_FORMAT(d.D_Created_At, '%d/%m/%Y') as criadoEm
-      FROM discipline d
-      INNER JOIN teacher t ON d.D_T_ID = t.T_ID
-      INNER JOIN user u ON t.T_U_ID = u.U_ID
-      LEFT JOIN studentcourse sc ON d.D_ID = sc.SC_D_ID
-      WHERE d.D_ID = ?
-      GROUP BY d.D_ID
-    `;
-    
-    db.query(sql, [cursoId], (err, results) => {
-      callback(err, results[0]);
+  atualizar: (courseId, nome, descricao, callback) => {
+    db.query('UPDATE course SET C_Name = ?, C_Description = ? WHERE C_ID = ?', [nome, descricao, courseId], callback);
+  },
+
+  apagar: (courseId, callback) => {
+    // Opcional: verificar e remover ligação das cadeiras (d.D_C_ID) ou impedir remoção se existam cadeiras
+    // Aqui vamos impedir apagar se houver cadeiras associadas:
+    db.query('SELECT COUNT(*) AS total FROM discipline WHERE D_C_ID = ?', [courseId], (err, results) => {
+      if (err) return callback(err);
+      if (results[0]?.total > 0) return callback(new Error('HAS_CADEIRAS'));
+      db.query('DELETE FROM course WHERE C_ID = ?', [courseId], callback);
     });
-  },
-
-  // Verificar se curso pertence ao professor
-  verificarPropriedade: (cursoId, professorId, callback) => {
-    db.query('SELECT D_ID FROM discipline WHERE D_ID = ? AND D_T_ID = ?', 
-      [cursoId, professorId], (err, results) => {
-        callback(err, results.length > 0);
-    });
-  },
-
-  // Atualizar curso
-  atualizar: (cursoId, nome, descricao, callback) => {
-    db.query('UPDATE discipline SET D_Name = ?, D_Description = ? WHERE D_ID = ?',
-      [nome, descricao, cursoId], callback);
-  },
-
-  // Verificar se tem estudantes inscritos
-  verificarEstudantes: (cursoId, callback) => {
-    db.query('SELECT COUNT(*) as total FROM studentcourse WHERE SC_D_ID = ?', 
-      [cursoId], (err, results) => {
-        callback(err, results[0]?.total || 0);
-    });
-  },
-
-  // Verificar se tem projetos associados
-  verificarProjetos: (cursoId, callback) => {
-    db.query('SELECT COUNT(*) as total FROM project WHERE P_D_ID = ?', 
-      [cursoId], (err, results) => {
-        callback(err, results[0]?.total || 0);
-    });
-  },
-
-  // Apagar curso
-  apagar: (cursoId, callback) => {
-    db.query('DELETE FROM discipline WHERE D_ID = ?', [cursoId], callback);
   }
 };
 
-module.exports = Curso;
+module.exports = Course;

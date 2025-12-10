@@ -36,14 +36,14 @@
 
       <nav class="menu">
         <ul>
-           <li>
+          <li>
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M3 13h8V3H3zM13 21h8v-8h-8zM13 3v8h8V3zM3 21h8v-8H3z"/>
             </svg>
             <a href="dashboard_Professor.html">Dashboard</a>
           </li>
 
-          <li>
+          <li class="active">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/>
               <path d="M22 3h-8a2 2 0 0 0-2 2v16a2 2 0 0 1 2-2h8z"/>
@@ -51,7 +51,7 @@
             <a href="curso_Professor.html">Cursos</a>
           </li>
 
-          <li class="active">
+          <li>
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" >
               <circle cx="9" cy="7" r="4"/>
               <circle cx="17" cy="7" r="4"/>
@@ -126,36 +126,10 @@
             </tr>
           </thead>
           <tbody>
+            <!-- Os dados serão carregados dinamicamente pelo JavaScript -->
             <tr>
-              <td>Laboratório de Tecnologias Web</td>
-              <td>Desenvolver interfaces web.</td>
-              <td>👥43</td>
-              <td>
-                <button class="ver-projetos-btn" onclick="window.location.href='projetos_Professor.html'">Ver Projetos</button>
-                <button class="editar-btn">✏️</button>
-                <button class="apagar-btn">🗑️</button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Compiladores</td>
-              <td>Compiladores: teoria, prática e otimização</td>
-              <td>👥36</td>
-              <td>
-                <button class="ver-projetos-btn" onclick="window.location.href='projetos_Professor.html'">Ver Projetos</button>
-                <button class="editar-btn">✏️</button>
-                <button class="apagar-btn">🗑️</button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Inteligência Artificial</td>
-              <td>Fundamentos e aplicações práticas da inteligência artificial</td>
-              <td>👥45</td>
-              <td>
-                <button class="ver-projetos-btn" onclick="window.location.href='projetos_Professor.html'">Ver Projetos</button>
-                <button class="editar-btn">✏️</button>
-                <button class="apagar-btn">🗑️</button>
+              <td colspan="4" style="text-align: center; padding: 40px;">
+                A carregar cadeiras...
               </td>
             </tr>
           </tbody>
@@ -175,10 +149,10 @@
 
       <form>
         <label>Nome da Cadeira</label>
-        <input type="text" placeholder="ex: Laboratório de Tecnologias Web">
+        <input type="text" placeholder="ex: Laboratório de Tecnologias Web" required>
 
         <label>Descrição</label>
-        <textarea placeholder="Breve descrição da cadeira"></textarea>
+        <textarea placeholder="Breve descrição da cadeira" required></textarea>
 
         <div class="actions">
           <button type="button" class="btn cancelar" onclick="fecharModal()">Cancelar</button>
@@ -188,16 +162,7 @@
     </div>
   </div>
 
-  <script>
-    function abrirModal() {
-      document.getElementById('modalCriarCadeira').classList.add('ativo');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function fecharModal() {
-      document.getElementById('modalCriarCadeira').classList.remove('ativo');
-      document.body.style.overflow = '';
-    }
-  </script>
+  <!-- JavaScript -->
+  <script src="/js/cadeiras_Professor.js"></script>
 </body>
 </html>
