@@ -7,6 +7,8 @@ const userRoutes = require('./routes/userRoutes');
 const cursosRoutes = require('./routes/cursoRoutes');
 const cadeirasRoutes = require('./routes/cadeiraRoutes'); // NOVAS ROTAS
 
+
+
 const app = express();
 const PORT = 3000;
 
@@ -75,6 +77,7 @@ app.get('/definicoesP', (req, res) => {
 app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);
 app.use('/cadeiras', cadeirasRoutes); // <-- ROTAS DE CADEIRAS
+
 
 // ==================== INICIAR SERVIDOR ===================S=
 app.listen(PORT, () => {
