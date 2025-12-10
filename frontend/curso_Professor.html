@@ -178,24 +178,6 @@
     </div>
   </div>
 
-  <script>
-    // --- ABRIR / FECHAR MODAL ---
-    function abrirModal() {
-      document.getElementById('modalCriarCurso').classList.add('ativo');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function fecharModal() {
-      document.getElementById('modalCriarCurso').classList.remove('ativo');
-      document.body.style.overflow = '';
-    }
-
-    // --- REDIRECIONAR PARA CADEIRAS ---
-    document.querySelectorAll(".ver-projetos-btn").forEach(botao => {
-      botao.addEventListener("click", () => {
-        window.location.href = "cadeiras_Professor.html";
-      });
-    });
-  </script>
+  <script src="/js/curso_Professor.js"></script>
 </body>
 </html>
