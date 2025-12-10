@@ -93,6 +93,9 @@ app.get('/definicoesP', (req, res) => {
 app.get('/definicoesE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Estudiante.html'));
 });
+app.get('/notificacoesE', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Estudiante.html'));
+});
 // ==================== ROTAS DE API ====================
 app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);
