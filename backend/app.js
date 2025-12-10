@@ -69,11 +69,11 @@ app.get('/notificacoesP', (req, res) => {
 
 // ==================== Estudante====================
 app.get('/projetosE', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Estudante_P.html'));
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'projeto_Estudante.html'));
 });
 
 app.get('/EquipaE', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Estudante_E.html'));
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'equipa_Estudante.html'));
 });
 
 app.get('/PremiosE', (req, res) => {

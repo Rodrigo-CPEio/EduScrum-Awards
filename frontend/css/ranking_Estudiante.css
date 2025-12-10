@@ -1111,3 +1111,82 @@ body {
   font-weight: 700;
   color: #111827;
 }
+
+/* ---------- Resumo pessoal (minha pontuação total) ---------- */
+
+.personal-summary-card {
+  margin-top: 20px;
+  margin-bottom: 18px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.personal-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.personal-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.personal-label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.personal-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.personal-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.personal-score-block {
+  text-align: right;
+}
+
+.personal-score {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.personal-score-label {
+  display: block;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.personal-rank-block {
+  text-align: right;
+}
+
+.personal-rank-title {
+  display: block;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.personal-rank-value {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}

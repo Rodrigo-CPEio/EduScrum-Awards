@@ -651,3 +651,187 @@ body {
   background: #d1d5db;
   border-radius: 999px;
 }
+/* ---------- Toolbar de equipas ---------- */
+.teams-toolbar {
+  margin-top: 16px;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teams-toolbar-text {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.btn-create-team {
+  border-radius: 999px;
+  border: 1px solid #111827;
+  background: #111827;
+  color: #ffffff;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-create-team:hover {
+  opacity: 0.9;
+}
+
+/* ---------- Card Criar Equipa ---------- */
+.create-team-card {
+  margin-top: 16px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 1px 4px rgba(15,23,42,0.06);
+  padding: 18px 22px;
+}
+
+.create-team-header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.create-team-header p {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.create-team-form {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-field label {
+  font-size: 12px;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.form-field input,
+.form-field select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 13px;
+  color: #111827;
+  background: #f9fafb;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* chips de tipo */
+.team-type-chips {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.chip-type {
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #4b5563;
+}
+
+.chip-type.active {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.create-team-footer {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-create-team-primary {
+  border-radius: 999px;
+  border: none;
+  background: #111827;
+  color: #ffffff;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-create-team-primary:hover {
+  opacity: 0.9;
+}
+
+/* ---------- Estado da equipa + footer ---------- */
+.team-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.team-status {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.team-status.open {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.team-status.closed {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.team-footer {
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.team-capacity {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.btn-join-team {
+  border-radius: 999px;
+  border: 1px solid #111827;
+  background: #111827;
+  color: #ffffff;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-join-team:hover {
+  opacity: 0.9;
+}
+
+.btn-join-team.disabled {
+  background: #e5e7eb;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
