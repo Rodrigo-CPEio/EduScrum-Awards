@@ -42,3 +42,25 @@ compilação.
 Os endpoints da API (controllers e services) foram validados através de testes
 de integração realizados com o Postman. A coleção Postman utilizada encontra-se
 disponível na pasta `/backend/Project_Maven/postman`.
+
+
+## Testes de Performance
+
+Foram definidos testes de performance utilizando o Apache JMeter, organizados
+num plano geral que inclui cenários de autenticação e de consulta de rankings.
+
+Os cenários de 50 e 100 utilizadores foram utilizados como testes intermédios
+de validação, com duração reduzida, permitindo verificar o comportamento inicial
+do sistema sob carga moderada.
+
+O cenário final de autenticação foi executado com 500 utilizadores concorrentes,
+utilizando um ramp-up progressivo de 60 segundos, conforme solicitado, de forma
+a simular uma carga realista.
+
+Nos cenários intermédios foram utilizadas múltiplas iterações por utilizador,
+de forma a obter resultados estáveis em testes de curta duração. No cenário de
+500 utilizadores foi utilizada apenas uma iteração por utilizador, de modo a
+respeitar o limite temporal definido e a analisar o impacto do aumento de carga.
+
+Os restantes endpoints foram testados com carga intermédia, com o objetivo de
+validar a consistência dos tempos de resposta do sistema.
