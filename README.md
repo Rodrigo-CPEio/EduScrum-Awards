@@ -32,6 +32,8 @@ EduScrum Awards should:
 Foram implementados testes unitários com JUnit, incidindo na lógica de negócio
 localizada no pacote `devapp.upt`.
 
+O relatório JaCoCo é gerado localmente através de mvn test e mvn jacoco:report.
+
 A cobertura de testes foi analisada com o plugin JaCoCo, apresentando valores
 elevados no domínio da aplicação (aproximadamente de 91% de instruções e 97% de ramos/branches).
 
