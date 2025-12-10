@@ -25,3 +25,20 @@ EduScrum Awards should:
 • Version control (e.g., GitHub or GitLab);
 • Unit, integration, and performance testing on your own system;
 • Present results through dashboards and ranking visualizations.
+
+
+## Testes e Cobertura
+
+Foram implementados testes unitários com JUnit, incidindo na lógica de negócio
+localizada no pacote `devapp.upt`.
+
+A cobertura de testes foi analisada com o plugin JaCoCo, apresentando valores
+elevados no domínio da aplicação (aproximadamente de 91% de instruções e 97% de ramos/branches).
+
+Os relatórios HTML gerados pelo JaCoCo não se encontram incluídos no repositório,
+por corresponderem a artefactos criados automaticamente durante o processo de
+compilação.
+
+Os endpoints da API (controllers e services) foram validados através de testes
+de integração realizados com o Postman. A coleção Postman utilizada encontra-se
+disponível na pasta `/backend/Project_Maven/postman`.
