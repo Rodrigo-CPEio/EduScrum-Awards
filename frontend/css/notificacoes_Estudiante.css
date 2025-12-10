@@ -1,0 +1,369 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden; /* bloqueia toda a rolagem da página */
+}
+
+body {
+  background-color: #f8f9fb;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar fixa */
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh; /* altura total da viewport */
+  overflow: hidden; /* impede scroll interno */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #3056d3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo h2 {
+  font-size: 18px; /* título maior */
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 10px 0;
+}
+
+
+/* User section */
+.user-info {
+  padding: 0 20px;
+}
+
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-top img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+}
+
+.user-details h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+}
+
+.user-details p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Caixinha de pontos mais à direita */
+.user-points {
+  display: flex;
+  justify-content: space-between; /* empurra box para a direita */
+  align-items: center;
+  margin-top: 12px;
+  padding: 0 5px;
+}
+
+.user-points .label {
+  font-size: 13px;
+  color: #666;
+}
+
+.points-box {
+  background: #f2f3f6;
+  border-radius: 6px;
+  padding: 5px 12px;
+  display: inline-block;
+}
+
+.points-box strong {
+  color: #333;
+  font-size: 14px;
+}
+
+/* Menus */
+.menu ul,
+.bottom-menu ul {
+  list-style: none;
+  padding: 0 20px;
+}
+
+.menu li,
+.bottom-menu li {
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}
+
+.menu li:hover,
+.bottom-menu li:hover {
+  background-color: #f2f3f6;
+}
+
+.menu .active {
+  background-color: #eef2ff;
+  color: #3056d3;
+  font-weight: 600;
+}
+
+.badge {
+  background-color: #d93025;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  position: absolute;
+  right: 10px;
+}
+
+.bottom-menu {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+/* Main Content */
+/* ----- Contenedor principal ----- */
+.main {
+  flex: 1;
+  background-color: #f9fafb;
+  padding: 40px 60px;
+  overflow-y: auto;
+}
+
+/* ---------- NOTIFICAÇÕES ---------- */
+
+.notifications-top {
+  margin-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.notifications-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 18px;
+}
+
+.notification-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(15,23,42,0.06);
+}
+
+.notification-stat-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.stat-total .notification-stat-icon {
+  background: #eef2ff;
+}
+
+.stat-unread .notification-stat-icon {
+  background: #fef3c7;
+}
+
+.stat-read .notification-stat-icon {
+  background: #dcfce7;
+}
+
+.notification-stat-label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.notification-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Botão "Marcar todas" */
+.btn-mark-all {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-mark-all:hover {
+  opacity: 0.9;
+}
+
+/* Lista de notificações */
+.notifications-list {
+  margin-top: 26px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 4px rgba(15,23,42,0.06);
+}
+
+.notifications-list-header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.notifications-list-body {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* item */
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f9fafb;
+}
+
+.notification-info {
+  background: #eff6ff;
+  border-left: 3px solid #3b82f6;
+}
+
+.notification-success {
+  background: #ecfdf3;
+  border-left: 3px solid #22c55e;
+}
+
+.notification-warning {
+  background: #fefce8;
+  border-left: 3px solid #f59e0b;
+}
+
+.notification-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.notification-icon {
+  font-size: 20px;
+  margin-top: 2px;
+}
+
+.notification-text h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.notification-text p {
+  margin-top: 3px;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+/* link "Marcar como lida" */
+.notification-link {
+  margin-top: 8px;
+  border: none;
+  background: transparent;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.notification-link:hover {
+  text-decoration: underline;
+}
+
+/* meta (data / dot) */
+.notification-meta {
+  text-align: right;
+  font-size: 11px;
+  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.notification-time {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.06);
+}
+
+.notification-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #2563eb;
+}

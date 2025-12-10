@@ -1,0 +1,398 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden; /* bloqueia toda a rolagem da página */
+}
+
+body {
+  background-color: #f8f9fb;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar fixa */
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh; /* altura total da viewport */
+  overflow: hidden; /* impede scroll interno */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #3056d3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo h2 {
+  font-size: 18px; /* título maior */
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 10px 0;
+}
+
+/* User section */
+.user-info {
+  padding: 0 20px;
+}
+
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-top img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+}
+
+.user-details h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+}
+
+.user-details p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Caixinha de pontos mais à direita */
+.user-points {
+  display: flex;
+  justify-content: space-between; /* empurra box para a direita */
+  align-items: center;
+  margin-top: 12px;
+  padding: 0 5px;
+}
+
+.user-points .label {
+  font-size: 13px;
+  color: #666;
+}
+
+.points-box {
+  background: #f2f3f6;
+  border-radius: 6px;
+  padding: 5px 12px;
+  display: inline-block;
+}
+
+.points-box strong {
+  color: #333;
+  font-size: 14px;
+}
+
+/* Menus */
+.menu ul,
+.bottom-menu ul {
+  list-style: none;
+  padding: 0 20px;
+}
+
+.menu li,
+.bottom-menu li {
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}
+
+.menu li:hover,
+.bottom-menu li:hover {
+  background-color: #f2f3f6;
+}
+
+.menu .active {
+  background-color: #eef2ff;
+  color: #3056d3;
+  font-weight: 600;
+}
+
+.badge {
+  background-color: #d93025;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  position: absolute;
+  right: 10px;
+}
+
+.bottom-menu {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+/* Main Content */
+/* ----- Contenedor principal ----- */
+.main {
+  flex: 1;
+  background-color: #f9fafb;
+  padding: 40px 60px;
+  overflow-y: auto;
+}
+
+/* ----- Caja principal ----- */
+.projects-section {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  padding: 30px 35px;
+}
+
+/* ----- Encabezado ----- */
+.projects-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #030213;
+}
+
+.projects-header p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* ----- Tabs ----- */
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin: 25px 0 30px;
+}
+
+.tab {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.tab:hover {
+  background: #e5e7eb;
+}
+
+.tab.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+/* ----- Tarjetas de proyectos ----- */
+.project-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 25px 28px;
+  margin-bottom: 32px;
+  transition: box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+/* ----- Encabezado del proyecto ----- */
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.project-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.project-header p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.status {
+  background: #dbeafe;
+  color: #1e3a8a;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+
+/* ----- Fechas ----- */
+.dates {
+  display: flex;
+  justify-content: space-between;
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-top: 12px;
+}
+
+/* ----- Progreso ----- */
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border-radius: 6px;
+}
+
+.progress-info {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* ----- Sprint activo ----- */
+.sprint-active {
+  background: #eff6ff;
+  border-left: 4px solid #2563eb;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-top: 12px;
+}
+
+.sprint-title {
+  display: flex;
+  justify-content: space-between;
+  color: #1e3a8a;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.sprint-active p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #111827;
+}
+
+.sprint-active ul {
+  margin: 8px 0 0 18px;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+/* ----- Lista de sprints ----- */
+.sprint-list {
+  margin-top: 18px;
+}
+
+.sprint-list h5 {
+  font-size: 0.9rem;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.sprint-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sprint-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #f3f4f6;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+/* ----- Dots y tags ----- */
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.dot.ativo {
+  background: #2563eb;
+}
+
+.dot.concluido {
+  background: #3b82f6;
+}
+
+.tag {
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.tag.ativo {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+
+.tag.concluido {
+  background: #dcfce7;
+  color: #166534;
+}
