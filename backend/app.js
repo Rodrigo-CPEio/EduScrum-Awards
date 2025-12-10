@@ -1,9 +1,11 @@
+// backend/app.js
 const express = require('express');
 const path = require('path');
 require('./config/db'); // inicia conexão ao MySQL
 
 const userRoutes = require('./routes/userRoutes');
-const cursosRoutes = require('./routes/cursoRoutes'); // rotas de cursos
+const cursosRoutes = require('./routes/cursoRoutes');
+const cadeirasRoutes = require('./routes/cadeiraRoutes'); // NOVAS ROTAS
 
 const app = express();
 const PORT = 3000;
@@ -40,30 +42,41 @@ app.get('/dashboardP', (req, res) => {
 app.get('/cursoP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'curso_Professor.html'));
 });
+
 app.get('/cadeirasP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'cadeiras_Professor.html'));
 });
+
 app.get('/projetosP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'projetos_Professor.html'));
 });
+
 app.get('/equipasP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'equipas_Professor.html'));
 });
+
 app.get('/premiosP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'premios_Professor.html'));
 });
+
 app.get('/rankingP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'ranking_Professor.html'));
 });
+
 app.get('/notificacoesP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Professor.html'));
 });
 
+app.get('/definicoesP', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Professor.html'));
+});
+
 // ==================== ROTAS DE API ====================
 app.use('/usuarios', userRoutes);
-app.use('/cursos', cursosRoutes); // <-- aqui registramos as rotas de cursos
+app.use('/cursos', cursosRoutes);
+app.use('/cadeiras', cadeirasRoutes); // <-- ROTAS DE CADEIRAS
 
-// ==================== INICIAR SERVIDOR ====================
+// ==================== INICIAR SERVIDOR ===================S=
 app.listen(PORT, () => {
   console.log(`🔥 Servidor rodando em: http://localhost:${PORT}`);
 });

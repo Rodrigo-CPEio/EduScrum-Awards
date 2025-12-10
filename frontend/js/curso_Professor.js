@@ -118,7 +118,7 @@ function renderizarCursos(cursos) {
   tbody.innerHTML = cursos.map(curso => `
     <tr data-curso-id="${curso.id}">
       <td><strong>${curso.nome}</strong></td>
-      <td>${curso.descricao}</td>
+      <td>${curso.descricao || '-'}</td>
       <td>👥 ${curso.totalEstudantes || 0}</td>
       <td><span class="date-badge">${curso.criadoEm || 'N/A'}</span></td>
       <td>
