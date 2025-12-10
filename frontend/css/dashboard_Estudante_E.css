@@ -1,0 +1,493 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar fixa */
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #3056d3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 10px 0;
+}
+
+/* User section */
+.user-info {
+  padding: 0 20px;
+}
+
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-top img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+}
+
+.user-details h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+}
+
+.user-details p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Caixinha de pontos */
+.user-points {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding: 0 5px;
+}
+
+.user-points .label {
+  font-size: 13px;
+  color: #666;
+}
+
+.points-box {
+  background: #f2f3f6;
+  border-radius: 6px;
+  padding: 5px 12px;
+  display: inline-block;
+}
+
+.points-box strong {
+  color: #333;
+  font-size: 14px;
+}
+
+/* Menus */
+.menu ul,
+.bottom-menu ul {
+  list-style: none;
+  padding: 0 20px;
+}
+
+.menu li,
+.bottom-menu li {
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}
+
+.menu li:hover,
+.bottom-menu li:hover {
+  background-color: #f2f3f6;
+}
+
+.menu .active {
+  background-color: #eef2ff;
+  color: #3056d3;
+  font-weight: 600;
+}
+
+.badge {
+  background-color: #d93025;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  position: absolute;
+  right: 10px;
+}
+
+.bottom-menu {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+/* ---------- MAIN ---------- */
+
+.main {
+  flex: 1;
+  background-color: #f3f4f6;
+  padding: 32px 48px;
+  overflow-y: auto;
+}
+
+.main-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.main-header p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Grid de equipas */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Cartão de equipa */
+.team-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+  padding: 24px 28px;
+}
+
+.team-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.team-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.team-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #e0e7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-icon-circle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.team-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.team-members-count {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Pontos */
+.points-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: #fffae5;
+  border-radius: 999px;
+  border: 1px solid #facc15;
+  font-size: 13px;
+  color: #b45309;
+  font-weight: 600;
+}
+
+.points-badge .trophy {
+  font-size: 14px;
+}
+
+.tasks-section {
+  margin-top: 22px;
+}
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tasks-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.tasks-total {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.tasks-percent {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.progress-bar {
+  margin-top: 8px;
+  height: 7px;
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #111827;
+  border-radius: 999px;
+}
+
+/* Membros */
+.members-section {
+  margin-top: 22px;
+}
+
+.members-section h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 12px;
+}
+
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.member-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.member-name {
+  font-size: 13px;
+  color: #111827;
+  font-weight: 500;
+}
+
+/* Pills de função */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pill-primary {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.pill-neutral {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+/* ---------- Comparação de performance ---------- */
+
+.performance-card {
+  margin-top: 28px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+  padding: 24px 28px;
+}
+
+.performance-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.performance-header p {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.performance-list {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.performance-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.performance-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 180px;
+}
+
+.rank-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.rank-1 {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.rank-2 {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.performance-team-name {
+  font-size: 13px;
+  color: #111827;
+  font-weight: 500;
+}
+
+.performance-bar-wrapper {
+  flex: 1;
+}
+
+.performance-bar {
+  height: 9px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.performance-fill {
+  height: 100%;
+  background: #111827;
+  border-radius: 999px;
+}
+
+.performance-fill.secondary {
+  background: #9ca3af;
+}
+
+.performance-meta {
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.meta-points {
+  font-weight: 600;
+}
+
+/* Scrollbar suave no main */
+.main::-webkit-scrollbar {
+  width: 6px;
+}
+
+.main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 999px;
+}
