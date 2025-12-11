@@ -107,8 +107,8 @@
       </div>
 
       <header class="header">
-        <h1>Laboratório de Tecnologias Web</h1>
-        <p>Desenvolvimento de interfaces web</p>
+        <h1 id="disciplinaNome">Carregando...</h1>
+        <p id="disciplinaDescricao">Carregando informações da disciplina...</p>
       </header>
 
       <!-- Cards -->
@@ -117,21 +117,21 @@
           <div class="card-icon"></div>
           <div class="card-info">
             <h4>Projetos</h4>
-            <p class="value">2</p>
+            <p class="value" id="totalProjetos">0</p>
           </div>
         </div>
         <div class="card">
           <div class="card-icon green"></div>
           <div class="card-info">
             <h4>Estudantes</h4>
-            <p class="value">2</p>
+            <p class="value" id="totalEstudantes">0</p>
           </div>
         </div>
         <div class="card">
           <div class="card-icon blue"></div>
           <div class="card-info">
             <h4>Equipas</h4>
-            <p class="value">2</p>
+            <p class="value" id="totalEquipas">0</p>
           </div>
         </div>
       </section>
@@ -144,114 +144,9 @@
         </div>
 
         <div id="projetosContainer">
-          <!-- PROJETO 1 -->
-          <div class="project-card">
-            <div class="project-header">
-              <div class="header-top">
-                <h3>Sistema de Gestão de um Posto de Combustivel<span class="status ativo">Ativo</span></h3>
-                <div class="actions">
-                  <button class="btn-ico">✎</button>
-                  <button class="btn-ico">🗑</button>
-                </div>
-              </div>
-              <p>Desenvolvimento de uma plataforma para gestão de Postos de Combustivel</p>
-            </div>
-
-            <div class="datas">
-              <p>📅 <strong>Início:</strong> 03/03/2025</p>
-              <p>📅 <strong>Fim:</strong> 17/05/2025</p>
-            </div>
-
-            <div class="progress-wrapper">
-              <p class="progress-label">Progresso</p>
-              <div class="progress-bar">
-                <div class="progress" style="width: 50%;"></div>
-              </div>
-              <p class="progress-text">2/4 sprints</p>
-            </div>
-
-            <div class="sprints">
-              <div class="sprint-header">
-                <h4>🌀 Sprints (4)</h4>
-                <button class="btn-sprint btn-add-sprint">+ Sprint</button>
-              </div>
-
-              <div class="sprint concluido">
-                <p><strong>Sprint 1 - Planeamento</strong> <span class="badge concluido">Concluído</span></p>
-                <p>03/03/2025 - 10/03/2025</p>
-                <p>3 objetivos</p>
-                <button class="btn-ico">🗑</button>
-              </div>
-
-              <div class="sprint concluido">
-                <p><strong>Sprint 2 - Desenvolvimento Base</strong> <span class="badge concluido">Concluído</span></p>
-                <p>11/03/2025 - 25/03/2025</p>
-                <p>5 objetivos</p>
-                <button class="btn-ico">🗑</button>
-              </div>
-
-              <div class="sprint ativo">
-                <p><strong>Sprint 3 - Funcionalidades Core</strong> <span class="badge ativo">Ativo</span></p>
-                <p>26/03/2025 - 26/04/2025</p>
-                <p>10 objetivos</p>
-                <button class="btn-ico">🗑</button>
-              </div>
-
-              <div class="sprint em-espera">
-                <p><strong>Sprint 4 - Conclusão</strong> <span class="badge ativo">Em espera</span></p>
-                <p>27/04/2025 - 17/05/2025</p>
-                <p>8 objetivos</p>
-                <button class="btn-ico">🗑</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- PROJETO 2 -->
-          <div class="project-card">
-            <div class="project-header">
-              <div class="header-top">
-                <h3>Portfólio<span class="status ativo">Ativo</span></h3>
-                <div class="actions">
-                  <button class="btn-ico">✎</button>
-                  <button class="btn-ico">🗑</button>
-                </div>
-              </div>
-              <p>Desenvolvimento de um portfólio pessoal</p>
-            </div>
-
-            <div class="datas">
-              <p>📅 <strong>Início:</strong> 18/05/2025</p>
-              <p>📅 <strong>Fim:</strong> 02/06/2025</p>
-            </div>
-
-            <div class="progress-wrapper">
-              <p class="progress-label">Progresso</p>
-              <div class="progress-bar">
-                <div class="progress" style="width: 100%;"></div>
-              </div>
-              <p class="progress-text">2/2 sprints</p>
-            </div>
-
-            <div class="sprints">
-              <div class="sprint-header">
-                <h4>🌀 Sprints (2)</h4>
-                <button class="btn-sprint btn-add-sprint">+ Sprint</button>
-              </div>
-
-              <div class="sprint concluido">
-                <p><strong>Sprint 1 - Planeamento</strong> <span class="badge concluido">Concluído</span></p>
-                <p>18/05/2025 - 22/05/2025</p>
-                <p>3 objetivos</p>
-                <button class="btn-ico">🗑</button>
-              </div>
-
-              <div class="sprint concluido">
-                <p><strong>Sprint 2 - Desenvolvimento</strong> <span class="badge concluido">Concluído</span></p>
-                <p>23/05/2025 - 02/06/2025</p>
-                <p>12 objetivos</p>
-                <button class="btn-ico">🗑</button>
-              </div>
-            </div>
+          <!-- Projetos serão carregados dinamicamente pelo JavaScript -->
+          <div style="text-align: center; padding: 40px; color: #666;">
+            <p>Carregando projetos...</p>
           </div>
         </div>
       </section>
@@ -326,125 +221,7 @@
     </div>
   </div>
 
-  <script>
-    (function(){
-      const btnVoltar = document.getElementById('btnVoltar');
-      btnVoltar?.addEventListener('click', () => {
-        window.location.href = 'cadeiras_Professor.html';
-      });
-
-      const modalNovoProjeto = document.getElementById('modalNovoProjeto');
-      const modalNovoSprint  = document.getElementById('modalNovoSprint');
-      const btnNovoProjeto   = document.getElementById('btnNovoProjeto');
-      const projetosContainer = document.getElementById('projetosContainer');
-      let sprintTargetProject = null;
-
-      btnNovoProjeto.addEventListener('click', () => openModal(modalNovoProjeto));
-
-      projetosContainer.addEventListener('click', (e) => {
-        if (e.target.closest('.btn-add-sprint')) {
-          sprintTargetProject = e.target.closest('.project-card');
-          openModal(modalNovoSprint);
-        }
-      });
-
-      document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', closeAllModals));
-      document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) closeAllModals(); }));
-
-      function openModal(m){ m.classList.add('ativo'); document.body.style.overflow='hidden'; }
-      function closeAllModals(){ document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('ativo')); document.body.style.overflow=''; sprintTargetProject=null; }
-
-      const formNovoProjeto = document.getElementById('formNovoProjeto');
-      formNovoProjeto.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const nome = projNome.value.trim();
-        const desc = projDesc.value.trim();
-        const inicio = projInicio.value;
-        const fim = projFim.value;
-        if (!nome || !desc || !inicio || !fim) return;
-        const newProject = createProjectCardDOM({ nome, desc, inicio, fim });
-        projetosContainer.appendChild(newProject);
-        formNovoProjeto.reset();
-        closeAllModals();
-      });
-
-      const formNovoSprint = document.getElementById('formNovoSprint');
-      formNovoSprint.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!sprintTargetProject) return;
-        const nome = sprintNome.value.trim();
-        const inicio = sprintInicio.value;
-        const fim = sprintFim.value;
-        const objetivos = sprintObjetivos.value;
-        if (!nome || !inicio || !fim || !objetivos) return;
-        const sprintEl = createSprintDOM({ nome, inicio, fim, objetivos });
-        sprintTargetProject.querySelector('.sprints').appendChild(sprintEl);
-        formNovoSprint.reset();
-        closeAllModals();
-      });
-
-      function createProjectCardDOM({ nome, desc, inicio, fim }) {
-        const wrap = document.createElement('div');
-        wrap.className = 'project-card';
-        wrap.innerHTML = `
-          <div class="project-header">
-            <div class="header-top">
-              <h3>${escapeHtml(nome)} <span class="status ativo">Ativo</span></h3>
-              <div class="actions">
-                <button class="btn-ico">✎</button>
-                <button class="btn-ico">🗑</button>
-              </div>
-            </div>
-            <p>${escapeHtml(desc)}</p>
-          </div>
-          <div class="datas">
-            <p>📅 <strong>Início:</strong> ${formatDateForDisplay(inicio)}</p>
-            <p>📅 <strong>Fim:</strong> ${formatDateForDisplay(fim)}</p>
-          </div>
-          <div class="progress-wrapper">
-            <p class="progress-label">Progresso</p>
-            <div class="progress-bar"><div class="progress" style="width:0%;"></div></div>
-            <p class="progress-text">0/0 sprints</p>
-          </div>
-          <div class="sprints">
-            <div class="sprint-header">
-              <h4>🌀 Sprints (0)</h4>
-              <button class="btn-sprint btn-add-sprint">+ Sprint</button>
-            </div>
-          </div>`;
-        return wrap;
-      }
-
-      function createSprintDOM({ nome, inicio, fim, objetivos }) {
-        const div = document.createElement('div');
-        div.className = 'sprint';
-        div.innerHTML = `
-          <p><strong>${escapeHtml(nome)}</strong></p>
-          <p>${formatDateForDisplay(inicio)} - ${formatDateForDisplay(fim)}</p>
-          <p>${escapeHtml(objetivos)} objetivos</p>
-          <button class="btn-ico">🗑</button>`;
-        return div;
-      }
-
-      function formatDateForDisplay(dateStr){ if(!dateStr)return'';const p=dateStr.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:dateStr; }
-      function escapeHtml(t){return t.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-
-      // apagar sprint ou projeto
-      document.addEventListener('click', (e) => {
-        if (e.target.matches('.sprint .btn-ico')) {
-          const sprint = e.target.closest('.sprint');
-          if (sprint) sprint.remove();
-        }
-        if (e.target.closest('.project-card .actions .btn-ico')) {
-          const buttons = Array.from(e.target.closest('.actions').querySelectorAll('.btn-ico'));
-          const index = buttons.indexOf(e.target);
-          if (index === 1) {
-            const projectCard = e.target.closest('.project-card');
-            if (projectCard) projectCard.remove();
-          }
-        }
-      });
-    })();
-  </script>
+  <!-- Script externo -->
+  <script src="/js/projetos_Professor.js"></script>
 </body>
 </html>

@@ -5,9 +5,8 @@ require('./config/db'); // inicia conexão ao MySQL
 
 const userRoutes = require('./routes/userRoutes');
 const cursosRoutes = require('./routes/cursoRoutes');
-const cadeirasRoutes = require('./routes/cadeiraRoutes'); // NOVAS ROTAS
-
-
+const cadeirasRoutes = require('./routes/cadeiraRoutes');
+const projectRoutes = require('./routes/projectRoutes'); 
 
 const app = express();
 const PORT = 3000;
@@ -69,7 +68,11 @@ app.get('/notificacoesP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Professor.html'));
 });
 
-// ==================== Estudante====================
+app.get('/definicoesP', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Professor.html'));
+});
+
+// ==================== Estudante ====================
 app.get('/projetosE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'projeto_Estudante.html'));
 });
@@ -81,30 +84,26 @@ app.get('/EquipaE', (req, res) => {
 app.get('/PremiosE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'premios_estudante.html'));
 });
-app.get('/RankingsE', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'ranking_Estudiante.html'));
-});
+
 app.get('/RankingsE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'ranking_Estudiante.html'));
 });
 
-
-app.get('/definicoesP', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Professor.html'));
-});
 app.get('/definicoesE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Estudiante.html'));
 });
+
 app.get('/notificacoesE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Estudiante.html'));
 });
+
 // ==================== ROTAS DE API ====================
 app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);
-app.use('/cadeiras', cadeirasRoutes); // <-- ROTAS DE CADEIRAS
+app.use('/cadeiras', cadeirasRoutes);
+app.use('/projetos', projectRoutes); // <-- ROTAS DE PROJETOS E SPRINTS
 
-
-// ==================== INICIAR SERVIDOR ===================S=
+// ==================== INICIAR SERVIDOR ====================
 app.listen(PORT, () => {
   console.log(`🔥 Servidor rodando em: http://localhost:${PORT}`);
 });

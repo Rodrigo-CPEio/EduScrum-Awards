@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   cursoAtual = localStorage.getItem('cursoAtual');
   if (!cursoAtual) {
     alert('Curso não selecionado. Volte à página de cursos.');
-    window.location.href = '/curso_Professor.html';
+    window.location.href = '/cursoP';
     return;
   }
 
@@ -291,7 +291,8 @@ async function apagarCadeira(id) {
 
 // ==================== VER PROJETOS ====================
 function verProjetos(cadeiraId) {
-  window.location.href = `/projetosP?cadeiraId=${cadeiraId}`;
+  // ✅ CORREÇÃO: Usar disciplineId em vez de cadeiraId
+  window.location.href = `/projetosP?disciplineId=${cadeiraId}`;
 }
 
 // ==================== FECHAR MODAL AO CLICAR FORA ====================
