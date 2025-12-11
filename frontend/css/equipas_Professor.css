@@ -572,3 +572,17 @@ body {
   background-color: #aaa;
 }
 
+.btn-delete-team {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-delete-team:hover {
+    background-color: #d93636;
+}

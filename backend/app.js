@@ -3,15 +3,17 @@ const express = require('express');
 const path = require('path');
 require('./config/db'); // inicia conexão ao MySQL
 
+// Rotas
 const userRoutes = require('./routes/userRoutes');
 const cursosRoutes = require('./routes/cursoRoutes');
 const cadeirasRoutes = require('./routes/cadeiraRoutes');
 const projectRoutes = require('./routes/projectRoutes'); 
+const teamRoutes = require('./routes/teamRoutes');
 
 const app = express();
 const PORT = 3000;
 
-// Middleware para processar JSON (necessário para POST, PUT, DELETE com body)
+// Middleware para processar JSON
 app.use(express.json());
 
 // Servir ficheiros do frontend
@@ -39,7 +41,7 @@ app.get('/dashboardP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Professor.html'));
 });
 
-// Professor - Cursos, Cadeiras, Projetos, Equipas, Prémios, Ranking, Notificações
+// Professor - Páginas
 app.get('/cursoP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'curso_Professor.html'));
 });
@@ -72,7 +74,7 @@ app.get('/definicoesP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Professor.html'));
 });
 
-// ==================== Estudante ====================
+// Estudante - Páginas
 app.get('/projetosE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'projeto_Estudante.html'));
 });
@@ -101,7 +103,8 @@ app.get('/notificacoesE', (req, res) => {
 app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);
 app.use('/cadeiras', cadeirasRoutes);
-app.use('/projetos', projectRoutes); // <-- ROTAS DE PROJETOS E SPRINTS
+app.use('/projetos', projectRoutes);   // Rotas de projetos e sprints
+app.use('/api/teams', teamRoutes);     // Rotas de equipas
 
 // ==================== INICIAR SERVIDOR ====================
 app.listen(PORT, () => {
