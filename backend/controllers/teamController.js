@@ -1,43 +1,54 @@
-// backend/controllers/teamController.js
 const teamModel = require("../models/teamModel");
 
-// =========================
-//   CRIAR EQUIPA
-// =========================
+// Criar equipa
 exports.createTeam = (req, res) => {
-    const { projectId, teamName, totalTasks, members } = req.body;
-    
-    teamModel.createTeam(projectId, teamName, totalTasks, members, (err, result) => {
+    const { projectId, teamName, members, tasks } = req.body;
+
+    teamModel.createTeam(projectId, teamName, members, tasks, (err, result) => {
         if (err) {
-            console.error(err);
-            return res.status(500).json({ message: "Erro ao criar equipa", error: err });
+            console.error("createTeam error:", err);
+            return res.status(500).json({ message: "Erro ao criar equipa" });
         }
         res.json(result);
     });
 };
 
-// =========================
-//   LISTAR EQUIPAS
-// =========================
+// Listar equipas
 exports.getTeams = (req, res) => {
     teamModel.getTeams((err, teams) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ message: "Erro ao buscar equipas" });
-        }
+        if (err) return res.status(500).json({ message: "Erro ao buscar equipas" });
         res.json(teams);
     });
 };
 
-// =========================
-//   ELIMINAR EQUIPA
-// =========================
+// Apagar equipa
 exports.deleteTeam = (req, res) => {
     teamModel.deleteTeam(req.params.id, (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ message: "Erro ao eliminar equipa" });
-        }
+        if (err) return res.status(500).json({ message: "Erro ao eliminar equipa" });
         res.json(result);
+    });
+};
+
+// Buscar estudantes
+exports.getStudents = (req, res) => {
+    teamModel.getStudents((err, rows) => {
+        if (err) return res.status(500).json({ message: "Erro ao buscar estudantes" });
+        res.json(rows);
+    });
+};
+
+// Marcar/desmarcar tarefa
+exports.toggleTask = (req, res) => {
+    teamModel.toggleTaskCompleted(req.params.taskId, req.body.completed, (err, result) => {
+        if (err) return res.status(500).json({ message: "Erro ao atualizar tarefa" });
+        res.json({ message: "Tarefa atualizada" });
+    });
+};
+
+// Buscar tarefas de equipa
+exports.getTasksByTeam = (req, res) => {
+    teamModel.getTasksByTeam(req.params.teamId, (err, rows) => {
+        if (err) return res.status(500).json({ message: "Erro ao buscar tarefas" });
+        res.json(rows);
     });
 };

@@ -9,7 +9,7 @@ require('./config/db'); // inicia conexão ao MySQL
 const userRoutes = require('./routes/userRoutes');
 const cursosRoutes = require('./routes/cursoRoutes');
 const cadeirasRoutes = require('./routes/cadeiraRoutes');
-const projectRoutes = require('./routes/projectRoutes'); 
+const projectRoutes = require('./routes/projectRoutes');
 const teamRoutes = require('./routes/teamRoutes');
 
 const app = express();
@@ -19,17 +19,26 @@ const PORT = 3000;
 // Middleware para processar JSON
 app.use(express.json());
 
-// Servir ficheiros do frontend
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
+// ==================== ROTAS DE API (DEVEM VIR PRIMEIRO!) ====================
+app.use('/usuarios', userRoutes);
+app.use('/cursos', cursosRoutes);
+app.use('/cadeiras', cadeirasRoutes);
+app.use('/projetos', projectRoutes);
+app.use('/api/teams', teamRoutes); // <-- AGORA FUNCIONA 100%
 
-// Ignorar favicon (opcional - remove o erro do console)
+// Ignorar favicon (opcional)
 app.get('/favicon.ico', (req, res) => res.status(204).end());
+
+// ==================== FICHEIROS DO FRONTEND ====================
+// (DEPOIS das rotas API!)
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // ==================== PÁGINAS FRONTEND ====================
 app.get('/', (req, res) => {
   res.send('Servidor Node.js funcionando corretamente 🚀');
 });
 
+// Login / Registo
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'login.html'));
 });
@@ -47,7 +56,7 @@ app.get('/dashboardP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Professor.html'));
 });
 
-// Professor - Páginas
+// Professor — Páginas
 app.get('/cursoP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'curso_Professor.html'));
 });
@@ -80,7 +89,7 @@ app.get('/definicoesP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Professor.html'));
 });
 
-// Estudante - Páginas
+// Estudante — Páginas
 app.get('/projetosE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'projeto_Estudante.html'));
 });
@@ -104,13 +113,6 @@ app.get('/definicoesE', (req, res) => {
 app.get('/notificacoesE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Estudiante.html'));
 });
-
-// ==================== ROTAS DE API ====================
-app.use('/usuarios', userRoutes);
-app.use('/cursos', cursosRoutes);
-app.use('/cadeiras', cadeirasRoutes);
-app.use('/projetos', projectRoutes);   // Rotas de projetos e sprints
-app.use('/api/teams', teamRoutes);     // Rotas de equipas
 
 // ==================== INICIAR SERVIDOR ====================
 app.listen(PORT, () => {

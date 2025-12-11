@@ -1,112 +1,165 @@
-// backend/models/teamModel.js
 const db = require("../config/db");
 
-// =========================
-//   CRIAR EQUIPA
-// =========================
-exports.createTeam = (projectId, teamName, totalTasks, members, callback) => {
-    db.beginTransaction((err) => {
-        if (err) return callback(err);
+// Criar equipa (com membros + tarefas)
+exports.createTeam = (projectId, teamName, members = [], tasks = [], callback) => {
 
-        // Inserir equipa
-        db.query(
-            "INSERT INTO team (TE_P_ID, TE_Name, TE_Total_Tasks) VALUES (?, ?, ?)",
-            [projectId, teamName, totalTasks],
-            (err, teamResult) => {
-                if (err) {
-                    return db.rollback(() => callback(err));
-                }
+    // Inserir equipa
+    db.query(
+        "INSERT INTO team (TE_P_ID, TE_Name) VALUES (?, ?)",
+        [projectId, teamName],
+        (err, result) => {
+            if (err) return callback(err);
 
-                const teamId = teamResult.insertId;
-                let insertedMembers = 0;
+            const teamId = result.insertId;
 
-                // Inserir membros
-                members.forEach((m, index) => {
+            // ----------------------------
+            // Inserção de Membros
+            // ----------------------------
+            members = Array.isArray(members) ? members : [];
+            tasks = Array.isArray(tasks) ? tasks : [];
+
+            let membersDone = 0;
+            let tasksDone = 0;
+
+            // Caso especial: sem membros e sem tarefas
+            if (members.length === 0 && tasks.length === 0) {
+                return callback(null, { message: "Equipa criada com sucesso!", teamId });
+            }
+
+            // Inserir membros
+            if (members.length > 0) {
+                members.forEach(m => {
                     db.query(
                         "INSERT INTO team_member (TM_TE_ID, TM_S_ID, TM_Role) VALUES (?, ?, ?)",
                         [teamId, m.studentId, m.role],
                         (err) => {
-                            if (err) {
-                                return db.rollback(() => callback(err));
+                            if (err) return callback(err);
+
+                            membersDone++;
+                            if (membersDone === members.length && tasks.length === 0) {
+                                return callback(null, { message: "Equipa criada com sucesso!", teamId });
                             }
 
-                            insertedMembers++;
-
-                            // Se todos os membros foram inseridos
-                            if (insertedMembers === members.length) {
-                                db.commit((err) => {
-                                    if (err) {
-                                        return db.rollback(() => callback(err));
-                                    }
-                                    callback(null, { message: "Equipa criada com sucesso!" });
-                                });
+                            if (membersDone === members.length && tasksDone === tasks.length) {
+                                return callback(null, { message: "Equipa criada com sucesso!", teamId });
                             }
                         }
                     );
                 });
             }
-        );
-    });
+
+            // ----------------------------
+            // Inserção de Tarefas
+            // ----------------------------
+            if (tasks.length > 0) {
+                tasks.forEach(t => {
+                    db.query(
+                        "INSERT INTO task (T_TE_ID, T_Name, T_Description, T_Completed) VALUES (?, ?, ?, 0)",
+                        [teamId, t.name, t.description],
+                        (err) => {
+                            if (err) return callback(err);
+
+                            tasksDone++;
+                            if (tasksDone === tasks.length && members.length === 0) {
+                                return callback(null, { message: "Equipa criada com sucesso!", teamId });
+                            }
+
+                            if (tasksDone === tasks.length && membersDone === members.length) {
+                                return callback(null, { message: "Equipa criada com sucesso!", teamId });
+                            }
+                        }
+                    );
+                });
+            }
+        }
+    );
 };
 
-// =========================
-//   LISTAR EQUIPAS
-// =========================
+// Buscar equipas + membros + tarefas
 exports.getTeams = (callback) => {
-    db.query("SELECT TE_ID, TE_Name, TE_Total_Tasks FROM team", (err, teams) => {
+    db.query("SELECT * FROM team", (err, teams) => {
         if (err) return callback(err);
+        if (teams.length === 0) return callback(null, []);
 
-        if (teams.length === 0) {
-            return callback(null, []);
-        }
+        let result = [];
+        let done = 0;
 
-        const finalTeams = [];
-        let processedTeams = 0;
-
-        teams.forEach((t) => {
+        teams.forEach(team => {
             db.query(
-                `SELECT u.U_Name, tm.TM_Role 
+                `SELECT u.U_Name, tm.TM_Role
                  FROM team_member tm
                  JOIN student s ON s.S_ID = tm.TM_S_ID
                  JOIN user u ON u.U_ID = s.S_U_ID
                  WHERE tm.TM_TE_ID = ?`,
-                [t.TE_ID],
+                [team.TE_ID],
                 (err, members) => {
                     if (err) return callback(err);
 
-                    finalTeams.push({
-                        TE_ID: t.TE_ID,
-                        TE_Name: t.TE_Name,
-                        totalTasks: t.TE_Total_Tasks,
-                        members: members.map(m => ({
-                            name: m.U_Name,
-                            role: m.TM_Role
-                        }))
-                    });
+                    db.query(
+                        "SELECT * FROM task WHERE T_TE_ID = ?",
+                        [team.TE_ID],
+                        (err, tasks) => {
+                            if (err) return callback(err);
 
-                    processedTeams++;
+                            result.push({
+                                TE_ID: team.TE_ID,
+                                TE_Name: team.TE_Name,
+                                projectId: team.TE_P_ID,
+                                members,
+                                tasks
+                            });
 
-                    // Se todas as equipas foram processadas
-                    if (processedTeams === teams.length) {
-                        callback(null, finalTeams);
-                    }
+                            done++;
+                            if (done === teams.length) callback(null, result);
+                        }
+                    );
                 }
             );
         });
     });
 };
 
-// =========================
-//   ELIMINAR EQUIPA
-// =========================
+// Apagar equipa
 exports.deleteTeam = (id, callback) => {
-    db.query("DELETE FROM team_member WHERE TM_TE_ID = ?", [id], (err) => {
+    db.query("DELETE FROM task WHERE T_TE_ID = ?", [id], err => {
         if (err) return callback(err);
 
-        db.query("DELETE FROM team WHERE TE_ID = ?", [id], (err) => {
+        db.query("DELETE FROM team_member WHERE TM_TE_ID = ?", [id], err => {
             if (err) return callback(err);
 
-            callback(null, { message: "Equipa eliminada com sucesso!" });
+            db.query("DELETE FROM team WHERE TE_ID = ?", [id], err => {
+                if (err) return callback(err);
+
+                callback(null, { message: "Equipa eliminada com sucesso!" });
+            });
         });
     });
+};
+
+// Buscar estudantes
+exports.getStudents = (callback) => {
+    db.query(
+        `SELECT student.S_ID, user.U_Name
+         FROM student
+         JOIN user ON user.U_ID = student.S_U_ID`,
+        callback
+    );
+};
+
+// Atualizar tarefa
+exports.toggleTaskCompleted = (taskId, completed, callback) => {
+    db.query(
+        "UPDATE task SET T_Completed = ? WHERE T_ID = ?",
+        [completed ? 1 : 0, taskId],
+        callback
+    );
+};
+
+// Buscar tarefas por equipa
+exports.getTasksByTeam = (teamId, callback) => {
+    db.query(
+        "SELECT * FROM task WHERE T_TE_ID = ?",
+        [teamId],
+        callback
+    );
 };
