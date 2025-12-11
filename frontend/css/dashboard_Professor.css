@@ -724,3 +724,124 @@ body {
   margin-top: 40px;
   background: #fff;
 }
+
+/* ==================== CARDS QUADRADOS ==================== */
+.cards-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+  max-width: 650px; /* Limita a 3 cards por linha */
+}
+
+.info-card {
+  aspect-ratio: 1 / 1; /* Força o card a ser quadrado */
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card.clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.info-card.clickable:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.info-card.clickable:active {
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* Ícone do card */
+.info-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Título do card */
+.info-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 10px 0;
+}
+
+/* Número principal */
+.info-number {
+  font-size: 36px;
+  font-weight: 700;
+  color: #667eea;
+  margin: 8px 0;
+  line-height: 1;
+}
+
+/* Texto detalhado */
+.info-detail {
+  font-size: 13px;
+  color: #718096;
+  margin: 8px 0 0 0;
+}
+
+/* Seta indicadora */
+.info-arrow {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  font-size: 20px;
+  color: #667eea;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.info-card.clickable:hover .info-arrow {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+/* Responsive - Em telas pequenas */
+@media (max-width: 768px) {
+  .cards-section {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .info-card {
+    padding: 20px;
+  }
+
+  .info-icon {
+    font-size: 36px;
+  }
+
+  .info-number {
+    font-size: 28px;
+  }
+
+  .info-card h4 {
+    font-size: 16px;
+  }
+
+  .info-detail {
+    font-size: 12px;
+  }
+}
+
+/* Muito pequeno - 1 coluna */
+@media (max-width: 480px) {
+  .cards-section {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+}

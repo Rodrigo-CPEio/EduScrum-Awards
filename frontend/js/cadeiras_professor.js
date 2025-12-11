@@ -81,9 +81,28 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Carregar o nome do curso
+  carregarNomeCurso();
   carregarCadeiras();
   configurarFormulario();
 });
+
+// ==================== CARREGAR NOME DO CURSO ====================
+async function carregarNomeCurso() {
+  try {
+    const response = await fetch(`/cursos/${cursoAtual}`);
+    const data = await response.json();
+
+    if (data.success && data.curso) {
+      const tituloElement = document.querySelector('.courses-section h3');
+      if (tituloElement) {
+        tituloElement.textContent = `Cadeiras - ${data.curso.nome}`;
+      }
+    }
+  } catch (error) {
+    console.error('Erro ao carregar nome do curso:', error);
+  }
+}
 
 // ==================== CARREGAR CADEIRAS ====================
 async function carregarCadeiras() {
@@ -291,7 +310,6 @@ async function apagarCadeira(id) {
 
 // ==================== VER PROJETOS ====================
 function verProjetos(cadeiraId) {
-  // ✅ CORREÇÃO: Usar disciplineId em vez de cadeiraId
   window.location.href = `/projetosP?disciplineId=${cadeiraId}`;
 }
 
