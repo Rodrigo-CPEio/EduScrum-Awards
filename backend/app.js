@@ -1,4 +1,6 @@
 // backend/app.js
+
+// ==================== IMPORTS ====================
 const express = require('express');
 const path = require('path');
 require('./config/db'); // inicia conexão ao MySQL
@@ -13,11 +15,15 @@ const teamRoutes = require('./routes/teamRoutes');
 const app = express();
 const PORT = 3000;
 
+// ==================== MIDDLEWARE ====================
 // Middleware para processar JSON
 app.use(express.json());
 
 // Servir ficheiros do frontend
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
+
+// Ignorar favicon (opcional - remove o erro do console)
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // ==================== PÁGINAS FRONTEND ====================
 app.get('/', (req, res) => {

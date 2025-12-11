@@ -1,35 +1,43 @@
+// backend/controllers/teamController.js
 const teamModel = require("../models/teamModel");
 
-// Criar equipa
-exports.createTeam = async (req, res) => {
-    try {
-        const { projectId, teamName, totalTasks, members } = req.body;
-
-        const result = await teamModel.createTeam(projectId, teamName, totalTasks, members);
+// =========================
+//   CRIAR EQUIPA
+// =========================
+exports.createTeam = (req, res) => {
+    const { projectId, teamName, totalTasks, members } = req.body;
+    
+    teamModel.createTeam(projectId, teamName, totalTasks, members, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Erro ao criar equipa", error: err });
+        }
         res.json(result);
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Erro ao criar equipa", error: err });
-    }
+    });
 };
 
-// Listar equipas
-exports.getTeams = async (req, res) => {
-    try {
-        const teams = await teamModel.getTeams();
+// =========================
+//   LISTAR EQUIPAS
+// =========================
+exports.getTeams = (req, res) => {
+    teamModel.getTeams((err, teams) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Erro ao buscar equipas" });
+        }
         res.json(teams);
-    } catch (err) {
-        res.status(500).json({ message: "Erro ao buscar equipas" });
-    }
+    });
 };
 
-// Eliminar equipa
-exports.deleteTeam = async (req, res) => {
-    try {
-        const result = await teamModel.deleteTeam(req.params.id);
+// =========================
+//   ELIMINAR EQUIPA
+// =========================
+exports.deleteTeam = (req, res) => {
+    teamModel.deleteTeam(req.params.id, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Erro ao eliminar equipa" });
+        }
         res.json(result);
-    } catch (err) {
-        res.status(500).json({ message: "Erro ao eliminar equipa" });
-    }
+    });
 };
