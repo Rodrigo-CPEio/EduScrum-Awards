@@ -6,6 +6,7 @@ require('./config/db'); // inicia conexão ao MySQL
 const userRoutes = require('./routes/userRoutes');
 const cursosRoutes = require('./routes/cursoRoutes');
 const cadeirasRoutes = require('./routes/cadeiraRoutes'); // NOVAS ROTAS
+const teamRoutes = require('./routes/teamRoutes');
 
 
 
@@ -102,6 +103,7 @@ app.get('/notificacoesE', (req, res) => {
 app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);
 app.use('/cadeiras', cadeirasRoutes); // <-- ROTAS DE CADEIRAS
+app.use('/api/teams', teamRoutes);
 
 
 // ==================== INICIAR SERVIDOR ===================S=
