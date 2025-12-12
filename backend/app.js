@@ -11,6 +11,8 @@ const cursosRoutes = require('./routes/cursoRoutes');
 const cadeirasRoutes = require('./routes/cadeiraRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const teamRoutes = require('./routes/teamRoutes');
+const awardsRoutes = require('./routes/awardsRoutes');
+const awardAssignmentRoutes = require('./routes/awardAssignmentRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -113,6 +115,15 @@ app.get('/definicoesE', (req, res) => {
 app.get('/notificacoesE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Estudiante.html'));
 });
+
+// ==================== ROTAS DE API ====================
+app.use('/usuarios', userRoutes);
+app.use('/cursos', cursosRoutes);
+app.use('/cadeiras', cadeirasRoutes);
+app.use('/projetos', projectRoutes);   // Rotas de projetos e sprints
+app.use('/api/teams', teamRoutes);     // Rotas de equipas
+app.use('/awards', awardsRoutes);
+app.use('/awardassignments', awardAssignmentRoutes);
 
 // ==================== INICIAR SERVIDOR ====================
 app.listen(PORT, () => {
