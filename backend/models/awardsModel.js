@@ -28,7 +28,14 @@ module.exports = {
   },
 
   deleteAward(awardId, callback) {
-    const sql = "DELETE FROM awards WHERE A_ID = ?";
-    db.query(sql, [awardId], callback);
+    // Primeiro apagar todas as atribuições deste prémio
+    const deletAssignmentsSql = "DELETE FROM awardassigment WHERE AA_A_ID = ?";
+    db.query(deletAssignmentsSql, [awardId], (err) => {
+      if (err) return callback(err);
+      
+      // Depois apagar o prémio
+      const deleteAwardSql = "DELETE FROM awards WHERE A_ID = ?";
+      db.query(deleteAwardSql, [awardId], callback);
+    });
   }
 };
