@@ -624,10 +624,64 @@ body {
   padding: 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   transition: transform 0.2s ease;
+  position: relative;
 }
 
 .premio-card:hover {
   transform: translateY(-4px);
+}
+
+.btn-delete-premio {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.btn-atribuir-premio {
+  position: absolute;
+  top: 12px;
+  right: 50px;
+  background: #4c6ef5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.premio-card:hover .btn-delete-premio,
+.premio-card:hover .btn-atribuir-premio {
+  opacity: 1;
+}
+
+.btn-delete-premio:hover {
+  background: #ff3838;
+  transform: scale(1.1);
+}
+
+.btn-atribuir-premio:hover {
+  background: #3b5bdb;
+  transform: scale(1.1);
 }
 
 .premio-card h3 {
@@ -759,4 +813,110 @@ body {
   border-color: #4c6ef5;
   outline: none;
   background: #fff;
+}
+
+/* ==============================
+   MODAL DE ATRIBUIÇÃO DE PRÉMIOS
+   ============================== */
+
+#modalAtribuicao {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+#modalAtribuicao .modal-content {
+  width: 500px;
+  max-width: 90%;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #f9f9fb;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.checkbox-item:hover {
+  background: #f0f2ff;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.checkbox-item span {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+#containerEstudantes,
+#containerEquipas {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+#motivoAtribuicao {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  font-family: inherit;
+  margin-bottom: 16px;
+}
+
+#motivoAtribuicao:focus {
+  border-color: #4c6ef5;
+  outline: none;
+}
+
+.btn-confirmar-atribuicao {
+  background-color: #4c6ef5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.btn-confirmar-atribuicao:hover {
+  background-color: #3b5bdb;
+}
+
+.btn-cancelar-atribuicao {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-cancelar-atribuicao:hover {
+  background-color: #f2f3f6;
 }
