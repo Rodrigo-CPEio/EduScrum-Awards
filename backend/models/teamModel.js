@@ -29,8 +29,11 @@ exports.createTeam = (projectId, teamName, members = [], tasks = [], callback) =
             // Inserir membros
             if (members.length > 0) {
                 members.forEach(m => {
+                    // ✅ USAR ON DUPLICATE KEY UPDATE para evitar erro de duplicação
                     db.query(
-                        "INSERT INTO team_member (TM_TE_ID, TM_S_ID, TM_Role) VALUES (?, ?, ?)",
+                        `INSERT INTO team_member (TM_TE_ID, TM_S_ID, TM_Role) 
+                         VALUES (?, ?, ?) 
+                         ON DUPLICATE KEY UPDATE TM_Role = VALUES(TM_Role)`,
                         [teamId, m.studentId, m.role],
                         (err) => {
                             if (err) return callback(err);
@@ -86,7 +89,7 @@ exports.getTeams = (callback) => {
 
         teams.forEach(team => {
             db.query(
-                `SELECT u.U_Name, tm.TM_Role
+                `SELECT s.S_ID, u.U_Name as name, tm.TM_Role as role
                  FROM team_member tm
                  JOIN student s ON s.S_ID = tm.TM_S_ID
                  JOIN user u ON u.U_ID = s.S_U_ID
@@ -102,11 +105,20 @@ exports.getTeams = (callback) => {
                             if (err) return callback(err);
 
                             result.push({
-                                TE_ID: team.TE_ID,
-                                TE_Name: team.TE_Name,
+                                id: team.TE_ID,
+                                name: team.TE_Name,
                                 projectId: team.TE_P_ID,
-                                members,
-                                tasks
+                                members: members.map(m => ({
+                                    id: m.S_ID,
+                                    name: m.name,
+                                    role: m.role
+                                })),
+                                tasks: tasks.map(t => ({
+                                    id: t.T_ID,
+                                    name: t.T_Name,
+                                    description: t.T_Description,
+                                    completed: t.T_Completed === 1
+                                }))
                             });
 
                             done++;
@@ -139,10 +151,13 @@ exports.deleteTeam = (id, callback) => {
 // Buscar estudantes
 exports.getStudents = (callback) => {
     db.query(
-        `SELECT student.S_ID, user.U_Name
+        `SELECT student.S_ID as id, user.U_Name as name
          FROM student
          JOIN user ON user.U_ID = student.S_U_ID`,
-        callback
+        (err, students) => {
+            if (err) return callback(err);
+            callback(null, students);
+        }
     );
 };
 
@@ -161,5 +176,65 @@ exports.getTasksByTeam = (teamId, callback) => {
         "SELECT * FROM task WHERE T_TE_ID = ?",
         [teamId],
         callback
+    );
+};
+
+// ✅ NOVA FUNÇÃO: Adicionar membro a uma equipa existente
+exports.addTeamMember = (teamId, studentId, role, callback) => {
+    db.query(
+        `INSERT INTO team_member (TM_TE_ID, TM_S_ID, TM_Role) 
+         VALUES (?, ?, ?) 
+         ON DUPLICATE KEY UPDATE TM_Role = VALUES(TM_Role)`,
+        [teamId, studentId, role || 'Membro'],
+        (err, result) => {
+            if (err) return callback(err);
+            callback(null, { message: "Membro adicionado/atualizado com sucesso!" });
+        }
+    );
+};
+
+// ✅ NOVA FUNÇÃO: Remover membro de uma equipa
+exports.removeTeamMember = (teamId, studentId, callback) => {
+    db.query(
+        "DELETE FROM team_member WHERE TM_TE_ID = ? AND TM_S_ID = ?",
+        [teamId, studentId],
+        (err, result) => {
+            if (err) return callback(err);
+            if (result.affectedRows === 0) {
+                return callback(new Error("Membro não encontrado"));
+            }
+            callback(null, { message: "Membro removido com sucesso!" });
+        }
+    );
+};
+
+// ✅ NOVA FUNÇÃO: Atualizar role de um membro
+exports.updateTeamMemberRole = (teamId, studentId, role, callback) => {
+    db.query(
+        "UPDATE team_member SET TM_Role = ? WHERE TM_TE_ID = ? AND TM_S_ID = ?",
+        [role, teamId, studentId],
+        (err, result) => {
+            if (err) return callback(err);
+            if (result.affectedRows === 0) {
+                return callback(new Error("Membro não encontrado"));
+            }
+            callback(null, { message: "Role atualizado com sucesso!" });
+        }
+    );
+};
+
+// ✅ NOVA FUNÇÃO: Buscar membros de uma equipa específica
+exports.getTeamMembers = (teamId, callback) => {
+    db.query(
+        `SELECT s.S_ID as id, u.U_Name as name, tm.TM_Role as role
+         FROM team_member tm
+         JOIN student s ON s.S_ID = tm.TM_S_ID
+         JOIN user u ON u.U_ID = s.S_U_ID
+         WHERE tm.TM_TE_ID = ?`,
+        [teamId],
+        (err, members) => {
+            if (err) return callback(err);
+            callback(null, members);
+        }
     );
 };

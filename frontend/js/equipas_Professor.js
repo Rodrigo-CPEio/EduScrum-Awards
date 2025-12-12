@@ -45,17 +45,38 @@ function verificarAutenticacao() {
 }
 
 // =========================
-//  SIDEBAR (ATUALIZADA - IGUAL AO CURSOS)
+//  SIDEBAR (ATUALIZADA - CARREGA PERFIL DO BACKEND)
 // =========================
-function carregarPerfilSidebar() {
+async function carregarPerfilSidebar() {
   const sidebarUserInfo = document.querySelector('.sidebar .user-info .user-top');
   if (!sidebarUserInfo) return;
+
+  // Se não tem userData, buscar do backend
+  if (!userData) {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      
+      try {
+        const response = await fetch(`/usuarios/profile/${user.id}`);
+        const data = await response.json();
+        
+        if (data.success) {
+          userData = data.perfil;
+        }
+      } catch (err) {
+        console.error('❌ Erro ao carregar perfil:', err);
+      }
+    }
+  }
 
   const img = sidebarUserInfo.querySelector('img');
   let avatar = sidebarUserInfo.querySelector('.avatar-placeholder');
 
+  // Remove avatar antigo se existir
   if (avatar) avatar.remove();
 
+  // Cria novo avatar
   avatar = document.createElement('div');
   avatar.className = 'avatar-placeholder';
   avatar.style.cssText = `
@@ -71,6 +92,7 @@ function carregarPerfilSidebar() {
     font-weight: bold;
   `;
 
+  // Insere ANTES da imagem
   sidebarUserInfo.insertBefore(avatar, img);
 
   if (userData && userData.foto) {
@@ -253,7 +275,9 @@ function limparFormulario() {
 async function fetchStudents() {
   try {
     const res = await fetch(`${API_BASE}/students`);
-    return await res.json();
+    const students = await res.json();
+    console.log('📚 Estudantes recebidos:', students); // ✅ Debug
+    return students;
   } catch (err) {
     console.error("Erro a buscar estudantes:", err);
     return [];
@@ -264,12 +288,28 @@ async function loadStudentsIntoSelect(select) {
   if (!select) return;
   const students = await fetchStudents();
   select.innerHTML = `<option value="">Selecionar aluno...</option>`;
+  
+  if (!Array.isArray(students) || students.length === 0) {
+    select.innerHTML = `<option value="">Nenhum estudante disponível</option>`;
+    return;
+  }
+  
   students.forEach(s => {
-    const opt = document.createElement("option");
-    opt.value = s.S_ID;
-    opt.textContent = s.U_Name;
-    select.appendChild(opt);
+    // ✅ Suporta AMBOS os formatos (novo e antigo)
+    const studentId = s.id || s.S_ID;
+    const studentName = s.name || s.U_Name;
+    
+    if (studentId && studentName) {
+      const opt = document.createElement("option");
+      opt.value = studentId;
+      opt.textContent = studentName;
+      select.appendChild(opt);
+    } else {
+      console.warn('⚠️ Estudante com dados inválidos:', s);
+    }
   });
+  
+  console.log('✅ Select preenchido com', students.length, 'estudantes');
 }
 
 // =========================
@@ -299,40 +339,57 @@ function renderTeams(teams) {
     card.style.boxShadow = "0 2px 8px rgba(0,0,0,0.05)";
     card.style.marginBottom = "18px";
 
-    const membersHTML = (team.members || []).map(m => `
-      <li>
-        <div class="circle">${(m.name || '').slice(0,2).toUpperCase()}</div>
-        <span>${m.name}</span>
-        <span class="role">${m.role || ''}</span>
-      </li>
-    `).join("");
+    // ✅ Suporta AMBOS os formatos de membros
+    const membersHTML = (team.members || []).map(m => {
+      const memberName = m.name || m.U_Name || 'Sem nome';
+      const memberRole = m.role || m.TM_Role || '';
+      
+      return `
+        <li>
+          <div class="circle">${memberName.slice(0,2).toUpperCase()}</div>
+          <span>${memberName}</span>
+          <span class="role">${memberRole}</span>
+        </li>
+      `;
+    }).join("");
 
-    // tasks list
-    const tasksHTML = (team.tasks || []).map(t => `
-      <li style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
-        <input type="checkbox" data-taskid="${t.T_ID}" ${t.T_Completed ? "checked": ""} onchange="toggleTask(${t.T_ID}, this.checked, ${team.TE_ID})" />
-        <div style="flex:1">
-          <div style="font-weight:600">${escapeHtml(t.T_Name)}</div>
-          <div style="font-size:13px; color:#666">${escapeHtml(t.T_Description || '')}</div>
-        </div>
-      </li>
-    `).join("");
+    // ✅ Suporta AMBOS os formatos de tarefas
+    const tasksHTML = (team.tasks || []).map(t => {
+      const taskId = t.id || t.T_ID;
+      const taskName = t.name || t.T_Name || 'Sem nome';
+      const taskDesc = t.description || t.T_Description || '';
+      const taskCompleted = t.completed || t.T_Completed;
+      const teamId = team.id || team.TE_ID;
+      
+      return `
+        <li style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+          <input type="checkbox" data-taskid="${taskId}" ${taskCompleted ? "checked": ""} onchange="toggleTask(${taskId}, this.checked, ${teamId})" />
+          <div style="flex:1">
+            <div style="font-weight:600">${escapeHtml(taskName)}</div>
+            <div style="font-size:13px; color:#666">${escapeHtml(taskDesc)}</div>
+          </div>
+        </li>
+      `;
+    }).join("");
+
+    const teamId = team.id || team.TE_ID;
+    const teamName = team.name || team.TE_Name || 'Sem nome';
 
     card.innerHTML = `
       <div class="team-header" style="display:flex; justify-content:space-between; align-items:start;">
         <div>
-          <h2 style="margin:0 0 6px 0">${escapeHtml(team.TE_Name)}</h2>
+          <h2 style="margin:0 0 6px 0">${escapeHtml(teamName)}</h2>
           <p style="margin:0; color:#666">${(team.members || []).length} membros</p>
         </div>
         <div>
-          <button class="btn-delete-team" style="background:#ff6b6b;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer" onclick="deleteTeam(${team.TE_ID})">Eliminar</button>
+          <button class="btn-delete-team" style="background:#ff6b6b;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer" onclick="deleteTeam(${teamId})">Eliminar</button>
         </div>
       </div>
 
       <div style="margin-top:12px">
         <h3 style="margin:6px 0">Membros da Equipa</h3>
         <ul class="member-list" style="list-style:none;padding:0;margin:8px 0">
-          ${membersHTML}
+          ${membersHTML || '<li style="color:#888">Sem membros</li>'}
         </ul>
       </div>
 
@@ -408,8 +465,11 @@ function renderPerformance(teams) {
 
   teams.forEach(team => {
     const total = (team.tasks || []).length;
-    const completed = (team.tasks || []).filter(t => t.T_Completed == 1).length;
+    const completed = (team.tasks || []).filter(t => (t.completed || t.T_Completed) == 1).length;
     const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+    const teamId = team.id || team.TE_ID;
+    const teamName = team.name || team.TE_Name || 'Sem nome';
 
     const item = document.createElement("div");
     item.className = "compare-item";
@@ -422,7 +482,7 @@ function renderPerformance(teams) {
     item.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <div>
-          <div style="font-weight:700">${escapeHtml(team.TE_Name)}</div>
+          <div style="font-weight:700">${escapeHtml(teamName)}</div>
           <div style="color:#666; font-size:13px">${completed}/${total} tarefas • 🏆 0</div>
         </div>
         <div style="font-weight:700">${percent}%</div>
@@ -434,15 +494,22 @@ function renderPerformance(teams) {
 
       <!-- Lista compacta de tarefas com checkbox -->
       <ul style="margin-top:12px; list-style:none; padding:0;">
-        ${(team.tasks || []).map(t => `
-          <li style="display:flex;align-items:center;gap:8px;padding:6px 0;">
-            <input type="checkbox" data-taskid="${t.T_ID}" ${t.T_Completed ? "checked" : ""} onchange="toggleTask(${t.T_ID}, this.checked, ${team.TE_ID})" />
-            <div style="flex:1">
-              <div style="font-weight:600">${escapeHtml(t.T_Name)}</div>
-              <div style="font-size:12px;color:#666">${escapeHtml(t.T_Description || '')}</div>
-            </div>
-          </li>
-        `).join("")}
+        ${(team.tasks || []).map(t => {
+          const taskId = t.id || t.T_ID;
+          const taskName = t.name || t.T_Name || 'Sem nome';
+          const taskDesc = t.description || t.T_Description || '';
+          const taskCompleted = t.completed || t.T_Completed;
+          
+          return `
+            <li style="display:flex;align-items:center;gap:8px;padding:6px 0;">
+              <input type="checkbox" data-taskid="${taskId}" ${taskCompleted ? "checked" : ""} onchange="toggleTask(${taskId}, this.checked, ${teamId})" />
+              <div style="flex:1">
+                <div style="font-weight:600">${escapeHtml(taskName)}</div>
+                <div style="font-size:12px;color:#666">${escapeHtml(taskDesc)}</div>
+              </div>
+            </li>
+          `;
+        }).join("")}
       </ul>
     `;
     container.appendChild(item);
