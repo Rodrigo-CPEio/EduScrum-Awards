@@ -3,7 +3,7 @@
 // =========================
 //  CONFIG
 // =========================
-const API_BASE = "/api/teams"; // corresponde ao app.use('/api/teams', teamRoutes) no app.js
+const API_BASE = "/teams"; // corresponde ao app.use('/api/teams', teamRoutes) no app.js
 
 // =========================
 //  VARIÁVEIS GLOBAIS

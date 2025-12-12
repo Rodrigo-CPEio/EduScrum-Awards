@@ -24,7 +24,7 @@ app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);
 app.use('/cadeiras', cadeirasRoutes);
 app.use('/projetos', projectRoutes);
-app.use('/api/teams', teamRoutes); // <-- AGORA FUNCIONA 100%
+app.use('/teams', teamRoutes); // <-- AGORA FUNCIONA 100%
 
 // Ignorar favicon (opcional)
 app.get('/favicon.ico', (req, res) => res.status(204).end());
