@@ -1,10 +1,43 @@
-// ==================== VARIÁVEIS GLOBAIS ====================
+// =========================
+//  VARIÁVEIS GLOBAIS
+// =========================
 let professorId = null;
 let cadeiraEditando = null;
 let cursoAtual = null;
 let userData = null;
 
-// ==================== AUTENTICAÇÃO ====================
+// =========================
+//  INICIALIZAÇÃO
+// =========================
+document.addEventListener('DOMContentLoaded', () => {
+  if (!verificarAutenticacao()) return;
+
+  // Inicializar sidebar
+  inicializarSidebar({
+    userType: 'professor',
+    activePage: 'cursos',
+    userData: {
+      nome: userData.nome,
+      foto: userData.foto || null
+    }
+  });
+
+  cursoAtual = localStorage.getItem('cursoAtual');
+  if (!cursoAtual) {
+    alert('Curso não selecionado. Volte à página de cursos.');
+    window.location.href = '/cursoP';
+    return;
+  }
+
+  carregarNomeCurso();
+  carregarCadeiras();
+  configurarFormulario();
+  configurarBotaoSair();
+});
+
+// =========================
+//  AUTENTICAÇÃO
+// =========================
 function verificarAutenticacao() {
   const userStr = localStorage.getItem('user');
   if (!userStr) {
@@ -24,70 +57,9 @@ function verificarAutenticacao() {
   return true;
 }
 
-// ==================== CARREGAR SIDEBAR ====================
-function carregarPerfilSidebar() {
-  const sidebarUserInfo = document.querySelector('.sidebar .user-info .user-top');
-  if (!sidebarUserInfo) return;
-
-  const img = sidebarUserInfo.querySelector('img');
-  let avatar = sidebarUserInfo.querySelector('.avatar-placeholder');
-
-  if (avatar) avatar.remove();
-
-  avatar = document.createElement('div');
-  avatar.className = 'avatar-placeholder';
-  avatar.style.cssText = `
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  `;
-
-  sidebarUserInfo.insertBefore(avatar, img);
-
-  if (userData.foto) {
-    img.src = userData.foto;
-    img.style.display = 'block';
-    avatar.style.display = 'none';
-  } else {
-    img.style.display = 'none';
-    avatar.style.display = 'flex';
-    avatar.textContent = (userData.nome || 'U')[0].toUpperCase();
-  }
-
-  const nameEl = sidebarUserInfo.querySelector('.user-details h3');
-  const typeEl = sidebarUserInfo.querySelector('.user-details p');
-
-  if (nameEl) nameEl.textContent = userData.nome;
-  if (typeEl) typeEl.textContent = 'Docente';
-}
-
-// ==================== DOM READY ====================
-document.addEventListener('DOMContentLoaded', () => {
-  if (!verificarAutenticacao()) return;
-
-  carregarPerfilSidebar();
-
-  cursoAtual = localStorage.getItem('cursoAtual');
-  if (!cursoAtual) {
-    alert('Curso não selecionado. Volte à página de cursos.');
-    window.location.href = '/cursoP';
-    return;
-  }
-
-  // Carregar o nome do curso
-  carregarNomeCurso();
-  carregarCadeiras();
-  configurarFormulario();
-});
-
-// ==================== CARREGAR NOME DO CURSO ====================
+// =========================
+//  CARREGAR NOME DO CURSO
+// =========================
 async function carregarNomeCurso() {
   try {
     const response = await fetch(`/cursos/${cursoAtual}`);
@@ -104,7 +76,9 @@ async function carregarNomeCurso() {
   }
 }
 
-// ==================== CARREGAR CADEIRAS ====================
+// =========================
+//  CARREGAR CADEIRAS
+// =========================
 async function carregarCadeiras() {
   try {
     const response = await fetch(`/cadeiras/curso/${cursoAtual}`);
@@ -122,12 +96,14 @@ async function carregarCadeiras() {
   }
 }
 
-// ==================== RENDERIZAR CADEIRAS ====================
+// =========================
+//  RENDERIZAR CADEIRAS
+// =========================
 function renderizarCadeiras(cadeiras) {
   const tbody = document.querySelector('.courses-table tbody');
 
   if (!cadeiras || cadeiras.length === 0) {
-    mostrarMensagemVazia('Nenhuma cadeira criada ainda');
+    mostrarMensagemVazia('Nenhuma cadeira criada ainda. Clique em "+ Nova Cadeira" para começar.');
     return;
   }
 
@@ -146,7 +122,7 @@ function renderizarCadeiras(cadeiras) {
         <button class="editar-btn" onclick="editarCadeira(${cadeira.id})" title="Editar">
           ✏️
         </button>
-        <button class="apagar-btn" onclick="confirmarApagarCadeira(${cadeira.id}, '${cadeira.nome}')" title="Apagar">
+        <button class="apagar-btn" onclick="confirmarApagarCadeira(${cadeira.id}, '${cadeira.nome.replace(/'/g, "\\'")}' )" title="Apagar">
           🗑️
         </button>
       </td>
@@ -155,7 +131,9 @@ function renderizarCadeiras(cadeiras) {
   });
 }
 
-// ==================== MENSAGEM QUANDO VAZIO ====================
+// =========================
+//  MENSAGEM QUANDO VAZIO
+// =========================
 function mostrarMensagemVazia(mensagem) {
   const tbody = document.querySelector('.courses-table tbody');
   tbody.innerHTML = `
@@ -167,22 +145,29 @@ function mostrarMensagemVazia(mensagem) {
   `;
 }
 
-// ==================== MODAL (CRIAR / EDITAR) ====================
+// =========================
+//  MODAL (CRIAR / EDITAR)
+// =========================
 function abrirModal() {
   cadeiraEditando = null;
-  document.getElementById('modalCriarCadeira').classList.add('ativo');
-  document.querySelector('#modalCriarCadeira h2').textContent = 'Criar Nova Cadeira';
-  document.querySelector('#modalCriarCadeira form').reset();
+  const modal = document.getElementById('modalCriarCadeira');
+  modal.classList.add('ativo');
+  modal.querySelector('h2').textContent = 'Criar Nova Cadeira';
+  modal.querySelector('form').reset();
+  modal.querySelector('.btn.criar').textContent = 'Criar';
   document.body.style.overflow = 'hidden';
 }
 
 function fecharModal() {
-  document.getElementById('modalCriarCadeira').classList.remove('ativo');
+  const modal = document.getElementById('modalCriarCadeira');
+  modal.classList.remove('ativo');
   document.body.style.overflow = '';
   cadeiraEditando = null;
 }
 
-// ==================== FORMULÁRIO ====================
+// =========================
+//  CONFIGURAR FORMULÁRIO
+// =========================
 function configurarFormulario() {
   const form = document.querySelector('#modalCriarCadeira form');
   if (!form) return;
@@ -254,7 +239,9 @@ function configurarFormulario() {
   });
 }
 
-// ==================== EDITAR ====================
+// =========================
+//  EDITAR
+// =========================
 async function editarCadeira(id) {
   try {
     const response = await fetch(`/cadeiras/${id}`);
@@ -263,12 +250,15 @@ async function editarCadeira(id) {
     if (data.success) {
       cadeiraEditando = id;
 
-      const form = document.querySelector('#modalCriarCadeira form');
+      const modal = document.getElementById('modalCriarCadeira');
+      const form = modal.querySelector('form');
+      
       form.querySelector('input[type="text"]').value = data.cadeira.nome;
       form.querySelector('textarea').value = data.cadeira.descricao;
 
-      document.querySelector('#modalCriarCadeira h2').textContent = 'Editar Cadeira';
-      document.getElementById('modalCriarCadeira').classList.add('ativo');
+      modal.querySelector('h2').textContent = 'Editar Cadeira';
+      modal.querySelector('.btn.criar').textContent = 'Salvar';
+      modal.classList.add('ativo');
       document.body.style.overflow = 'hidden';
     } else {
       alert('Erro ao carregar cadeira: ' + data.error);
@@ -279,7 +269,9 @@ async function editarCadeira(id) {
   }
 }
 
-// ==================== APAGAR ====================
+// =========================
+//  APAGAR
+// =========================
 function confirmarApagarCadeira(id, nome) {
   if (confirm(`Tem certeza que deseja apagar a cadeira "${nome}"?\n\nEsta ação não pode ser desfeita.`)) {
     apagarCadeira(id);
@@ -308,15 +300,38 @@ async function apagarCadeira(id) {
   }
 }
 
-// ==================== VER PROJETOS ====================
+// =========================
+//  VER PROJETOS
+// =========================
 function verProjetos(cadeiraId) {
   window.location.href = `/projetosP?disciplineId=${cadeiraId}`;
 }
 
-// ==================== FECHAR MODAL AO CLICAR FORA ====================
+// =========================
+//  FECHAR MODAL AO CLICAR FORA
+// =========================
 document.addEventListener('click', (e) => {
   const modal = document.getElementById('modalCriarCadeira');
   if (e.target === modal) {
     fecharModal();
   }
 });
+
+// =========================
+//  BOTÃO SAIR
+// =========================
+function configurarBotaoSair() {
+  setTimeout(() => {
+    const botaoSair = document.querySelector('.bottom-menu li:last-child');
+    if (botaoSair) {
+      botaoSair.style.cursor = 'pointer';
+      botaoSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Tem certeza que deseja sair?')) {
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+        }
+      });
+    }
+  }, 100);
+}

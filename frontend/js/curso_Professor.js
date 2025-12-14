@@ -1,15 +1,34 @@
+// =========================
+//  VARIÁVEIS GLOBAIS
+// =========================
 let userData = null;
 let teacherId = null;
 let cursoEditando = null;
 
+// =========================
+//  INICIALIZAÇÃO
+// =========================
 document.addEventListener('DOMContentLoaded', () => {
   if (!verificarAutenticacao()) return;
-  carregarPerfilSidebar();
+  
+  // Inicializar sidebar
+  inicializarSidebar({
+    userType: 'professor',
+    activePage: 'cursos',
+    userData: {
+      nome: userData.nome,
+      foto: userData.foto || null
+    }
+  });
+
   carregarCursos();
   configurarFormularioModal();
+  configurarBotaoSair();
 });
 
-// ==================== AUTENTICAÇÃO ====================
+// =========================
+//  AUTENTICAÇÃO
+// =========================
 function verificarAutenticacao() {
   const userStr = localStorage.getItem('user');
   if (!userStr) {
@@ -29,50 +48,9 @@ function verificarAutenticacao() {
   return true;
 }
 
-// ==================== CARREGAR SIDEBAR ====================
-function carregarPerfilSidebar() {
-  const sidebarUserInfo = document.querySelector('.sidebar .user-info .user-top');
-  if (!sidebarUserInfo) return;
-
-  const img = sidebarUserInfo.querySelector('img');
-  let avatar = sidebarUserInfo.querySelector('.avatar-placeholder');
-
-  if (avatar) avatar.remove();
-
-  avatar = document.createElement('div');
-  avatar.className = 'avatar-placeholder';
-  avatar.style.cssText = `
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  `;
-
-  sidebarUserInfo.insertBefore(avatar, img);
-
-  if (userData.foto) {
-    img.src = userData.foto;
-    img.style.display = 'block';
-    avatar.style.display = 'none';
-  } else {
-    img.style.display = 'none';
-    avatar.style.display = 'flex';
-    avatar.textContent = (userData.nome || 'U')[0].toUpperCase();
-  }
-
-  const nameEl = sidebarUserInfo.querySelector('.user-details h3');
-  const typeEl = sidebarUserInfo.querySelector('.user-details p');
-  if (nameEl) nameEl.textContent = userData.nome;
-  if (typeEl) typeEl.textContent = 'Docente';
-}
-
-// ==================== CARREGAR CURSOS ====================
+// =========================
+//  CARREGAR CURSOS
+// =========================
 async function carregarCursos() {
   if (!teacherId) return;
 
@@ -81,8 +59,9 @@ async function carregarCursos() {
     const text = await res.text();
 
     let data;
-    try { data = JSON.parse(text); } 
-    catch (err) { 
+    try { 
+      data = JSON.parse(text); 
+    } catch (err) { 
       console.error('Resposta inválida:', text);
       alert('Erro ao carregar cursos');
       return;
@@ -99,7 +78,9 @@ async function carregarCursos() {
   }
 }
 
-// ==================== RENDERIZAR CURSOS ====================
+// =========================
+//  RENDERIZAR CURSOS
+// =========================
 function renderizarCursos(cursos) {
   const tbody = document.querySelector('.courses-table tbody');
   if (!tbody) return;
@@ -130,7 +111,9 @@ function renderizarCursos(cursos) {
   `).join('');
 }
 
-// ==================== MODAL ====================
+// =========================
+//  MODAL
+// =========================
 function abrirModal() {
   cursoEditando = null;
   const modal = document.getElementById('modalCriarCurso');
@@ -157,7 +140,9 @@ function fecharModal() {
   cursoEditando = null;
 }
 
-// ==================== CONFIGURAR FORMULÁRIO MODAL ====================
+// =========================
+//  CONFIGURAR FORMULÁRIO MODAL
+// =========================
 function configurarFormularioModal() {
   const form = document.querySelector('.modal form');
   if (!form) return;
@@ -180,7 +165,9 @@ function configurarFormularioModal() {
   });
 }
 
-// ==================== CRUD ====================
+// =========================
+//  CRUD - CRIAR
+// =========================
 async function criarCurso(nome, descricao) {
   try {
     const res = await fetch('/cursos', {
@@ -191,29 +178,45 @@ async function criarCurso(nome, descricao) {
 
     const text = await res.text();
     let data;
-    try { data = JSON.parse(text); } 
-    catch { alert('Erro: resposta inválida do servidor'); return; }
+    try { 
+      data = JSON.parse(text); 
+    } catch { 
+      alert('Erro: resposta inválida do servidor'); 
+      return; 
+    }
 
     if (data.success) {
       alert('✅ Curso criado com sucesso!');
       fecharModal();
       carregarCursos();
-    } else alert(data.error || 'Erro ao criar curso');
+    } else {
+      alert(data.error || 'Erro ao criar curso');
+    }
   } catch (err) {
     console.error(err);
     alert('Erro ao criar curso');
   }
 }
 
+// =========================
+//  CRUD - EDITAR
+// =========================
 async function editarCurso(cursoId) {
   try {
     const res = await fetch(`/cursos/${cursoId}`);
     const text = await res.text();
     let data;
-    try { data = JSON.parse(text); } 
-    catch { alert('Erro: resposta inválida'); return; }
+    try { 
+      data = JSON.parse(text); 
+    } catch { 
+      alert('Erro: resposta inválida'); 
+      return; 
+    }
 
-    if (!data.success) { alert('Erro ao carregar curso'); return; }
+    if (!data.success) { 
+      alert('Erro ao carregar curso'); 
+      return; 
+    }
 
     const curso = data.curso;
     cursoEditando = cursoId;
@@ -236,6 +239,9 @@ async function editarCurso(cursoId) {
   }
 }
 
+// =========================
+//  CRUD - ATUALIZAR
+// =========================
 async function atualizarCurso(cursoId, nome, descricao) {
   try {
     const res = await fetch(`/cursos/${cursoId}`, {
@@ -246,20 +252,29 @@ async function atualizarCurso(cursoId, nome, descricao) {
 
     const text = await res.text();
     let data;
-    try { data = JSON.parse(text); } 
-    catch { alert('Erro: resposta inválida'); return; }
+    try { 
+      data = JSON.parse(text); 
+    } catch { 
+      alert('Erro: resposta inválida'); 
+      return; 
+    }
 
     if (data.success) {
       alert('✅ Curso atualizado com sucesso!');
       fecharModal();
       carregarCursos();
-    } else alert(data.error || 'Erro ao atualizar curso');
+    } else {
+      alert(data.error || 'Erro ao atualizar curso');
+    }
   } catch (err) {
     console.error(err);
     alert('Erro ao atualizar curso');
   }
 }
 
+// =========================
+//  CRUD - APAGAR
+// =========================
 async function apagarCurso(cursoId) {
   if (!confirm('Tem certeza que deseja apagar este curso?')) return;
 
@@ -272,21 +287,48 @@ async function apagarCurso(cursoId) {
 
     const text = await res.text();
     let data;
-    try { data = JSON.parse(text); } 
-    catch { alert('Erro: resposta inválida'); return; }
+    try { 
+      data = JSON.parse(text); 
+    } catch { 
+      alert('Erro: resposta inválida'); 
+      return; 
+    }
 
     if (data.success) {
       alert('✅ Curso apagado com sucesso!');
       carregarCursos();
-    } else alert(data.error || 'Erro ao apagar curso');
+    } else {
+      alert(data.error || 'Erro ao apagar curso');
+    }
   } catch (err) {
     console.error(err);
     alert('Erro ao apagar curso');
   }
 }
 
-// ==================== VER CADEIRAS ====================
+// =========================
+//  VER CADEIRAS
+// =========================
 function verCadeiras(cursoId) {
   localStorage.setItem('cursoAtual', cursoId);
   window.location.href = 'cadeiras_Professor.html';
+}
+
+// =========================
+//  BOTÃO SAIR
+// =========================
+function configurarBotaoSair() {
+  setTimeout(() => {
+    const botaoSair = document.querySelector('.bottom-menu li:last-child');
+    if (botaoSair) {
+      botaoSair.style.cursor = 'pointer';
+      botaoSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Tem certeza que deseja sair?')) {
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+        }
+      });
+    }
+  }, 100);
 }

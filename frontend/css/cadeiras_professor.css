@@ -1,6 +1,11 @@
+/* ==========================================
+   CADEIRAS PROFESSOR - Apenas estilos específicos
+   (Sidebar vem de sidebar.css)
+   ========================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Base do teu CSS original */
+/* RESET E BASE */
 * {
   margin: 0;
   padding: 0;
@@ -23,132 +28,9 @@ body {
   height: 100vh;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 240px;
-  background-color: #fff;
-  border-right: 1px solid #e6e6e6;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.logo-icon {
-  width: 22px;
-  height: 22px;
-  background-color: #3056d3;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo h2 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #2c2c2c;
-}
-
-.divider {
-  border: none;
-  border-top: 1px solid #eee;
-  margin: 10px 0;
-}
-
-/* User */
-.user-info {
-  padding: 0 20px;
-}
-
-.user-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-top img {
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  object-fit: cover;
-}
-
-.user-details h3 {
-  font-size: 15px;
-  font-weight: 600;
-  color: #222;
-}
-
-.user-details p {
-  font-size: 13px;
-  color: #777;
-}
-
-/* Menus */
-.menu ul,
-.bottom-menu ul {
-  list-style: none;
-  padding: 0 20px;
-}
-
-.menu li,
-.bottom-menu li {
-  padding: 12px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 15px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-}
-
-.icon {
-  width: 18px;
-  height: 18px;
-  stroke-width: 2;
-}
-
-.menu li:hover,
-.bottom-menu li:hover {
-  background-color: #f2f3f6;
-}
-
-.menu .active {
-  background-color: #eef2ff;
-  color: #3056d3;
-  font-weight: 600;
-}
-
-.badge {
-  background-color: #d93025;
-  color: #fff;
-  font-size: 12px;
-  border-radius: 50%;
-  padding: 2px 6px;
-  position: absolute;
-  right: 10px;
-}
-
-.bottom-menu {
-  border-top: 1px solid #eee;
-  padding-top: 10px;
-}
-
-/* Main */
+/* ==========================================
+   MAIN CONTENT
+   ========================================== */
 .main {
   flex: 1;
   padding: 30px 40px;
@@ -157,103 +39,174 @@ body {
   height: 100vh;
 }
 
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between; /* 👉 botão vai para a direita */
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.header h1 {
-  font-size: 28px;
-  font-weight: 700;
-}
-
-.header p {
-  color: #777;
-  margin-top: 4px;
-}
-
-.novo-curso-btn {
-  background-color: #0a0a23;
-  color: #fff;
-  border: none;
+/* ==========================================
+   BOTÃO VOLTAR
+   ========================================== */
+.voltar-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   padding: 8px 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+
+.voltar-btn:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+  transform: translateX(-2px);
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-left h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 4px;
+}
+
+.header-left p {
+  color: #777;
+  font-size: 14px;
+}
+
+/* ==========================================
+   BOTÃO NOVA CADEIRA
+   ========================================== */
+.novo-curso-btn {
+  background: #0b0b21;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-bottom: 25px;
+  transition: all 0.2s ease;
 }
 
 .novo-curso-btn:hover {
-  background-color: #1a1a4a;
+  background: #1a1a3a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(11, 11, 33, 0.3);
 }
 
-/* Cursos */
+.novo-curso-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================
+   COURSES SECTION
+   ========================================== */
 .courses-section {
   background-color: #fff;
   border-radius: 12px;
-  padding: 16px;
+  padding: 20px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
 }
 
 .courses-section h3 {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 4px;
+  color: #2c2c2c;
 }
 
-.courses-section p {
+.courses-section > p {
   color: #777;
   font-size: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
-/* Tabela */
+/* ==========================================
+   TABELA DE CADEIRAS
+   ========================================== */
 .courses-table {
   width: 100%;
   border-collapse: collapse;
 }
 
+.courses-table thead {
+  background-color: #f9fafb;
+}
+
 .courses-table th {
   text-align: left;
-  padding: 8px;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.courses-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.courses-table tbody tr:hover {
+  background-color: #f9fafb;
 }
 
 .courses-table td {
-  padding: 8px;
-  border-top: 1px solid #f0f0f0;
+  padding: 16px 12px;
   vertical-align: middle;
+  font-size: 14px;
+  color: #374151;
 }
 
-.courses-table td img {
-  width: 20px;
-  margin-right: 8px;
-  vertical-align: middle;
+.courses-table td strong {
+  color: #1f2937;
+  font-weight: 600;
 }
 
-.date-badge {
-  background-color: #f3f4f6;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 0.875rem;
+/* ==========================================
+   BOTÕES DE AÇÃO NA TABELA
+   ========================================== */
+.courses-table td:last-child {
+  text-align: right;
+  white-space: nowrap;
 }
 
-/* Botões de ação */
 .ver-projetos-btn {
-  background-color: #0a0a23;
+  background-color: #0b0b21;
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 6px 12px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
+  margin-right: 6px;
 }
 
 .ver-projetos-btn:hover {
-  background-color: #1a1a4a;
+  background-color: #1a1a3a;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(11, 11, 33, 0.2);
 }
 
 .editar-btn,
@@ -261,24 +214,287 @@ body {
   background-color: #f9fafb;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
-  padding: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
   cursor: pointer;
   margin-left: 4px;
+  transition: all 0.2s ease;
 }
 
-.editar-btn:hover,
+.editar-btn:hover {
+  background-color: #e5e7eb;
+  border-color: #d1d5db;
+}
+
 .apagar-btn:hover {
-  background-color: #f3f4f6;
+  background-color: #fee2e2;
+  border-color: #fecaca;
+  color: #dc2626;
 }
 
-/* Vazio */
-.empty-section {
-  height: 100%;
-  margin-top: 40px;
+/* ==========================================
+   MODAL
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.ativo {
+  display: flex;
+}
+
+.modal {
   background: #fff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 480px;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
 }
 
-.header {
-  margin-bottom: 80px; /* Aumenta a distância até à box dos cursos */
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
 }
 
+.close-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.modal h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.modal .sub {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* ==========================================
+   FORMULÁRIO DO MODAL
+   ========================================== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  background-color: #fff;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #0b0b21;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(11, 11, 33, 0.1);
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+  max-height: 200px;
+}
+
+/* ==========================================
+   BOTÕES DO MODAL
+   ========================================== */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn.cancelar {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.btn.cancelar:hover {
+  background: #e5e7eb;
+}
+
+.btn.criar {
+  background: #0b0b21;
+  color: #fff;
+}
+
+.btn.criar:hover {
+  background: #1a1a3a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(11, 11, 33, 0.3);
+}
+
+.btn.criar:active {
+  transform: translateY(0);
+}
+
+.btn.criar:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================
+   EMPTY SECTION
+   ========================================== */
+.empty-section {
+  height: 40px;
+  margin-top: 20px;
+}
+
+/* ==========================================
+   ANIMAÇÕES
+   ========================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================
+   RESPONSIVO
+   ========================================== */
+@media (max-width: 768px) {
+  .main {
+    padding: 20px 24px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-left h1 {
+    font-size: 24px;
+  }
+
+  .novo-curso-btn {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .courses-table {
+    font-size: 13px;
+  }
+
+  .courses-table th,
+  .courses-table td {
+    padding: 10px 8px;
+  }
+
+  .courses-table th:nth-child(2),
+  .courses-table td:nth-child(2) {
+    display: none;
+  }
+
+  .modal {
+    width: 95%;
+    padding: 24px;
+  }
+
+  .modal h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .courses-table th:nth-child(3),
+  .courses-table td:nth-child(3) {
+    display: none;
+  }
+
+  .ver-projetos-btn {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 4px;
+  }
+
+  .courses-table td:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .editar-btn,
+  .apagar-btn {
+    width: 48%;
+    display: inline-block;
+  }
+}
