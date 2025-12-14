@@ -2,6 +2,8 @@
 const db = require('../config/db');
 
 const Project = {
+  // ==================== CRUD BÁSICO ====================
+
   // Criar novo projeto
   create: (projectData, callback) => {
     const { name, description, startDate, endDate, disciplineId } = projectData;
@@ -12,7 +14,25 @@ const Project = {
     db.query(query, [name, description, startDate, endDate, disciplineId], callback);
   },
 
-  // Buscar todos os projetos de uma disciplina
+  // Buscar todos os projetos
+  getProjects: (callback) => {
+    db.query("SELECT P_ID, P_Name, P_D_ID FROM project ORDER BY P_ID DESC", callback);
+  },
+
+  // Buscar projetos do estudante
+  getMyProjects: (studentId, callback) => {
+    const sql = `
+      SELECT DISTINCT p.P_ID, p.P_Name
+      FROM studentcourse sc
+      JOIN discipline d ON d.D_ID = sc.SC_D_ID
+      JOIN project p ON p.P_D_ID = d.D_ID
+      WHERE sc.SC_S_ID = ?
+      ORDER BY p.P_ID DESC
+    `;
+    db.query(sql, [studentId], callback);
+  },
+
+  // Buscar projeto por disciplina
   findByDiscipline: (disciplineId, callback) => {
     const query = `
       SELECT 
@@ -39,24 +59,7 @@ const Project = {
     db.query(query, [projectId], callback);
   },
 
-  // Atualizar projeto
-  update: (projectId, projectData, callback) => {
-    const { name, description, startDate, endDate, status } = projectData;
-    const query = `
-      UPDATE project 
-      SET P_Name = ?, P_Description = ?, P_Start_Date = ?, P_End_Date = ?, P_Status = ?
-      WHERE P_ID = ?
-    `;
-    db.query(query, [name, description, startDate, endDate, status, projectId], callback);
-  },
-
-  // Deletar projeto
-  delete: (projectId, callback) => {
-    const query = 'DELETE FROM project WHERE P_ID = ?';
-    db.query(query, [projectId], callback);
-  },
-
-  // Buscar projetos do professor (através das disciplinas)
+  // Buscar projetos do professor
   findByTeacher: (teacherId, callback) => {
     const query = `
       SELECT 
@@ -80,36 +83,58 @@ const Project = {
     db.query(query, [teacherId], callback);
   },
 
-  // ✅ NOVO: Buscar projetos do estudante (pela disciplina onde está inscrito)
-  // GET /projetos/me?studentId=1
-  findByStudent: (studentId, callback) => {
-    const sql = `
-      SELECT DISTINCT p.P_ID, p.P_Name
-      FROM student s
-      JOIN studentcourse sc ON sc.SC_S_ID = s.S_ID
-      JOIN discipline d ON d.D_ID = sc.SC_D_ID
-      JOIN project p ON p.P_D_ID = d.D_ID
-      WHERE s.S_ID = ?
-      ORDER BY p.P_ID DESC
+  // Atualizar projeto
+  update: (projectId, projectData, callback) => {
+    const { name, description, startDate, endDate, status } = projectData;
+    const query = `
+      UPDATE project 
+      SET P_Name = ?, P_Description = ?, P_Start_Date = ?, P_End_Date = ?, P_Status = ?
+      WHERE P_ID = ?
     `;
-    db.query(sql, [studentId], callback);
+    db.query(query, [name, description, startDate, endDate, status, projectId], callback);
   },
-  getProjects: (callback) => {
-  db.query("SELECT P_ID, P_Name, P_D_ID FROM project ORDER BY P_ID DESC", callback);
-},
 
-getMyProjects: (studentId, callback) => {
-  const sql = `
-    SELECT DISTINCT p.P_ID, p.P_Name
-    FROM studentcourse sc
-    JOIN discipline d ON d.D_ID = sc.SC_D_ID
-    JOIN project p ON p.P_D_ID = d.D_ID
-    WHERE sc.SC_S_ID = ?
-    ORDER BY p.P_ID DESC
-  `;
-  db.query(sql, [studentId], callback);
-},
+  // Deletar projeto
+  delete: (projectId, callback) => {
+    const query = 'DELETE FROM project WHERE P_ID = ?';
+    db.query(query, [projectId], callback);
+  },
 
+  // ==================== DELETES EM CASCATA ====================
+
+  // Deletar todas as tasks de um projeto (através das equipes)
+  deleteTasksByProject: (projectId, callback) => {
+    const query = `
+      DELETE t
+      FROM task t
+      INNER JOIN team te ON t.T_TE_ID = te.TE_ID
+      WHERE te.TE_P_ID = ?
+    `;
+    db.query(query, [projectId], callback);
+  },
+
+  // Deletar todos os membros das equipes de um projeto
+  deleteTeamMembersByProject: (projectId, callback) => {
+    const query = `
+      DELETE tm
+      FROM team_member tm
+      INNER JOIN team te ON tm.TM_TE_ID = te.TE_ID
+      WHERE te.TE_P_ID = ?
+    `;
+    db.query(query, [projectId], callback);
+  },
+
+  // Deletar todas as equipes de um projeto
+  deleteTeamsByProject: (projectId, callback) => {
+    const query = 'DELETE FROM team WHERE TE_P_ID = ?';
+    db.query(query, [projectId], callback);
+  },
+
+  // Deletar todas as sprints de um projeto
+  deleteSprintsByProject: (projectId, callback) => {
+    const query = 'DELETE FROM sprint WHERE SP_P_ID = ?';
+    db.query(query, [projectId], callback);
+  }
 };
 
 module.exports = Project;
