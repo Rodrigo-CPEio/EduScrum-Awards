@@ -134,15 +134,47 @@
     </aside>
 
     <!-- MAIN: Prémios -->
+    <!-- MAIN -->
     <main class="main">
       <header class="main-header">
-        <h1>Prémios Disponíveis</h1>
-        <p>Conquiste prémios completando objetivos e demonstrando excelência</p>
+        <h1>Os meus Prémios</h1>
+        <p>Vê todos os prémios que já recebeste (individual e em grupo)</p>
       </header>
 
-      <section class="awards-grid">
-        <!-- Prémios carregados dinamicamente via JavaScript -->
+      <!-- Painel + Toggle -->
+      <section class="awards-panel">
+        <div class="awards-left">
+          <h2>Histórico de Prémios</h2>
+          <p class="muted">Troca entre prémios individuais e prémios de equipa</p>
+
+          <div class="toggle">
+            <button class="toggle-btn active" id="btnAwardIndividual" type="button">Individual</button>
+            <button class="toggle-btn" id="btnAwardGroup" type="button">Grupo</button>
+          </div>
+        </div>
+
+        <div class="awards-right">
+          <div class="mini-stat">
+            <span class="label">Total</span>
+            <strong id="awardsTotal">—</strong>
+          </div>
+          <button class="btn" id="btnRefreshAwards" type="button">Atualizar</button>
+        </div>
       </section>
+
+      <!-- Lista de prémios -->
+      <section class="awards-list-card">
+        <div class="awards-list-header">
+          <h3 id="awardsTitle">Prémios Individuais</h3>
+          <p id="awardsSubtitle" class="muted">A carregar...</p>
+        </div>
+
+        <div class="awards-grid" id="awardsGrid">
+          <!-- preenchido via JS -->
+        </div>
+      </section>
+
+      <script src="js/premios_Estudante.js"></script>
     </main>
   </div>
 </body>

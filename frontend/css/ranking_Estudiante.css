@@ -1,3 +1,132 @@
+<<<<<<< HEAD
+/* Base */
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Inter",sans-serif;}
+html,body{height:100%;overflow:hidden;}
+body{background:#f3f4f6;color:#111827;}
+.container{display:flex;height:100vh;}
+
+/* Sidebar */
+.sidebar{
+  width:240px;background:#fff;border-right:1px solid #e6e6e6;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:20px 0;position:sticky;top:0;height:100vh;overflow:hidden;
+}
+.logo{display:flex;align-items:center;justify-content:center;gap:8px;}
+.logo-icon{width:22px;height:22px;background:#3056d3;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;}
+.logo h2{font-size:18px;font-weight:700;color:#2c2c2c;}
+.divider{border:none;border-top:1px solid #eee;margin:10px 0;}
+
+.user-info{padding:0 20px;}
+.user-top{display:flex;align-items:center;gap:10px;}
+.user-top img{border-radius:50%;width:55px;height:55px;object-fit:cover;}
+.user-details h3{font-size:15px;font-weight:600;color:#222;}
+.user-details p{font-size:13px;color:#777;}
+
+.user-points{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:0 5px;}
+.user-points .label{font-size:13px;color:#666;}
+.points-box{background:#f2f3f6;border-radius:6px;padding:5px 12px;display:inline-block;}
+.points-box strong{color:#333;font-size:14px;}
+
+.menu ul,.bottom-menu ul{list-style:none;padding:0 20px;margin:0;}
+.menu li,.bottom-menu li{margin-bottom:4px;position:relative;}
+.menu li a,.bottom-menu li a{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:10px 12px;border-radius:10px;text-decoration:none;
+  font-size:15px;color:#374151;cursor:pointer;
+  transition:background-color .18s ease,color .18s ease,transform .12s ease;
+}
+.sidebar .icon{width:18px;height:18px;stroke-width:2;flex-shrink:0;}
+.menu li a:hover,.bottom-menu li a:hover{background:#f3f4f6;transform:translateX(2px);}
+.menu li.active a{background:#eef2ff;color:#3056d3;font-weight:600;}
+.bottom-menu{border-top:1px solid #eee;padding-top:10px;margin-top:10px;}
+.badge{background:#d93025;color:#fff;font-size:12px;border-radius:999px;padding:2px 8px;position:absolute;right:12px;}
+
+/* Main */
+.main{flex:1;background:#f3f4f6;padding:32px 48px;overflow-y:auto;}
+.main-header h1{font-size:24px;font-weight:700;color:#111827;}
+.main-header p{margin-top:4px;font-size:14px;color:#6b7280;}
+
+.muted{color:#6b7280;font-size:13px}
+
+/* Panel puntos */
+.points-panel{
+  margin-top:18px;background:#fff;border-radius:18px;
+  padding:18px 22px;box-shadow:0 1px 4px rgba(15,23,42,.06);
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.points-left h2{font-size:16px;font-weight:600;color:#111827;}
+.toggle{margin-top:10px;display:inline-flex;background:#f3f4f6;border-radius:999px;padding:4px;}
+.toggle-btn{
+  border:0;background:transparent;padding:8px 14px;border-radius:999px;
+  font-size:13px;cursor:pointer;font-weight:600;color:#111827;
+}
+.toggle-btn.active{background:#3056d3;color:#fff;}
+.points-right{display:flex;align-items:center;gap:14px;}
+.my-points-card{
+  background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;
+  padding:10px 14px;min-width:170px;
+}
+.my-points-card .label{display:block;font-size:12px;color:#6b7280;}
+.my-points-card strong{display:block;font-size:22px;font-weight:800;color:#111827;margin-top:2px;}
+.btn{border:1px solid #d1d5db;background:#fff;border-radius:10px;padding:10px 14px;cursor:pointer;}
+.btn:hover{background:#f3f4f6;}
+
+/* ✅ TOP 3 */
+.top-ranking-grid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(240px,1fr));
+  gap:18px;
+}
+
+.top-card{
+  border-radius:20px;
+  padding:18px 18px;
+  background:#fff;
+  box-shadow:0 1px 4px rgba(15,23,42,.06);
+}
+
+.first-place{background:#fef9c3;border:1px solid #facc15;}
+.second-place{background:#eef2ff;border:2px solid #60a5fa;}
+.third-place{background:#ffedd5;border:1px solid #fdba74;}
+
+.top-card-header{display:flex;justify-content:center;align-items:center;}
+.top-trophy{font-size:22px;}
+
+.top-card-body{margin-top:10px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.top-avatar{
+  width:76px;height:76px;border-radius:999px;border:3px solid #fff;
+  box-shadow:0 4px 10px rgba(15,23,42,.18);
+  overflow:hidden;
+}
+.top-avatar img{width:100%;height:100%;object-fit:cover;}
+.top-name{margin-top:10px;font-size:15px;font-weight:700;color:#111827;}
+.top-stats{margin-top:10px;}
+.top-value{display:block;font-size:22px;font-weight:800;color:#111827;}
+.top-label{display:block;font-size:11px;color:#6b7280;margin-top:2px;}
+
+.you-pill{
+  display:inline-flex;align-items:center;padding:2px 8px;margin-left:6px;
+  border-radius:999px;background:#111827;color:#fff;font-size:10px;font-weight:700;
+}
+
+/* Ranking list */
+.points-list{
+  margin-top:18px;background:#fff;border-radius:18px;
+  padding:18px 22px;box-shadow:0 1px 4px rgba(15,23,42,.06);
+}
+.points-list h3{font-size:15px;font-weight:700;color:#111827;margin-bottom:10px;}
+
+.rank-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:12px 6px;border-top:1px solid #eee;
+}
+.rank-row .pos{width:40px;color:#6b7280;font-weight:700;}
+.rank-row .name{flex:1;color:#111827;}
+.rank-row .points{min-width:120px;text-align:right;font-weight:800;color:#111827;}
+.rank-row.me{background:#eff6ff;border-radius:12px;padding:12px 10px;}
+=======
 * {
   margin: 0;
   padding: 0;
@@ -1187,3 +1316,4 @@ body {
   font-weight: 600;
   color: #111827;
 }
+>>>>>>> 2b4e0291ca9d22567b1ea5a449505aeb0af282d7

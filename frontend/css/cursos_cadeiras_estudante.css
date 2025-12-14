@@ -1,0 +1,213 @@
+/* frontend/css/cursos_cadeiras_estudante.css */
+
+/* IMPORTANTE: no usar .badge aquí (esa clase es del sidebar) */
+
+.acad-section{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.acad-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.acad-header h1{
+  margin:0;
+  font-size:22px;
+  font-weight:800;
+  color:#111827;
+}
+
+.acad-header p{
+  margin:6px 0 0;
+  color:#6b7280;
+  font-size:14px;
+}
+
+.acad-actions{
+  display:flex;
+  gap:10px;
+}
+
+/* Panel layout */
+.acad-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:14px;
+}
+
+.panel{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  box-shadow:0 8px 18px rgba(0,0,0,.05);
+  overflow:hidden;
+  min-height: 520px;
+  display:flex;
+  flex-direction:column;
+}
+
+.panel-head{
+  padding:14px 16px;
+  border-bottom:1px solid #eef2f7;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.panel-head h2{
+  margin:0;
+  font-size:15px;
+  font-weight:800;
+  color:#111827;
+}
+
+.hint{ color:#9ca3af; font-size:12px; }
+
+.panel-body{
+  padding:14px;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.muted{ color:#6b7280; }
+
+/* Cards (solo para este módulo) */
+.acad-card{
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:12px;
+  background:#fff;
+  transition:.15s ease;
+}
+
+.acad-card:hover{
+  box-shadow:0 10px 20px rgba(0,0,0,.06);
+  transform: translateY(-1px);
+}
+
+.acad-card.active{
+  border-color:#3056d3;
+  box-shadow:0 0 0 3px rgba(48,86,211,.12);
+}
+
+.acad-card-title{
+  margin:0;
+  font-size:14px;
+  font-weight:800;
+  color:#111827;
+}
+
+.acad-card-desc{
+  margin:6px 0 0;
+  font-size:13px;
+  line-height:1.35;
+  color:#6b7280;
+}
+
+/* Acciones SIEMPRE abajo, alineadas a la izquierda */
+.acad-card-actions{
+  margin-top:12px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+/* Botones */
+.acad-section .btn{
+  border:1px solid #e5e7eb;
+  background:#f9fafb;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  color:#111827;
+}
+
+.acad-section .btn:hover{ background:#f3f4f6; }
+
+.acad-section .btn.primary{
+  background:#3056d3;
+  border-color:#3056d3;
+  color:#fff;
+}
+
+.acad-section .btn.ghost{ background:#fff; }
+
+.acad-section .btn.sm{
+  padding:8px 10px;
+  font-size:13px;
+}
+
+/* Proyectos: grupos */
+.proj-group{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.proj-group-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:2px 2px 6px;
+}
+
+.proj-group-head h3{
+  margin:0;
+  font-size:13px;
+  font-weight:900;
+  color:#111827;
+}
+
+.count{
+  font-size:12px;
+  font-weight:800;
+  color:#6b7280;
+}
+
+/* Chips (NO badge) */
+.chip{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  border:1px solid #e5e7eb;
+  background:#f9fafb;
+  color:#374151;
+}
+
+.chip-team{
+  background:#ecfeff;
+  border-color:#cffafe;
+  color:#155e75;
+}
+
+.chip-ind{
+  background:#fff7ed;
+  border-color:#ffedd5;
+  color:#9a3412;
+}
+
+.chip-ok{
+  background:#ecfdf5;
+  border-color:#bbf7d0;
+  color:#166534;
+}
+
+/* Responsive */
+@media (max-width: 1200px){
+  .acad-grid{ grid-template-columns: 1fr; }
+  .panel{ min-height:auto; }
+}

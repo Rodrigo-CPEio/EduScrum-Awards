@@ -162,7 +162,7 @@ async function confirmarAtribuicao() {
       }
     }
     
-    alert(`Prémio atribuído com sucesso a ${selecionados.length} ${targetAtual === 'estudante' ? 'estudante(s)' : 'equipa(s)')}`);
+    alert(`Prémio atribuído com sucesso a ${selecionados.length} ${targetAtual === 'estudante' ? 'estudante(s)' : 'equipa(s)'}`);
     fecharModalAtribuicao();
     carregarPremios(); // Recarregar prémios
   } catch (error) {
