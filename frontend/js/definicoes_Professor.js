@@ -350,14 +350,257 @@ function configurarNotificacoes() {
 }
 
 // ============================================
-// EXPORTAR DADOS
+// EXPORTAR DADOS - SUBSTITUIR A FUNÇÃO EXISTENTE
 // ============================================
 function configurarExportarDados() {
   const btnExportar = document.querySelector('.btn-export');
   
   if (btnExportar) {
     btnExportar.addEventListener('click', async () => {
-      alert('Funcionalidade de exportação em desenvolvimento');
+      await exportarDadosCSV();
     });
   }
+}
+
+// ============================================
+// FUNÇÃO DE EXPORTAÇÃO CSV
+// ============================================
+async function exportarDadosCSV() {
+  try {
+    // Mostrar loading
+    const btnExportar = document.querySelector('.btn-export');
+    const textoOriginal = btnExportar ? btnExportar.textContent : '';
+    if (btnExportar) {
+      btnExportar.textContent = 'Exportando...';
+      btnExportar.disabled = true;
+    }
+
+    // Buscar todos os dados necessários
+    const [equipas, cursos, premios] = await Promise.all([
+      fetch('http://localhost:3000/api/teams').then(r => r.json()),
+      fetch(`/cursos/professor/${teacherId}`).then(r => r.json()),
+      fetch('/awardassignments/professor/' + teacherId).then(r => r.json()).catch(() => [])
+    ]);
+
+    // Processar dados dos cursos
+    const cursosData = cursos.success ? cursos.cursos : [];
+    
+    // Criar CSV ÚNICO com todas as informações
+    const csvCompleto = gerarCSVCompleto(equipas, cursosData, premios);
+
+    // Baixar arquivo único
+    const dataAtual = new Date().toISOString().split('T')[0];
+    downloadCSV(csvCompleto, `dashboard_completo_${dataAtual}.csv`);
+
+    alert('✅ Dados exportados com sucesso!\n\nArquivo: dashboard_completo_' + dataAtual + '.csv');
+
+  } catch (error) {
+    console.error('Erro ao exportar dados:', error);
+    alert('❌ Erro ao exportar dados: ' + error.message);
+  } finally {
+    // Restaurar botão
+    const btnExportar = document.querySelector('.btn-export');
+    if (btnExportar) {
+      btnExportar.textContent = textoOriginal || 'Exportar Dados';
+      btnExportar.disabled = false;
+    }
+  }
+}
+
+// =========================
+//  GERAR CSV COMPLETO - TODAS AS INFORMAÇÕES
+// =========================
+function gerarCSVCompleto(equipas, cursos, premios) {
+  const linhas = [];
+  const separador = '='.repeat(80);
+  
+  // ==========================================
+  // SEÇÃO 1: RESUMO GERAL
+  // ==========================================
+  linhas.push('RESUMO GERAL DO DASHBOARD');
+  linhas.push(separador);
+  linhas.push('');
+  
+  // Estatísticas de Equipas
+  const totalEquipas = equipas.length;
+  const totalMembros = equipas.reduce((sum, t) => sum + (t.members?.length || 0), 0);
+  const totalTarefas = equipas.reduce((sum, t) => sum + (t.tasks?.length || 0), 0);
+  const tarefasConcluidas = equipas.reduce((sum, t) => 
+    sum + (t.tasks?.filter(task => task.completed || task.T_Completed).length || 0), 0);
+  
+  linhas.push('Categoria,Métrica,Valor');
+  linhas.push(`Equipas,Total de Equipas,${totalEquipas}`);
+  linhas.push(`Equipas,Total de Membros,${totalMembros}`);
+  linhas.push(`Equipas,Total de Tarefas,${totalTarefas}`);
+  linhas.push(`Equipas,Tarefas Concluídas,${tarefasConcluidas}`);
+  linhas.push(`Equipas,Taxa de Conclusão,${totalTarefas > 0 ? ((tarefasConcluidas/totalTarefas)*100).toFixed(1) : 0}%`);
+  
+  // Estatísticas de Cursos
+  const totalCursos = cursos.length;
+  const totalEstudantesCursos = cursos.reduce((sum, c) => sum + (c.totalEstudantes || 0), 0);
+  
+  linhas.push(`Cursos,Total de Cursos,${totalCursos}`);
+  linhas.push(`Cursos,Total de Estudantes,${totalEstudantesCursos}`);
+  
+  // Estatísticas de Prêmios
+  const totalPremios = Array.isArray(premios) ? premios.length : 0;
+  
+  linhas.push(`Prêmios,Total Atribuídos,${totalPremios}`);
+  linhas.push(`Geral,Data de Exportação,${new Date().toLocaleString('pt-PT')}`);
+  
+  // ==========================================
+  // SEÇÃO 2: CURSOS
+  // ==========================================
+  linhas.push('');
+  linhas.push('');
+  linhas.push('CURSOS');
+  linhas.push(separador);
+  linhas.push('');
+  linhas.push('ID Curso,Nome do Curso,Descrição,Total Estudantes,Data de Criação');
+  
+  cursos.forEach(curso => {
+    const id = curso.id || '';
+    const nome = escapeCSV(curso.nome || '');
+    const descricao = escapeCSV(curso.descricao || '');
+    const totalEstudantes = curso.totalEstudantes || 0;
+    const dataCriacao = curso.criadoEm || 'N/A';
+    
+    linhas.push(`${id},"${nome}","${descricao}",${totalEstudantes},"${dataCriacao}"`);
+  });
+  
+  // ==========================================
+  // SEÇÃO 3: EQUIPAS - RESUMO
+  // ==========================================
+  linhas.push('');
+  linhas.push('');
+  linhas.push('EQUIPAS - RESUMO');
+  linhas.push(separador);
+  linhas.push('');
+  linhas.push('ID Equipa,Nome da Equipa,Projeto,Total Membros,Total Tarefas,Tarefas Concluídas,Progresso (%)');
+  
+  equipas.forEach(equipa => {
+    const id = equipa.id || equipa.TE_ID || '';
+    const nome = escapeCSV(equipa.name || equipa.TE_Name || '');
+    const projeto = escapeCSV(equipa.project_name || 'N/A');
+    const totalMembros = equipa.members?.length || 0;
+    const totalTarefas = equipa.tasks?.length || 0;
+    const tarefasConcluidas = equipa.tasks?.filter(t => t.completed || t.T_Completed).length || 0;
+    const progresso = totalTarefas > 0 ? ((tarefasConcluidas / totalTarefas) * 100).toFixed(1) : 0;
+    
+    linhas.push(`${id},"${nome}","${projeto}",${totalMembros},${totalTarefas},${tarefasConcluidas},${progresso}%`);
+  });
+  
+  // ==========================================
+  // SEÇÃO 4: EQUIPAS - MEMBROS
+  // ==========================================
+  linhas.push('');
+  linhas.push('');
+  linhas.push('EQUIPAS - MEMBROS');
+  linhas.push(separador);
+  linhas.push('');
+  linhas.push('ID Equipa,Nome da Equipa,Nome do Membro,Função');
+  
+  equipas.forEach(equipa => {
+    const idEquipa = equipa.id || equipa.TE_ID || '';
+    const nomeEquipa = escapeCSV(equipa.name || equipa.TE_Name || '');
+    
+    (equipa.members || []).forEach(membro => {
+      const nomeMembro = escapeCSV(membro.name || membro.U_Name || '');
+      const funcao = escapeCSV(membro.role || membro.TM_Role || 'N/A');
+      
+      linhas.push(`${idEquipa},"${nomeEquipa}","${nomeMembro}","${funcao}"`);
+    });
+  });
+  
+  // ==========================================
+  // SEÇÃO 5: EQUIPAS - TAREFAS
+  // ==========================================
+  linhas.push('');
+  linhas.push('');
+  linhas.push('EQUIPAS - TAREFAS');
+  linhas.push(separador);
+  linhas.push('');
+  linhas.push('ID Equipa,Nome da Equipa,ID Tarefa,Nome da Tarefa,Descrição,Status');
+  
+  equipas.forEach(equipa => {
+    const idEquipa = equipa.id || equipa.TE_ID || '';
+    const nomeEquipa = escapeCSV(equipa.name || equipa.TE_Name || '');
+    
+    (equipa.tasks || []).forEach(tarefa => {
+      const idTarefa = tarefa.id || tarefa.T_ID || '';
+      const nomeTarefa = escapeCSV(tarefa.name || tarefa.T_Name || '');
+      const descricao = escapeCSV(tarefa.description || tarefa.T_Description || '');
+      const status = (tarefa.completed || tarefa.T_Completed) ? 'Concluída' : 'Pendente';
+      
+      linhas.push(`${idEquipa},"${nomeEquipa}",${idTarefa},"${nomeTarefa}","${descricao}","${status}"`);
+    });
+  });
+  
+  // ==========================================
+  // SEÇÃO 6: PRÊMIOS
+  // ==========================================
+  linhas.push('');
+  linhas.push('');
+  linhas.push('PRÊMIOS ATRIBUÍDOS');
+  linhas.push(separador);
+  linhas.push('');
+  linhas.push('ID Atribuição,Nome do Prêmio,Tipo,Pontos,Destinatário,Tipo Destinatário,Motivo,Data Atribuição');
+  
+  if (Array.isArray(premios)) {
+    premios.forEach(premio => {
+      const id = premio.AA_ID || '';
+      const nome = escapeCSV(premio.A_Name || '');
+      const tipo = escapeCSV(premio.A_Type || '');
+      const pontos = premio.A_Points || 0;
+      const destinatario = escapeCSV(premio.recipient_name || 'N/A');
+      const tipoDestinatario = premio.A_Target || 'N/A';
+      const motivo = escapeCSV(premio.AA_Reason || 'N/A');
+      const data = premio.AA_Assigned_Date ? new Date(premio.AA_Assigned_Date).toLocaleDateString('pt-PT') : 'N/A';
+      
+      linhas.push(`${id},"${nome}","${tipo}",${pontos},"${destinatario}","${tipoDestinatario}","${motivo}","${data}"`);
+    });
+  }
+  
+  // ==========================================
+  // RODAPÉ
+  // ==========================================
+  linhas.push('');
+  linhas.push('');
+  linhas.push(separador);
+  linhas.push('Fim do Relatório');
+  linhas.push(`Exportado em: ${new Date().toLocaleString('pt-PT')}`);
+  
+  return linhas.join('\n');
+}
+
+// =========================
+//  UTILITÁRIO - ESCAPE CSV
+// =========================
+function escapeCSV(text) {
+  if (!text && text !== 0) return '';
+  const str = String(text);
+  // Remover aspas duplas e substituir por aspas simples
+  return str.replace(/"/g, "'").replace(/\n/g, ' ').replace(/\r/g, '');
+}
+
+// =========================
+//  UTILITÁRIO - DOWNLOAD CSV
+// =========================
+function downloadCSV(csvContent, filename) {
+  // Adicionar BOM para UTF-8 (garante acentos corretos no Excel)
+  const BOM = '\uFEFF';
+  const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  link.style.visibility = 'hidden';
+  
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  // Limpar URL
+  setTimeout(() => URL.revokeObjectURL(url), 100);
 }
