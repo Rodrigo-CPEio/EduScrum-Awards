@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Dez-2025 às 23:59
+-- Tempo de geração: 15-Dez-2025 às 00:32
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -143,6 +143,13 @@ CREATE TABLE `student` (
   `S_U_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Extraindo dados da tabela `student`
+--
+
+INSERT INTO `student` (`S_ID`, `S_Year`, `S_Class`, `S_U_ID`) VALUES
+(2, NULL, NULL, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -180,6 +187,13 @@ CREATE TABLE `teacher` (
   `T_Department` varchar(60) DEFAULT NULL,
   `T_U_ID` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `teacher`
+--
+
+INSERT INTO `teacher` (`T_ID`, `T_Institution`, `T_Department`, `T_U_ID`) VALUES
+(2, NULL, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -221,6 +235,14 @@ CREATE TABLE `user` (
   `U_Password` varchar(20) DEFAULT NULL,
   `U_Name` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `user`
+--
+
+INSERT INTO `user` (`U_ID`, `U_Email`, `U_Password`, `U_Name`) VALUES
+(3, 'professor@gmail.com', '123', 'Professor'),
+(4, 'estudante@gmail.com', '123', 'Estudante');
 
 --
 -- Índices para tabelas despejadas
@@ -380,7 +402,7 @@ ALTER TABLE `sprint`
 -- AUTO_INCREMENT de tabela `student`
 --
 ALTER TABLE `student`
-  MODIFY `S_ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `S_ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `task`
@@ -392,7 +414,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT de tabela `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `T_ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `T_ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `team`
@@ -404,7 +426,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT de tabela `user`
 --
 ALTER TABLE `user`
-  MODIFY `U_ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `U_ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para despejos de tabelas
