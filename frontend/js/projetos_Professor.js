@@ -172,6 +172,12 @@ async function carregarProjetos() {
   if (!disciplineId) return;
 
   try {
+    // Limpar container primeiro para evitar conflitos
+    const container = document.getElementById('projetosContainer');
+    if (container) {
+      container.innerHTML = '<div style="text-align: center; padding: 20px;">Carregando...</div>';
+    }
+
     const res = await fetch(`/projetos/disciplina/${disciplineId}`);
     const text = await res.text();
 
@@ -291,6 +297,13 @@ function criarCardProjeto(projeto) {
 async function carregarSprints(projectId) {
   try {
     const res = await fetch(`/projetos/${projectId}/sprints`);
+    
+    // Verificar se o projeto ainda existe (status 404 = projeto foi apagado)
+    if (res.status === 404) {
+      console.log(`Projeto ${projectId} não existe mais, ignorando...`);
+      return;
+    }
+
     const text = await res.text();
 
     let sprints;

@@ -2,27 +2,48 @@
 const express = require("express");
 const router = express.Router();
 const projectController = require("../controllers/projectController");
+const sprintController = require("../controllers/sprintController");
 
-// LISTAR TODOS (opcional)
+// ==================== ROTAS DE PROJETOS ====================
+// LISTAR TODOS
 router.get("/", projectController.getProjects);
 
-// ✅ MIS PROYECTOS (IMPORTANTE: antes de "/:projectId")
+// ✅ MEUS PROJETOS (antes de "/:projectId")
 router.get("/me", projectController.getMyProjects);
 
-// crear
+// CRIAR PROJETO
 router.post("/", projectController.createProject);
 
-// por disciplina
+// POR DISCIPLINA
 router.get("/disciplina/:disciplineId", projectController.getProjectsByDiscipline);
 
-// por profesor
+// POR PROFESSOR
 router.get("/professor/:teacherId", projectController.getProjectsByTeacher);
 
-// por id (último)
+// ==================== ROTAS DE SPRINTS ====================
+// ✅ CRIAR SPRINT (POST /projetos/:projectId/sprints)
+router.post("/:projectId/sprints", sprintController.createSprint);
+
+// ✅ LISTAR SPRINTS DE UM PROJETO (GET /projetos/:projectId/sprints)
+router.get("/:projectId/sprints", sprintController.getSprintsByProject);
+
+// ✅ DELETAR SPRINT (DELETE /projetos/sprints/:sprintId)
+router.delete("/sprints/:sprintId", sprintController.deleteSprint);
+
+// ✅ ATUALIZAR SPRINT (PUT /projetos/sprints/:sprintId)
+router.put("/sprints/:sprintId", sprintController.updateSprint);
+
+// ✅ BUSCAR SPRINT POR ID (GET /projetos/sprints/:sprintId)
+router.get("/sprints/:sprintId", sprintController.getSprintById);
+
+// ==================== ROTAS DE PROJETO POR ID ====================
+// POR ID (DEVE VIR POR ÚLTIMO!)
 router.get("/:projectId", projectController.getProjectById);
 
-// update / delete
+// ATUALIZAR PROJETO
 router.put("/:projectId", projectController.updateProject);
+
+// DELETAR PROJETO
 router.delete("/:projectId", projectController.deleteProject);
 
 module.exports = router;
