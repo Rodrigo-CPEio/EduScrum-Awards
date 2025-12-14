@@ -475,3 +475,173 @@ body {
   background: #dcfce7;
   color: #166534;
 }
+
+.acad-section{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.acad-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:12px;
+}
+
+.acad-header h1{
+  margin:0;
+  font-size:22px;
+}
+
+.acad-header p{
+  margin:6px 0 0;
+  opacity:.75;
+}
+
+.acad-actions{
+  display:flex;
+  gap:10px;
+}
+
+.acad-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:14px;
+}
+
+.panel{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  box-shadow:0 8px 18px rgba(0,0,0,.06);
+  overflow:hidden;
+  min-height: 520px;
+  display:flex;
+  flex-direction:column;
+}
+
+.panel-head{
+  padding:14px;
+  border-bottom:1px solid rgba(0,0,0,.08);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.panel-head h2{
+  margin:0;
+  font-size:16px;
+}
+
+.hint{ opacity:.65; font-size:12px; }
+
+.panel-body{
+  padding:14px;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.muted{ opacity:.75; }
+
+.card{
+  border:1px solid rgba(0,0,0,.10);
+  border-radius:14px;
+  padding:12px;
+  background:#fff;
+  transition: .15s ease;
+}
+
+.card:hover{
+  transform: translateY(-1px);
+  box-shadow:0 10px 22px rgba(0,0,0,.06);
+}
+
+.card.active{
+  border-color:#3056d3;
+  box-shadow:0 0 0 3px rgba(48,86,211,.12);
+}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.card-text h3{
+  margin:0;
+  font-size:15px;
+}
+
+.card-text p{
+  margin:6px 0 0;
+  opacity:.75;
+  font-size:13px;
+}
+
+.card-footer{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  border:1px solid rgba(0,0,0,.15);
+  background:#f6f7fb;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.btn.primary{
+  background:#3056d3;
+  border-color:#3056d3;
+  color:#fff;
+}
+
+.btn.ghost{
+  background:#fff;
+}
+
+.btn.sm{
+  padding:8px 10px;
+  font-size:13px;
+}
+
+.badge{
+  padding:7px 10px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:12px;
+  background:#eef2ff;
+  border:1px solid rgba(0,0,0,.08);
+  white-space:nowrap;
+}
+
+.badge.neutral{ background:#f3f4f6; }
+.badge.ok{ background:#ecfdf5; }
+.badge.team{ background:#e6fffa; }
+.badge.ind{ background:#fff7ed; }
+
+.group{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.group-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 2px;
+}
+
+.group-head h3{
+  margin:0;
+  font-size:14px;
+}

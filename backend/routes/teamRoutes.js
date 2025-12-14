@@ -37,4 +37,13 @@ router.put("/members/role", teamController.updateTeamMemberRole);
 // ⚠️ Esta rota deve vir por último para não capturar outras rotas
 router.delete("/:id", teamController.deleteTeam);
 
+// ✅ Estudante
+router.get("/eligible-students/:projectId", teamController.getEligibleStudents);
+router.get("/my/:studentId", teamController.getMyTeams);
+
+router.post("/create-open", teamController.createTeamOpen);
+router.post("/create-manual", teamController.createTeamManual);
+
+router.post("/join-open", teamController.joinOpenTeam);
+
 module.exports = router;

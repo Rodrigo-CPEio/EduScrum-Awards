@@ -1,15 +1,29 @@
 const teamModel = require("../models/teamModel");
 
 // Criar equipa
+// Criar equipa
 exports.createTeam = (req, res) => {
-    const { projectId, teamName, members, tasks } = req.body;
-    teamModel.createTeam(projectId, teamName, members, tasks, (err, result) => {
-        if (err) {
-            console.error("createTeam error:", err);
-            return res.status(500).json({ message: "Erro ao criar equipa" });
-        }
-        res.json(result);
-    });
+  const { projectId, teamName, teamType, capacity, members, tasks } = req.body;
+
+  if (!projectId || !teamName) {
+    return res.status(400).json({ message: "projectId e teamName são obrigatórios" });
+  }
+
+  teamModel.createTeam(
+    projectId,
+    teamName,
+    teamType || "Aberta",
+    Number(capacity) || 4,
+    Array.isArray(members) ? members : [],
+    Array.isArray(tasks) ? tasks : [],
+    (err, result) => {
+      if (err) {
+        console.error("createTeam error:", err);
+        return res.status(500).json({ message: err.message || "Erro ao criar equipa" });
+      }
+      res.json(result);
+    }
+  );
 };
 
 // Listar equipas
@@ -114,4 +128,74 @@ exports.getTeamMembers = (req, res) => {
         }
         res.json(members);
     });
+};
+
+// listar equipas do estudante (as que ele pertence)
+exports.getMyTeams = (req, res) => {
+  const { studentId } = req.params;
+  teamModel.getTeamsByStudent(studentId, (err, teams) => {
+    if (err) return res.status(500).json({ message: "Erro ao buscar equipas do estudante" });
+    res.json(teams);
+  });
+};
+
+// buscar estudantes elegíveis (mesma cadeira do projeto)
+exports.getEligibleStudents = (req, res) => {
+  const { projectId } = req.params;
+  teamModel.getEligibleStudentsByProject(projectId, (err, rows) => {
+    if (err) return res.status(500).json({ message: "Erro ao buscar estudantes elegíveis" });
+    res.json(rows);
+  });
+};
+
+// criar equipa aberta
+exports.createTeamOpen = (req, res) => {
+  const { projectId, teamName, capacity, createdByStudentId, role } = req.body;
+
+  teamModel.createTeamStudent({
+    projectId,
+    teamName,
+    type: "Aberta",
+    capacity,
+    createdByStudentId,
+    members: [{ studentId: createdByStudentId, role: role || "Membro" }]
+  }, (err, result) => {
+    if (err) return res.status(500).json({ message: err.message || "Erro ao criar equipa" });
+    res.json(result);
+  });
+};
+
+// criar equipa manual (fechada)
+exports.createTeamManual = (req, res) => {
+  const { projectId, teamName, capacity, createdByStudentId, members } = req.body;
+
+  teamModel.createTeamStudent({
+    projectId,
+    teamName,
+    type: "Manual",
+    capacity,
+    createdByStudentId,
+    members // lista escolhida (inclui ou não o criador — eu recomendo incluir)
+  }, (err, result) => {
+    if (err) return res.status(500).json({ message: err.message || "Erro ao criar equipa manual" });
+    res.json(result);
+  });
+};
+
+// entrar numa equipa aberta
+// ✅ Entrar numa equipa aberta
+exports.joinOpenTeam = (req, res) => {
+  const { teamId, studentId, role } = req.body;
+
+  if (!teamId || !studentId) {
+    return res.status(400).json({ message: "teamId e studentId são obrigatórios" });
+  }
+
+  teamModel.joinOpenTeam(teamId, studentId, role || "Membro", (err, result) => {
+    if (err) {
+      console.error("joinOpenTeam error:", err);
+      return res.status(400).json({ message: err.message || "Não foi possível entrar na equipa" });
+    }
+    res.json(result);
+  });
 };

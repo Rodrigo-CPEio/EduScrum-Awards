@@ -78,7 +78,38 @@ const Project = {
       ORDER BY p.P_Start_Date DESC
     `;
     db.query(query, [teacherId], callback);
-  }
+  },
+
+  // ✅ NOVO: Buscar projetos do estudante (pela disciplina onde está inscrito)
+  // GET /projetos/me?studentId=1
+  findByStudent: (studentId, callback) => {
+    const sql = `
+      SELECT DISTINCT p.P_ID, p.P_Name
+      FROM student s
+      JOIN studentcourse sc ON sc.SC_S_ID = s.S_ID
+      JOIN discipline d ON d.D_ID = sc.SC_D_ID
+      JOIN project p ON p.P_D_ID = d.D_ID
+      WHERE s.S_ID = ?
+      ORDER BY p.P_ID DESC
+    `;
+    db.query(sql, [studentId], callback);
+  },
+  getProjects: (callback) => {
+  db.query("SELECT P_ID, P_Name, P_D_ID FROM project ORDER BY P_ID DESC", callback);
+},
+
+getMyProjects: (studentId, callback) => {
+  const sql = `
+    SELECT DISTINCT p.P_ID, p.P_Name
+    FROM studentcourse sc
+    JOIN discipline d ON d.D_ID = sc.SC_D_ID
+    JOIN project p ON p.P_D_ID = d.D_ID
+    WHERE sc.SC_S_ID = ?
+    ORDER BY p.P_ID DESC
+  `;
+  db.query(sql, [studentId], callback);
+},
+
 };
 
 module.exports = Project;

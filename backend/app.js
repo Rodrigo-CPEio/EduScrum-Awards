@@ -13,6 +13,7 @@ const projectRoutes = require('./routes/projectRoutes');
 const teamRoutes = require('./routes/teamRoutes');
 const awardsRoutes = require('./routes/awardsRoutes');
 const awardAssignmentRoutes = require('./routes/awardAssignmentRoutes');
+const studentRoutes = require("./routes/studentRoutes");
 
 const app = express();
 const PORT = 3000;
@@ -22,6 +23,7 @@ const PORT = 3000;
 app.use(express.json());
 
 // ==================== ROTAS DE API (DEVEM VIR PRIMEIRO!) ====================
+app.use("/api", studentRoutes);
 app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);
 app.use('/cadeiras', cadeirasRoutes);

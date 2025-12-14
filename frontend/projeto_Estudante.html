@@ -134,113 +134,57 @@
     </aside>
 
     <!-- Main Content -->
+    <!-- Main Content -->
     <main class="main">
-      <!-- Sección: Meus Projetos -->
-      <section class="projects-section">
-  <div class="projects-header">
-    <h2>Meus Projetos</h2>
-    <p>Acompanhe os projetos e sprints ativos</p>
-  </div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab active">Ativos</button>
-    <button class="tab">Concluídos</button>
-    <button class="tab">Planeados</button>
-  </div>
+      <!-- ✅ NUEVO: Cursos / Cadeiras / Projetos -->
+      <section class="acad-section">
+        <header class="acad-header">
+          <div>
+            <h1>Cursos e Cadeiras</h1>
+            <p>Entra no curso, escolhe cadeiras e vê projetos (Individual / Equipa)</p>
+          </div>
+          <div class="acad-actions">
+            <button class="btn ghost" id="btnRefreshAcad">Atualizar</button>
+            <button class="btn" id="btnVerMinhasCadeiras">Minhas cadeiras</button>
+          </div>
+        </header>
 
-  <!-- Projeto 1 -->
-  <div class="project-card">
-    <div class="project-header">
-      <div>
-        <h3>Sistema de Gestão Acadêmica</h3>
-        <p>Desenvolvimento de uma plataforma de gestão para universidades</p>
-      </div>
-      <span class="status ativo">Ativo</span>
-    </div>
+        <div class="acad-grid">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Cursos</h2>
+              <span class="hint">Seleciona um curso</span>
+            </div>
+            <div id="cursosContainer" class="panel-body">
+              <p class="muted">A carregar...</p>
+            </div>
+          </div>
 
-    <div class="dates">
-      <span>📅 Início: 15/09/2025</span>
-      <span>📅 Fim: 20/12/2025</span>
-    </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Cadeiras</h2>
+              <span class="hint">Do curso selecionado</span>
+            </div>
+            <div id="cadeirasContainer" class="panel-body">
+              <p class="muted">Escolhe um curso à esquerda</p>
+            </div>
+          </div>
 
-    <div class="progress-wrapper">
-      <div class="progress-bar">
-        <div class="progress" style="width: 66%;"></div>
-      </div>
-      <span class="progress-info">2/3 sprints</span>
-    </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Projetos</h2>
+              <span class="hint">Da cadeira selecionada</span>
+            </div>
+            <div id="projetosContainer" class="panel-body">
+              <p class="muted">Escolhe uma cadeira</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <div class="sprint-active">
-      <div class="sprint-title">
-        <h4>Sprint Ativo</h4>
-        <span>23/10/2025</span>
-      </div>
-      <p><strong>Sprint 3 - Funcionalidades Core</strong></p>
-      <ul>
-        <li>Gestão de cursos</li>
-        <li>Gestão de alunos</li>
-        <li>Sistema de notas</li>
-      </ul>
-    </div>
-
-    <div class="sprint-list">
-      <h5>Todos os Sprints</h5>
-      <ul>
-        <li><span class="dot concluido"></span> Sprint 1 - Planeamento <span class="tag concluido">Concluído</span></li>
-        <li><span class="dot concluido"></span> Sprint 2 - Desenvolvimento Base <span class="tag concluido">Concluído</span></li>
-        <li><span class="dot ativo"></span> Sprint 3 - Funcionalidades Core <span class="tag ativo">Ativo</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Projeto 2 -->
-  <div class="project-card">
-    <div class="project-header">
-      <div>
-        <h3>App Mobile de Eventos</h3>
-        <p>Aplicação móvel para gestão de eventos universitários</p>
-      </div>
-      <span class="status ativo">Ativo</span>
-    </div>
-
-    <div class="dates">
-      <span>📅 Início: 01/10/2025</span>
-      <span>📅 Fim: 15/12/2025</span>
-    </div>
-
-    <div class="progress-wrapper">
-      <div class="progress-bar">
-        <div class="progress" style="width: 50%;"></div>
-      </div>
-      <span class="progress-info">1/2 sprints</span>
-    </div>
-
-    <div class="sprint-active">
-      <div class="sprint-title">
-        <h4>Sprint Ativo</h4>
-        <span>30/10/2025</span>
-      </div>
-      <p><strong>Sprint 2 - Desenvolvimento</strong></p>
-      <ul>
-        <li>Criar listagem de eventos</li>
-        <li>Implementar filtros</li>
-        <li>Sistema de notificações</li>
-      </ul>
-    </div>
-
-    <div class="sprint-list">
-      <h5>Todos os Sprints</h5>
-      <ul>
-        <li><span class="dot concluido"></span> Sprint 1 - Setup <span class="tag concluido">Concluído</span></li>
-        <li><span class="dot ativo"></span> Sprint 2 - Desenvolvimento <span class="tag ativo">Ativo</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-        
     </main>
   </div>
+   <script src="js/cursos_cadeiras_estudante.js"></script>
 </body>
 </html>

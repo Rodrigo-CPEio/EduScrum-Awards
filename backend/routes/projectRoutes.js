@@ -1,42 +1,28 @@
 // backend/routes/projectRoutes.js
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const projectController = require('../controllers/projectController');
-const sprintController = require('../controllers/sprintController');
+const projectController = require("../controllers/projectController");
 
-// ==================== ROTAS DE PROJETOS ====================
-// Criar novo projeto
-router.post('/', projectController.createProject);
+// LISTAR TODOS (opcional)
+router.get("/", projectController.getProjects);
 
-// Buscar projetos por disciplina
-router.get('/disciplina/:disciplineId', projectController.getProjectsByDiscipline);
+// ✅ MIS PROYECTOS (IMPORTANTE: antes de "/:projectId")
+router.get("/me", projectController.getMyProjects);
 
-// Buscar projetos do professor
-router.get('/professor/:teacherId', projectController.getProjectsByTeacher);
+// crear
+router.post("/", projectController.createProject);
 
-// Buscar projeto por ID
-router.get('/:projectId', projectController.getProjectById);
+// por disciplina
+router.get("/disciplina/:disciplineId", projectController.getProjectsByDiscipline);
 
-// Atualizar projeto
-router.put('/:projectId', projectController.updateProject);
+// por profesor
+router.get("/professor/:teacherId", projectController.getProjectsByTeacher);
 
-// Deletar projeto
-router.delete('/:projectId', projectController.deleteProject);
+// por id (último)
+router.get("/:projectId", projectController.getProjectById);
 
-// ==================== ROTAS DE SPRINTS ====================
-// Criar novo sprint
-router.post('/:projectId/sprints', sprintController.createSprint);
-
-// Buscar sprints por projeto
-router.get('/:projectId/sprints', sprintController.getSprintsByProject);
-
-// Buscar sprint por ID
-router.get('/sprints/:sprintId', sprintController.getSprintById);
-
-// Atualizar sprint
-router.put('/sprints/:sprintId', sprintController.updateSprint);
-
-// Deletar sprint
-router.delete('/sprints/:sprintId', sprintController.deleteSprint);
+// update / delete
+router.put("/:projectId", projectController.updateProject);
+router.delete("/:projectId", projectController.deleteProject);
 
 module.exports = router;
