@@ -20,18 +20,30 @@ body{background:#f6f7fb;color:#111}
 .user-points{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
 .points-box{background:#f2f3f7;border-radius:10px;padding:6px 12px;font-weight:800}
 
+/* ✅ icon fix */
+.icon{width:18px;height:18px;flex:0 0 18px}
+
 /* menu */
 .menu ul,.bottom-menu ul{list-style:none;padding:0 12px}
 .menu li a,.bottom-menu li a{
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;gap:10px;justify-content:flex-start;
   text-decoration:none;color:#243046;
   padding:12px 12px;border-radius:12px;font-weight:600;
 }
 .menu li a:hover,.bottom-menu li a:hover{background:#f3f4f7}
+
+/* ✅ active item (si usas <li class="active">) */
+.menu li.active a{
+  background:#eef2ff;
+  color:#2f57d3;
+}
+
+/* active bottom settings */
 .settings-active a{background:#eef2ff;color:#2f57d3}
+
 .badge{
   background:#d93025;color:#fff;font-size:12px;border-radius:999px;
-  padding:2px 8px;margin-left:10px
+  padding:2px 8px;margin-left:auto
 }
 
 /* Main */
