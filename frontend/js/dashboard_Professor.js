@@ -9,7 +9,17 @@ let teacherId = null;
 // =========================
 document.addEventListener('DOMContentLoaded', () => {
   if (!verificarAutenticacao()) return;
-  carregarPerfilSidebar();
+  
+  // Inicializar sidebar
+  inicializarSidebar({
+    userType: 'professor',
+    activePage: 'dashboard',
+    userData: {
+      nome: userData.nome,
+      foto: userData.foto || null
+    }
+  });
+
   carregarDashboardData();
   configurarBotaoSair();
   animarGraficos();
@@ -35,64 +45,6 @@ function verificarAutenticacao() {
   userData = user;
   teacherId = user.teacherId;
   return true;
-}
-
-// =========================
-//  CARREGAR SIDEBAR
-// =========================
-function carregarPerfilSidebar() {
-  const sidebarUserInfo = document.querySelector('.sidebar .user-info');
-  if (!sidebarUserInfo) return;
-
-  // Criar estrutura se não existir
-  let userDetails = sidebarUserInfo.querySelector('.user-details');
-  if (!userDetails) {
-    userDetails = document.createElement('div');
-    userDetails.className = 'user-details';
-    userDetails.innerHTML = '<h3></h3><p></p>';
-    sidebarUserInfo.appendChild(userDetails);
-  }
-
-  // Criar avatar
-  let img = sidebarUserInfo.querySelector('img');
-  let avatar = sidebarUserInfo.querySelector('.avatar-placeholder');
-
-  if (avatar) avatar.remove();
-
-  if (!img) {
-    img = document.createElement('img');
-    img.alt = 'Foto de perfil';
-    img.style.cssText = 'width: 55px; height: 55px; border-radius: 50%; object-fit: cover;';
-    sidebarUserInfo.insertBefore(img, userDetails);
-  }
-
-  if (userData.foto) {
-    img.src = userData.foto;
-    img.style.display = 'block';
-  } else {
-    img.style.display = 'none';
-    avatar = document.createElement('div');
-    avatar.className = 'avatar-placeholder';
-    avatar.style.cssText = `
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-    `;
-    avatar.textContent = (userData.nome || 'U')[0].toUpperCase();
-    sidebarUserInfo.insertBefore(avatar, img);
-  }
-
-  const nameEl = userDetails.querySelector('h3');
-  const typeEl = userDetails.querySelector('p');
-  if (nameEl) nameEl.textContent = userData.nome;
-  if (typeEl) typeEl.textContent = 'Docente';
 }
 
 // =========================
@@ -175,22 +127,6 @@ function criarCardsClicaveis(teams, totalCursos) {
 
   // Inserir ANTES dos gráficos
   chartsGrid.parentNode.insertBefore(cardsSection, chartsGrid);
-
-  // Adicionar efeito hover nos cards
-  document.querySelectorAll('.info-card.clickable').forEach(card => {
-    card.style.cursor = 'pointer';
-    card.style.transition = 'transform 0.2s, box-shadow 0.2s';
-    
-    card.addEventListener('mouseenter', () => {
-      card.style.transform = 'translateY(-5px)';
-      card.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'translateY(0)';
-      card.style.boxShadow = '';
-    });
-  });
 }
 
 // =========================
@@ -224,15 +160,17 @@ function animarGraficos() {
 //  BOTÃO SAIR
 // =========================
 function configurarBotaoSair() {
-  const botaoSair = document.querySelector('.bottom-menu li:last-child a, .bottom-menu li:last-child');
-  if (botaoSair) {
-    botaoSair.style.cursor = 'pointer';
-    botaoSair.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (confirm('Tem certeza que deseja sair?')) {
-        localStorage.removeItem('user');
-        window.location.href = '/login';
-      }
-    });
-  }
+  setTimeout(() => {
+    const botaoSair = document.querySelector('.bottom-menu li:last-child');
+    if (botaoSair) {
+      botaoSair.style.cursor = 'pointer';
+      botaoSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Tem certeza que deseja sair?')) {
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+        }
+      });
+    }
+  }, 100);
 }

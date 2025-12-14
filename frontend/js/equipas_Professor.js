@@ -1,10 +1,3 @@
-// frontend/js/equipas_Professor.js
-
-// =========================
-//  CONFIG
-// =========================
-const API_BASE = "/api/teams"; // corresponde ao app.use('/api/teams', teamRoutes) no app.js
-
 // =========================
 //  VARIÁVEIS GLOBAIS
 // =========================
@@ -16,99 +9,42 @@ let teacherId = null;
 // =========================
 document.addEventListener('DOMContentLoaded', () => {
   if (!verificarAutenticacao()) return;
-  carregarPerfilSidebar();
+
+  // Inicializar sidebar
+  inicializarSidebar({
+    userType: 'professor',
+    activePage: 'equipas',
+    userData: {
+      nome: userData.nome,
+      foto: userData.foto || null
+    }
+  });
+
   setupModalHandlers();
   loadTeams();
+  configurarBotaoSair();
 });
 
 // =========================
-//  AUTENTICAÇÃO (mesma lógica antiga)
+//  AUTENTICAÇÃO
 // =========================
 function verificarAutenticacao() {
   const userStr = localStorage.getItem('user');
   if (!userStr) {
-    // deixa abrir a página para desenvolvimento (opcional)
-    // window.location.href = '/login';
-    return true;
+    window.location.href = 'login.html';
+    return false;
   }
 
   const user = JSON.parse(userStr);
-  if (user.tipo && user.tipo !== 'docente') {
+  if (user.tipo !== 'docente') {
     alert('Acesso negado. Apenas professores podem acessar esta página.');
-    window.location.href = '/login';
+    window.location.href = 'login.html';
     return false;
   }
 
   userData = user;
-  teacherId = user ? user.teacherId : null;
+  teacherId = user.teacherId;
   return true;
-}
-
-// =========================
-//  SIDEBAR (ATUALIZADA - CARREGA PERFIL DO BACKEND)
-// =========================
-async function carregarPerfilSidebar() {
-  const sidebarUserInfo = document.querySelector('.sidebar .user-info .user-top');
-  if (!sidebarUserInfo) return;
-
-  // Se não tem userData, buscar do backend
-  if (!userData) {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
-      const user = JSON.parse(userStr);
-      
-      try {
-        const response = await fetch(`/usuarios/profile/${user.id}`);
-        const data = await response.json();
-        
-        if (data.success) {
-          userData = data.perfil;
-        }
-      } catch (err) {
-        console.error('❌ Erro ao carregar perfil:', err);
-      }
-    }
-  }
-
-  const img = sidebarUserInfo.querySelector('img');
-  let avatar = sidebarUserInfo.querySelector('.avatar-placeholder');
-
-  // Remove avatar antigo se existir
-  if (avatar) avatar.remove();
-
-  // Cria novo avatar
-  avatar = document.createElement('div');
-  avatar.className = 'avatar-placeholder';
-  avatar.style.cssText = `
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  `;
-
-  // Insere ANTES da imagem
-  sidebarUserInfo.insertBefore(avatar, img);
-
-  if (userData && userData.foto) {
-    img.src = userData.foto;
-    img.style.display = 'block';
-    avatar.style.display = 'none';
-  } else {
-    img.style.display = 'none';
-    avatar.style.display = 'flex';
-    avatar.textContent = (userData && userData.nome ? userData.nome[0].toUpperCase() : 'U');
-  }
-
-  const nameEl = sidebarUserInfo.querySelector('.user-details h3');
-  const typeEl = sidebarUserInfo.querySelector('.user-details p');
-  if (nameEl) nameEl.textContent = userData ? userData.nome : 'Professor';
-  if (typeEl) typeEl.textContent = 'Docente';
 }
 
 // =========================
@@ -120,14 +56,13 @@ function setupModalHandlers() {
   const fechar = document.getElementById("fecharModal");
   const numMembrosInput = document.getElementById("numMembros");
   const numTarefasInput = document.querySelector("input[name='numTarefas']");
-  window._membrosContainer = document.getElementById("membrosContainer"); // exposto globalmente
+  window._membrosContainer = document.getElementById("membrosContainer");
 
-  // garante que existe o placeholder das tarefas no HTML
+  // Garante que existe o placeholder das tarefas no HTML
   let tarefasContainer = document.getElementById("tarefasContainer");
   if (!tarefasContainer) {
     tarefasContainer = document.createElement("div");
     tarefasContainer.id = "tarefasContainer";
-    // inserir após o input numTarefas (se existir)
     const form = document.getElementById("formNovaEquipa");
     const numTarefasEl = form.querySelector("input[name='numTarefas']");
     if (numTarefasEl && numTarefasEl.parentNode) {
@@ -137,16 +72,20 @@ function setupModalHandlers() {
     }
   }
 
+  // Abrir modal
   btnAbrirModal.addEventListener("click", () => {
     limparFormulario();
+    loadProjectsIntoSelect(); // ✅ Carregar projetos disponíveis
     modal.style.display = "flex";
   });
 
+  // Fechar modal
   fechar.addEventListener("click", () => {
     modal.style.display = "none";
     limparFormulario();
   });
 
+  // Fechar ao clicar fora
   window.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.style.display = "none";
@@ -154,11 +93,12 @@ function setupModalHandlers() {
     }
   });
 
-  // num membros -> cria selects para alunos + funções
+  // Num membros -> cria selects para alunos + funções
   numMembrosInput.addEventListener("input", async () => {
     const membrosContainer = window._membrosContainer;
     membrosContainer.innerHTML = "";
     const qtd = parseInt(numMembrosInput.value) || 0;
+    
     for (let i = 1; i <= qtd; i++) {
       const div = document.createElement("div");
       div.className = "membro-item";
@@ -185,11 +125,12 @@ function setupModalHandlers() {
     }
   });
 
-  // num tarefas -> cria campos de tarefa (nome + descrição)
+  // Num tarefas -> cria campos de tarefa (nome + descrição)
   numTarefasInput.addEventListener("input", () => {
     const tarefasContainer = document.getElementById("tarefasContainer");
     tarefasContainer.innerHTML = "";
     const qtd = parseInt(numTarefasInput.value) || 0;
+    
     for (let i = 1; i <= qtd; i++) {
       const card = document.createElement("div");
       card.style.padding = "10px";
@@ -208,15 +149,23 @@ function setupModalHandlers() {
     }
   });
 
-  // form submit
+  // Form submit
   document.getElementById("formNovaEquipa").addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    const projetoSelect = document.getElementById("selectProjeto");
+    const projectId = projetoSelect ? parseInt(projetoSelect.value) : null;
     const nomeEquipa = document.querySelector("input[name='nomeEquipa']").value.trim();
     const totalTasks = parseInt(document.querySelector("input[name='numTarefas']").value) || 0;
     const qtd = parseInt(numMembrosInput.value) || 0;
 
-    // NOTE: variável chama-se "members" (ING) porque o backend espera essa propriedade
+    // ✅ Validar projeto selecionado
+    if (!projectId || isNaN(projectId)) {
+      alert('⚠️ Por favor, selecione um projeto válido!');
+      return;
+    }
+
+    // Coletar membros
     const members = [];
     for (let i = 1; i <= qtd; i++) {
       const studentIdEl = document.getElementById(`aluno${i}`);
@@ -227,6 +176,7 @@ function setupModalHandlers() {
       });
     }
 
+    // Coletar tarefas
     const tasks = [];
     for (let i = 1; i <= totalTasks; i++) {
       const name = (document.getElementById(`taskName${i}`) || {}).value || "";
@@ -236,32 +186,42 @@ function setupModalHandlers() {
     }
 
     const body = {
-      projectId: 1,
+      projectId: projectId, // ✅ Usa o projeto selecionado
       teamName: nomeEquipa,
       members,
       tasks
     };
 
     try {
-      console.log("Criando equipa -> payload:", body);
-      const res = await fetch(`${API_BASE}/create`, {
+      console.log("📤 Criando equipa -> payload:", body);
+      
+      const res = await fetch('http://localhost:3000/api/teams/create', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       });
+      
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Erro ao criar equipa");
-      alert(data.message || "Equipa criada!");
-      document.getElementById("modalNovaEquipa").style.display = "none";
+      
+      if (!res.ok) {
+        throw new Error(data.message || "Erro ao criar equipa");
+      }
+      
+      alert(data.message || "✅ Equipa criada com sucesso!");
+      modal.style.display = "none";
       limparFormulario();
       loadTeams();
+      
     } catch (err) {
-      console.error("Erro ao criar equipa:", err);
+      console.error("❌ Erro ao criar equipa:", err);
       alert("Erro ao criar equipa: " + (err.message || err));
     }
   });
 }
 
+// =========================
+//  LIMPAR FORMULÁRIO
+// =========================
 function limparFormulario() {
   document.getElementById("formNovaEquipa").reset();
   const tarefasContainer = document.getElementById("tarefasContainer");
@@ -272,20 +232,82 @@ function limparFormulario() {
 // =========================
 //  BUSCAR ESTUDANTES
 // =========================
+async function fetchProjects() {
+  try {
+    const res = await fetch('http://localhost:3000/projetos');
+    
+    if (!res.ok) {
+      throw new Error('Erro ao buscar projetos');
+    }
+    
+    const data = await res.json();
+    console.log('📁 Projetos recebidos (raw):', data);
+    
+    // A API pode retornar array direto ou objeto com propriedade
+    const projects = Array.isArray(data) ? data : (data.projetos || data.projects || []);
+    
+    return projects;
+    
+  } catch (err) {
+    console.error("❌ Erro a buscar projetos:", err);
+    return [];
+  }
+}
+
+async function loadProjectsIntoSelect() {
+  const select = document.getElementById('selectProjeto');
+  if (!select) return;
+  
+  select.innerHTML = `<option value="">Carregando projetos...</option>`;
+  
+  const projects = await fetchProjects();
+  
+  if (!Array.isArray(projects) || projects.length === 0) {
+    select.innerHTML = `<option value="">❌ Nenhum projeto disponível</option>`;
+    alert('⚠️ Não existem projetos disponíveis!\n\nPor favor:\n1. Vá para Cursos\n2. Selecione uma Cadeira\n3. Crie um Projeto primeiro');
+    return;
+  }
+  
+  select.innerHTML = `<option value="">-- Selecionar projeto --</option>`;
+  
+  projects.forEach(p => {
+    // Suporta ambos os formatos
+    const projectId = p.id || p.P_ID;
+    const projectName = p.name || p.P_Name;
+    const projectDesc = p.description || p.P_Description || '';
+    
+    if (projectId && projectName) {
+      const opt = document.createElement("option");
+      opt.value = projectId;
+      
+      // Mostra nome + descrição curta
+      const displayText = projectDesc 
+        ? `${projectName} - ${projectDesc.substring(0, 40)}${projectDesc.length > 40 ? '...' : ''}`
+        : projectName;
+      
+      opt.textContent = displayText;
+      select.appendChild(opt);
+    }
+  });
+  
+  console.log('✅ Select de projetos preenchido com', projects.length, 'projetos');
+}
+
 async function fetchStudents() {
   try {
-    const res = await fetch(`${API_BASE}/students`);
+    const res = await fetch('http://localhost:3000/api/teams/students');
     const students = await res.json();
-    console.log('📚 Estudantes recebidos:', students); // ✅ Debug
+    console.log('📚 Estudantes recebidos:', students);
     return students;
   } catch (err) {
-    console.error("Erro a buscar estudantes:", err);
+    console.error("❌ Erro a buscar estudantes:", err);
     return [];
   }
 }
 
 async function loadStudentsIntoSelect(select) {
   if (!select) return;
+  
   const students = await fetchStudents();
   select.innerHTML = `<option value="">Selecionar aluno...</option>`;
   
@@ -295,7 +317,7 @@ async function loadStudentsIntoSelect(select) {
   }
   
   students.forEach(s => {
-    // ✅ Suporta AMBOS os formatos (novo e antigo)
+    // Suporta AMBOS os formatos (novo e antigo)
     const studentId = s.id || s.S_ID;
     const studentName = s.name || s.U_Name;
     
@@ -313,22 +335,36 @@ async function loadStudentsIntoSelect(select) {
 }
 
 // =========================
-//  LISTAR EQUIPAS (com members + tasks)
+//  LISTAR EQUIPAS
 // =========================
 async function loadTeams() {
   try {
-    const res = await fetch(`${API_BASE}`);
+    const res = await fetch('http://localhost:3000/api/teams');
     const teams = await res.json();
+    console.log('👥 Equipas recebidas:', teams);
+    
     renderTeams(teams);
     renderPerformance(teams);
   } catch (err) {
-    console.error("Erro a carregar equipas:", err);
+    console.error("❌ Erro a carregar equipas:", err);
   }
 }
 
+// =========================
+//  RENDERIZAR EQUIPAS
+// =========================
 function renderTeams(teams) {
   const container = document.querySelector(".teams");
   container.innerHTML = "";
+
+  if (!Array.isArray(teams) || teams.length === 0) {
+    container.innerHTML = `
+      <div style="padding: 40px; text-align: center; color: #666;">
+        <p>Nenhuma equipa criada ainda. Clique em "+ Nova Equipa" para começar!</p>
+      </div>
+    `;
+    return;
+  }
 
   teams.forEach(team => {
     const card = document.createElement("div");
@@ -339,7 +375,7 @@ function renderTeams(teams) {
     card.style.boxShadow = "0 2px 8px rgba(0,0,0,0.05)";
     card.style.marginBottom = "18px";
 
-    // ✅ Suporta AMBOS os formatos de membros
+    // Suporta AMBOS os formatos de membros
     const membersHTML = (team.members || []).map(m => {
       const memberName = m.name || m.U_Name || 'Sem nome';
       const memberRole = m.role || m.TM_Role || '';
@@ -347,13 +383,13 @@ function renderTeams(teams) {
       return `
         <li>
           <div class="circle">${memberName.slice(0,2).toUpperCase()}</div>
-          <span>${memberName}</span>
-          <span class="role">${memberRole}</span>
+          <span>${escapeHtml(memberName)}</span>
+          ${memberRole ? `<span class="role">${escapeHtml(memberRole)}</span>` : ''}
         </li>
       `;
     }).join("");
 
-    // ✅ Suporta AMBOS os formatos de tarefas
+    // Suporta AMBOS os formatos de tarefas
     const tasksHTML = (team.tasks || []).map(t => {
       const taskId = t.id || t.T_ID;
       const taskName = t.name || t.T_Name || 'Sem nome';
@@ -366,7 +402,7 @@ function renderTeams(teams) {
           <input type="checkbox" data-taskid="${taskId}" ${taskCompleted ? "checked": ""} onchange="toggleTask(${taskId}, this.checked, ${teamId})" />
           <div style="flex:1">
             <div style="font-weight:600">${escapeHtml(taskName)}</div>
-            <div style="font-size:13px; color:#666">${escapeHtml(taskDesc)}</div>
+            ${taskDesc ? `<div style="font-size:13px; color:#666">${escapeHtml(taskDesc)}</div>` : ''}
           </div>
         </li>
       `;
@@ -399,38 +435,50 @@ function renderTeams(teams) {
           ${tasksHTML || '<li style="color:#888">Sem tarefas</li>'}
         </ul>
       </div>
-
     `;
+    
     container.appendChild(card);
   });
 }
 
 // =========================
-//  ESCAPE HTML (simples)
+//  ESCAPE HTML
 // =========================
 function escapeHtml(s) {
   if (!s && s !== 0) return "";
   return String(s).replace(/[&<>"']/g, function (m) {
-    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+    return { 
+      '&': '&amp;', 
+      '<': '&lt;', 
+      '>': '&gt;', 
+      '"': '&quot;', 
+      "'": '&#39;' 
+    }[m];
   });
 }
 
 // =========================
-//  TOGGLE TASK (checkbox) -> chama API para marcar como complete
+//  TOGGLE TASK
 // =========================
 async function toggleTask(taskId, checked, teamId) {
   try {
-    const res = await fetch(`${API_BASE}/tasks/${taskId}/complete`, {
+    const res = await fetch(`http://localhost:3000/api/teams/tasks/${taskId}/complete`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ completed: checked ? 1 : 0 })
     });
+    
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Erro a atualizar tarefa");
-    // recarrega as equipas para actualizar barras
+    
+    if (!res.ok) {
+      throw new Error(data.message || "Erro a atualizar tarefa");
+    }
+    
+    console.log('✅ Tarefa atualizada');
     loadTeams();
+    
   } catch (err) {
-    console.error("Erro ao atualizar tarefa:", err);
+    console.error("❌ Erro ao atualizar tarefa:", err);
     alert("Erro ao atualizar tarefa");
   }
 }
@@ -440,14 +488,23 @@ async function toggleTask(taskId, checked, teamId) {
 // =========================
 async function deleteTeam(id) {
   if (!confirm("Deseja realmente eliminar esta equipa?")) return;
+  
   try {
-    const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
+    const res = await fetch(`http://localhost:3000/api/teams/${id}`, { 
+      method: "DELETE" 
+    });
+    
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Erro ao eliminar");
-    alert(data.message);
+    
+    if (!res.ok) {
+      throw new Error(data.message || "Erro ao eliminar");
+    }
+    
+    alert(data.message || "✅ Equipa eliminada!");
     loadTeams();
+    
   } catch (err) {
-    console.error(err);
+    console.error("❌ Erro ao eliminar equipa:", err);
     alert("Erro ao eliminar equipa");
   }
 }
@@ -458,6 +515,7 @@ async function deleteTeam(id) {
 function renderPerformance(teams) {
   const container = document.getElementById("performanceContainer");
   container.innerHTML = "";
+  
   if (!Array.isArray(teams) || teams.length === 0) {
     container.innerHTML = `<p style="color:#666">Nenhuma equipa ainda.</p>`;
     return;
@@ -492,7 +550,6 @@ function renderPerformance(teams) {
         <div style="width:${percent}%; height:100%; background:linear-gradient(90deg,#2b8aef,#0ac06a)"></div>
       </div>
 
-      <!-- Lista compacta de tarefas com checkbox -->
       <ul style="margin-top:12px; list-style:none; padding:0;">
         ${(team.tasks || []).map(t => {
           const taskId = t.id || t.T_ID;
@@ -505,13 +562,33 @@ function renderPerformance(teams) {
               <input type="checkbox" data-taskid="${taskId}" ${taskCompleted ? "checked" : ""} onchange="toggleTask(${taskId}, this.checked, ${teamId})" />
               <div style="flex:1">
                 <div style="font-weight:600">${escapeHtml(taskName)}</div>
-                <div style="font-size:12px;color:#666">${escapeHtml(taskDesc)}</div>
+                ${taskDesc ? `<div style="font-size:12px;color:#666">${escapeHtml(taskDesc)}</div>` : ''}
               </div>
             </li>
           `;
         }).join("")}
       </ul>
     `;
+    
     container.appendChild(item);
   });
+}
+
+// =========================
+//  BOTÃO SAIR
+// =========================
+function configurarBotaoSair() {
+  setTimeout(() => {
+    const botaoSair = document.querySelector('.bottom-menu li:last-child');
+    if (botaoSair) {
+      botaoSair.style.cursor = 'pointer';
+      botaoSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Tem certeza que deseja sair?')) {
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        }
+      });
+    }
+  }, 100);
 }

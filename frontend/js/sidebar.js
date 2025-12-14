@@ -58,38 +58,69 @@ function inicializarSidebar(config) {
         id: 'dashboard',
         icon: '<path d="M3 13h8V3H3zM13 21h8v-8h-8zM13 3v8h8V3zM3 21h8v-8H3z"/>',
         label: 'Dashboard',
-        href: 'dashboard_Professor.html'
+        href: '/dashboardP'
       },
       {
         id: 'cursos',
         icon: '<path d="M2 3h8a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H2z"/><path d="M22 3h-8a2 2 0 0 0-2 2v16a2 2 0 0 1 2-2h8z"/>',
         label: 'Cursos',
-        href: 'curso_Professor.html'
+        href: '/cursoP'
       },
       {
         id: 'equipas',
         icon: '<circle cx="9" cy="7" r="4"/><circle cx="17" cy="7" r="4"/><path d="M5 21v-2a4 4 0 0 1 8 0v2"/><path d="M13 21v-2a4 4 0 0 1 8 0v2"/>',
         label: 'Equipas',
-        href: 'equipas_Professor.html'
+        href: '/equipasP'
       },
       {
         id: 'premios',
         icon: '<path d="M8 2h8v4H8z"/><path d="M6 6h12v2a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5V6z"/><path d="M9 18h6"/><path d="M12 14v4"/>',
         label: 'Prémios',
-        href: 'premios_Professor.html'
+        href: '/premiosP'
       },
       {
         id: 'rankings',
         icon: '<line x1="4" y1="20" x2="4" y2="14"/><line x1="9" y1="20" x2="9" y2="10"/><line x1="14" y1="20" x2="14" y2="16"/><line x1="19" y1="20" x2="19" y2="8"/>',
         label: 'Rankings',
-        href: 'ranking_Professor.html'
+        href: '/rankingP'
       },
       {
         id: 'notificacoes',
         icon: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
         label: 'Notificações',
-        href: 'notificacoes_Professor.html',
-        badge: '2'
+        href: '/notificacoesP'
+      }
+    ]
+  };
+
+  // Bottom menu items
+  const bottomMenuItems = {
+    estudante: [
+      {
+        id: 'definicoes',
+        icon: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c0 .69.28 1.36.77 1.85.49.49 1.16.77 1.85.77h.09a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+        label: 'Definições',
+        href: '/definicoesE'
+      },
+      {
+        id: 'sair',
+        icon: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+        label: 'Sair',
+        href: '#'
+      }
+    ],
+    professor: [
+      {
+        id: 'definicoes',
+        icon: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c0 .69.28 1.36.77 1.85.49.49 1.16.77 1.85.77h.09a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+        label: 'Definições',
+        href: '/definicoesP'
+      },
+      {
+        id: 'sair',
+        icon: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+        label: 'Sair',
+        href: '#'
       }
     ]
   };
@@ -143,21 +174,16 @@ function inicializarSidebar(config) {
 
       <div class="bottom-menu">
         <ul>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c0 .69.28 1.36.77 1.85.49.49 1.16.77 1.85.77h.09a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-            </svg>
-            Definições
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-            Sair
-          </li>
+          ${bottomMenuItems[userType].map(item => `
+            <li${item.id === activePage && item.id !== 'definicoes' ? ' class="active"' : ''}>
+              <a href="${item.href}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  ${item.icon}
+                </svg>
+                <span>${item.label}</span>
+              </a>
+            </li>
+          `).join('')}
         </ul>
       </div>
     </aside>
@@ -219,4 +245,3 @@ function carregarPerfilSidebar(userData, userType) {
   `;
   userTop.appendChild(userDetails);
 }
-

@@ -1,7 +1,9 @@
-/* ==============================
-   BASE GERAL (mantido do teu CSS original)
-   ============================== */
+/* ==========================================
+   EQUIPAS PROFESSOR - Apenas estilos específicos
+   (Sidebar vem de sidebar.css)
+   ========================================== */
 
+/* RESET E BASE */
 * {
   margin: 0;
   padding: 0;
@@ -11,12 +13,17 @@
 
 html, body {
   height: 100%;
+  background-color: #f8f9fb;
+  color: #222;
   overflow: hidden;
 }
 
-body {
-  background-color: #f8f9fb;
-  color: #333;
+:root {
+  --bg: #f8f9fb;
+  --muted: #777;
+  --accent: #3056d3;
+  --card: #fff;
+  --shadow: 0 6px 18px rgba(16,24,40,0.06);
 }
 
 .container {
@@ -24,158 +31,9 @@ body {
   height: 100vh;
 }
 
-/* Sidebar fixa */
-.sidebar {
-  width: 240px;
-  background-color: #fff;
-  border-right: 1px solid #e6e6e6;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.logo-icon {
-  width: 22px;
-  height: 22px;
-  background-color: #3056d3;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo h2 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #2c2c2c;
-}
-
-.divider {
-  border: none;
-  border-top: 1px solid #eee;
-  margin: 10px 0;
-}
-
-/* User section */
-.user-info {
-  padding: 0 20px;
-}
-
-.user-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-top img {
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  object-fit: cover;
-}
-
-.user-details h3 {
-  font-size: 15px;
-  font-weight: 600;
-  color: #222;
-}
-
-.user-details p {
-  font-size: 13px;
-  color: #777;
-}
-
-/* Caixinha de pontos mais à direita */
-.user-points {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-  padding: 0 5px;
-}
-
-.user-points .label {
-  font-size: 13px;
-  color: #666;
-}
-
-.points-box {
-  background: #f2f3f6;
-  border-radius: 6px;
-  padding: 5px 12px;
-  display: inline-block;
-}
-
-.points-box strong {
-  color: #333;
-  font-size: 14px;
-}
-
-/* Menus */
-.menu ul,
-.bottom-menu ul {
-  list-style: none;
-  padding: 0 20px;
-}
-
-.menu li,
-.bottom-menu li {
-  padding: 12px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 15px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-}
-
-.icon {
-  width: 18px;
-  height: 18px;
-  stroke-width: 2;
-}
-
-.menu li:hover,
-.bottom-menu li:hover {
-  background-color: #f2f3f6;
-}
-
-.menu .active {
-  background-color: #eef2ff;
-  color: #3056d3;
-  font-weight: 600;
-}
-
-.badge {
-  background-color: #d93025;
-  color: #fff;
-  font-size: 12px;
-  border-radius: 50%;
-  padding: 2px 6px;
-  position: absolute;
-  right: 10px;
-}
-
-.bottom-menu {
-  border-top: 1px solid #eee;
-  padding-top: 10px;
-}
-
-/* Main Content */
+/* ==========================================
+   MAIN CONTENT
+   ========================================== */
 .main {
   flex: 1;
   padding: 30px 40px;
@@ -184,216 +42,9 @@ body {
   height: 100vh;
 }
 
-.header h1 {
-  font-size: 28px;
-  font-weight: 700;
-}
-
-.header span {
-  color: #3056d3;
-}
-
-.header p {
-  color: #777;
-  margin-top: 4px;
-  margin-bottom: 30px;
-}
-
-/* ==============================
-   SEÇÃO DAS EQUIPAS (ADICIONADA)
-   ============================== */
-
-.teams {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 24px;
-  margin-bottom: 40px;
-}
-
-.team-card {
-  background-color: #fff;
-  border: 1px solid #eee;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-}
-
-.team-card:hover {
-  transform: translateY(-3px);
-}
-
-.team-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.team-header h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #222;
-}
-
-.team-header .points {
-  background: #3056d3;
-  color: #fff;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.members {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 6px;
-}
-
-.progress-text {
-  font-size: 13px;
-  color: #777;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background: #f1f3f8;
-  border-radius: 4px;
-  margin: 6px 0;
-}
-
-.progress {
-  height: 100%;
-  background: linear-gradient(90deg, #3056d3, #1ca65a);
-  border-radius: 4px;
-}
-
-.percent {
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.member-list {
-  list-style: none;
-  margin-top: 10px;
-}
-
-.member-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #333;
-}
-
-.member-list img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 8px;
-}
-
-.member-list .circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #3056d3;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  margin-right: 8px;
-}
-
-.role {
-  background: #eef2ff;
-  color: #3056d3;
-  border-radius: 6px;
-  font-size: 12px;
-  padding: 2px 6px;
-  margin-left: auto;
-}
-
-/* ==============================
-   PERFORMANCE SECTION
-   ============================== */
-
-.performance {
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.performance h2 {
-  color: #222;
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.performance .subtitle {
-  color: #777;
-  font-size: 14px;
-  margin-bottom: 16px;
-}
-
-.compare {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.compare-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.compare-item .label {
-  font-weight: 600;
-  color: #222;
-  margin-bottom: 5px;
-}
-
-.compare-item .bar {
-  height: 8px;
-  background: #f1f3f8;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.compare-item .fill {
-  height: 100%;
-  background: linear-gradient(90deg, #3056d3, #1ca65a);
-  border-radius: 4px;
-}
-
-.score {
-  color: #555;
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-/* ==============================
-   RESPONSIVO
-   ============================== */
-@media (max-width: 900px) {
-  .teams {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* ==============================
-   CABEÇALHO E BOTÃO NOVA EQUIPA
-   ============================== */
-
+/* ==========================================
+   HEADER
+   ========================================== */
 .header-top {
   display: flex;
   align-items: flex-start;
@@ -405,15 +56,16 @@ body {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 4px;
+  color: #111;
 }
 
 .header-top p {
-  color: #777;
+  color: var(--muted);
   font-size: 14px;
 }
 
 .btn-nova-equipa {
-  background-color: #3056d3;
+  background-color: var(--accent);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -423,166 +75,469 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   align-self: flex-start;
-  margin-left: auto;
 }
 
 .btn-nova-equipa:hover {
   background-color: #2748b8;
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(48, 86, 211, 0.3);
 }
 
 .btn-nova-equipa:active {
   transform: translateY(0);
 }
 
+/* ==========================================
+   TEAMS GRID
+   ========================================== */
+.teams {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
 
-/* === BOTÃO NOVA EQUIPA === */
-.btn-nova-equipa {
-  background-color: #4c6ef5;
+.team-card {
+  background-color: var(--card);
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.team-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 6px 0;
+}
+
+.team-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.btn-delete-team {
+  background-color: #ff4d4d;
   color: white;
   border: none;
-  padding: 10px 18px;
-  font-size: 15px;
+  padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.btn-delete-team:hover {
+  background-color: #d93636;
+  transform: scale(1.05);
+}
+
+/* ==========================================
+   MEMBERS LIST
+   ========================================== */
+.member-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.member-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.member-list img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid #e8ebff;
+}
+
+.member-list .circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.role {
+  background: #e8ebff;
+  color: var(--accent);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  margin-left: auto;
+}
+
+/* ==========================================
+   TASKS LIST
+   ========================================== */
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.task-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #f8f9fb;
+  border-radius: 8px;
   transition: background 0.2s ease;
 }
 
-.btn-nova-equipa:hover {
-  background-color: #3b5bdb;
+.task-list li:hover {
+  background: #f0f2f5;
 }
 
-/* === MODAL (caixa flutuante) === */
+.task-list input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.task-list input[type="checkbox"]:checked + div {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* ==========================================
+   PERFORMANCE SECTION
+   ========================================== */
+.performance {
+  background: var(--card);
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  margin-top: 32px;
+}
+
+.performance h2 {
+  color: #222;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.performance .subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.compare {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.compare-item {
+  padding: 18px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f0f0f0;
+}
+
+.compare-item .label {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.compare-item .bar {
+  height: 12px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.compare-item .fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2b8aef, #0ac06a);
+  border-radius: 8px;
+  transition: width 0.4s ease;
+}
+
+.score {
+  color: #666;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ==========================================
+   MODAL
+   ========================================== */
 .modal {
-  display: none; /* escondido até ser aberto pelo JS */
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4); /* fundo escurecido */
+  background: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
 }
 
-/* === CONTEÚDO DO MODAL === */
 .modal-content {
   background: #fff;
   border-radius: 12px;
-  width: 400px;
+  width: 480px;
   max-width: 90%;
-  padding: 24px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  padding: 28px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease;
   position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
-/* === BOTÃO FECHAR === */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .modal-content .close {
   position: absolute;
   top: 12px;
   right: 14px;
-  font-size: 24px;
-  color: #777;
+  font-size: 28px;
+  color: #999;
   cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
 }
 
 .modal-content .close:hover {
-  color: #000;
+  color: #333;
 }
 
-/* === FORMULÁRIO === */
+.modal-content h2 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+}
+
 .modal-content form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-}
-
-.modal-content input,
-.modal-content select {
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+  gap: 16px;
 }
 
 .modal-content label {
   font-weight: 500;
   color: #333;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(48, 86, 211, 0.1);
+}
+
+.modal-content textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-content textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(48, 86, 211, 0.1);
 }
 
 .btn-criar {
-  background-color: #4c6ef5;
+  background-color: var(--accent);
   color: white;
   border: none;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 8px;
 }
 
 .btn-criar:hover {
-  background-color: #3b5bdb;
+  background-color: #2748b8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(48, 86, 211, 0.3);
 }
 
-/* === MEMBROS DINÂMICOS === */
+/* ==========================================
+   MEMBROS & TAREFAS DINÂMICOS
+   ========================================== */
 .membro-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   background: #f7f8fa;
-  padding: 10px;
+  padding: 14px;
   border-radius: 8px;
   border: 1px solid #e2e2e2;
+  margin-bottom: 12px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+.membro-item h3 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
 }
 
-
-.modal-content {
+#tarefasContainer > div {
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 8px;
   background: #fff;
-  border-radius: 12px;
-  width: 400px;
-  max-width: 90%;
-  padding: 24px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-  animation: fadeIn 0.3s ease;
-  position: relative;
-
-  /* --- ESSAS 3 LINHAS SÃO A CHAVE --- */
-  max-height: 90vh;      /* impede o modal de sair da tela */
-  overflow-y: auto;      /* ativa o scroll interno */
-  scrollbar-width: thin; /* scroll discreto (Firefox) */
+  border: 1px solid #eee;
 }
 
-/* scroll bar mais bonita (Chrome, Edge, Safari) */
-.modal-content::-webkit-scrollbar {
-  width: 8px;
-}
-.modal-content::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 10px;
-}
-.modal-content::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa;
+#tarefasContainer h3 {
+  margin: 0 0 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
 }
 
-.btn-delete-team {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.2s;
+#tarefasContainer input,
+#tarefasContainer textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
 }
 
-.btn-delete-team:hover {
-    background-color: #d93636;
+/* ==========================================
+   RESPONSIVO
+   ========================================== */
+@media (max-width: 900px) {
+  .teams {
+    grid-template-columns: 1fr;
+  }
+
+  .header-top {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .btn-nova-equipa {
+    width: 100%;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 20px 24px;
+  }
+
+  .header-top h1 {
+    font-size: 24px;
+  }
+
+  .teams {
+    gap: 16px;
+  }
+
+  .team-card {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 16px 20px;
+  }
+
+  .performance {
+    padding: 20px;
+  }
 }

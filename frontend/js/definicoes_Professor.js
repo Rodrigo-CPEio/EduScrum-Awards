@@ -1,37 +1,95 @@
+// ============================================
+// VARIÁVEIS GLOBAIS
+// ============================================
 let userData = null;
+let teacherId = null;
 
+// ============================================
+// INICIALIZAÇÃO
+// ============================================
 document.addEventListener('DOMContentLoaded', () => {
+  if (!verificarAutenticacao()) return;
+  
+  // Inicializar sidebar
+  inicializarSidebar({
+    userType: 'professor',
+    activePage: '',
+    userData: {
+      nome: userData.nome,
+      foto: userData.foto || null
+    }
+  });
+
+  configurarBotaoSair();
   carregarPerfil();
   configurarFormularioPerfil();
   configurarFormularioSenha();
   configurarBotaoFoto();
+  configurarNotificacoes();
+  configurarExportarDados();
 });
 
-// ==================== CARREGAR PERFIL ====================
-async function carregarPerfil() {
+// ============================================
+// AUTENTICAÇÃO
+// ============================================
+function verificarAutenticacao() {
   const userStr = localStorage.getItem('user');
-  
   if (!userStr) {
     window.location.href = '/login';
-    return;
+    return false;
   }
 
   const user = JSON.parse(userStr);
-  
+  if (user.tipo !== 'docente') {
+    alert('Acesso negado. Apenas professores podem acessar esta página.');
+    window.location.href = '/login';
+    return false;
+  }
+
+  userData = user;
+  teacherId = user.teacherId;
+  return true;
+}
+
+// ============================================
+// BOTÃO SAIR
+// ============================================
+function configurarBotaoSair() {
+  setTimeout(() => {
+    const botaoSair = document.querySelector('.bottom-menu li:last-child');
+    if (botaoSair) {
+      botaoSair.style.cursor = 'pointer';
+      botaoSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Tem certeza que deseja sair?')) {
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+        }
+      });
+    }
+  }, 100);
+}
+
+// ============================================
+// CARREGAR PERFIL
+// ============================================
+async function carregarPerfil() {
   try {
-    const response = await fetch(`/usuarios/profile/${user.id}`);
+    const response = await fetch(`/usuarios/profile/${userData.id}`);
     const data = await response.json();
     
     if (data.success) {
-      userData = data.perfil;
-      preencherFormulario(userData);
+      const perfil = data.perfil;
+      preencherFormulario(perfil);
     }
   } catch (err) {
-    console.error('❌ Erro ao carregar perfil:', err);
+    console.error('Erro ao carregar perfil:', err);
   }
 }
 
-// ==================== PREENCHER FORMULÁRIO ====================
+// ============================================
+// PREENCHER FORMULÁRIO
+// ============================================
 function preencherFormulario(perfil) {
   // Nome
   const inputNome = document.querySelector('.profile-form input[type="text"]');
@@ -52,17 +110,15 @@ function preencherFormulario(perfil) {
     inputTipo.value = perfil.tipo === 'docente' ? 'Docente' : 'Estudante';
   }
 
-  // ===== FOTO CARD (Preview grande) =====
+  // Foto
   const photoContainer = document.querySelector('.photo-top');
   const imgCard = photoContainer.querySelector('img');
   let avatarCard = photoContainer.querySelector('.avatar-placeholder');
 
-  // Remove avatar antigo se existir
   if (avatarCard) {
     avatarCard.remove();
   }
 
-  // Cria novo avatar
   avatarCard = document.createElement('div');
   avatarCard.className = 'avatar-placeholder';
   avatarCard.style.cssText = `
@@ -76,10 +132,9 @@ function preencherFormulario(perfil) {
     color: white;
     font-size: 48px;
     font-weight: bold;
-    margin-top: 15px;
+    border: 3px solid #f0f0f0;
   `;
   
-  // Insere ANTES da imagem
   photoContainer.insertBefore(avatarCard, imgCard);
 
   if (perfil.foto) {
@@ -92,51 +147,14 @@ function preencherFormulario(perfil) {
     avatarCard.textContent = (perfil.nome || 'U')[0].toUpperCase();
   }
 
-  // ===== FOTO SIDEBAR =====
-  const sidebarUserInfo = document.querySelector('.sidebar .user-info');
-  const sidebarImg = sidebarUserInfo.querySelector('img');
-  let sidebarAvatar = sidebarUserInfo.querySelector('.avatar-placeholder');
-
-  // Remove avatar antigo se existir
-  if (sidebarAvatar) {
-    sidebarAvatar.remove();
-  }
-
-  // Cria novo avatar
-  sidebarAvatar = document.createElement('div');
-  sidebarAvatar.className = 'avatar-placeholder';
-  sidebarAvatar.style.cssText = `
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  `;
-  
-  // Insere ANTES da imagem
-  sidebarUserInfo.insertBefore(sidebarAvatar, sidebarImg);
-
-  if (perfil.foto) {
-    sidebarImg.src = perfil.foto;
-    sidebarImg.style.display = 'block';
-    sidebarAvatar.style.display = 'none';
-  } else {
-    sidebarImg.style.display = 'none';
-    sidebarAvatar.style.display = 'flex';
-    sidebarAvatar.textContent = (perfil.nome || 'U')[0].toUpperCase();
-  }
-
-  // Atualiza texto da sidebar
-  document.querySelector('.sidebar .user-details h3').textContent = perfil.nome;
-  document.querySelector('.sidebar .user-details p').textContent = perfil.tipo === 'docente' ? 'Docente' : 'Estudante';
+  userData.nome = perfil.nome;
+  userData.email = perfil.email;
+  userData.foto = perfil.foto;
 }
 
-// ==================== FORMULÁRIO PERFIL ====================
+// ============================================
+// FORMULÁRIO PERFIL
+// ============================================
 function configurarFormularioPerfil() {
   const form = document.querySelector('.profile-form');
   const btnSalvar = form.querySelector('.save-btn');
@@ -162,21 +180,28 @@ function configurarFormularioPerfil() {
       
       if (data.success) {
         alert('✅ Perfil atualizado com sucesso!');
+        
         const user = JSON.parse(localStorage.getItem('user'));
         user.nome = nome;
         localStorage.setItem('user', JSON.stringify(user));
+        
+        const sidebarName = document.querySelector('.sidebar .user-details h3');
+        if (sidebarName) sidebarName.textContent = nome;
+        
         carregarPerfil();
       } else {
         alert(data.error || 'Erro ao atualizar perfil');
       }
     } catch (err) {
-      console.error('❌ Erro:', err);
+      console.error('Erro:', err);
       alert('Erro ao atualizar perfil');
     }
   });
 }
 
-// ==================== FORMULÁRIO SENHA ====================
+// ============================================
+// FORMULÁRIO SENHA
+// ============================================
 function configurarFormularioSenha() {
   const formSenha = document.querySelectorAll('.profile-form')[1];
   const btnSalvarSenha = formSenha.querySelector('.save-btn');
@@ -223,21 +248,20 @@ function configurarFormularioSenha() {
         alert(data.error || 'Erro ao alterar senha');
       }
     } catch (err) {
-      console.error('❌ Erro:', err);
+      console.error('Erro:', err);
       alert('Erro ao alterar senha');
     }
   });
 }
 
-// ==================== BOTÃO FOTO ====================
+// ============================================
+// BOTÃO FOTO
+// ============================================
 function configurarBotaoFoto() {
   const btnUpload = document.querySelector('.btn-upload');
   const photoContainer = document.querySelector('.photo-top');
   const imgCard = photoContainer.querySelector('img');
   
-  const sidebarUserInfo = document.querySelector('.sidebar .user-info');
-  const sidebarImg = sidebarUserInfo.querySelector('img');
-
   btnUpload.addEventListener('click', () => {
     const inputFile = document.createElement('input');
     inputFile.type = 'file';
@@ -257,19 +281,25 @@ function configurarBotaoFoto() {
       reader.onload = async (e) => {
         const base64 = e.target.result;
 
-        // Atualiza foto do card
         const avatarCard = photoContainer.querySelector('.avatar-placeholder');
         imgCard.src = base64;
         imgCard.style.display = 'block';
         if (avatarCard) avatarCard.style.display = 'none';
 
-        // Atualiza foto da sidebar
-        const sidebarAvatar = sidebarUserInfo.querySelector('.avatar-placeholder');
-        sidebarImg.src = base64;
-        sidebarImg.style.display = 'block';
-        if (sidebarAvatar) sidebarAvatar.style.display = 'none';
+        const sidebarUserInfo = document.querySelector('.sidebar .user-info .user-top');
+        if (sidebarUserInfo) {
+          const sidebarImg = sidebarUserInfo.querySelector('img');
+          const sidebarAvatar = sidebarUserInfo.querySelector('.avatar-placeholder');
+          
+          if (sidebarImg) {
+            sidebarImg.src = base64;
+            sidebarImg.style.display = 'block';
+          }
+          if (sidebarAvatar) {
+            sidebarAvatar.style.display = 'none';
+          }
+        }
 
-        // Enviar para backend
         try {
           const response = await fetch(`/usuarios/profile/${userData.id}/foto`, {
             method: 'PUT',
@@ -280,6 +310,7 @@ function configurarBotaoFoto() {
           const data = await response.json();
           if (data.success) {
             alert('✅ Foto atualizada com sucesso!');
+            
             userData.foto = base64;
             const user = JSON.parse(localStorage.getItem('user'));
             user.foto = base64;
@@ -288,7 +319,7 @@ function configurarBotaoFoto() {
             alert(data.error || 'Erro ao atualizar foto');
           }
         } catch (err) {
-          console.error('❌ Erro ao atualizar foto:', err);
+          console.error('Erro ao atualizar foto:', err);
           alert('Erro ao atualizar foto');
         }
       };
@@ -296,4 +327,37 @@ function configurarBotaoFoto() {
       reader.readAsDataURL(file);
     };
   });
+}
+
+// ============================================
+// NOTIFICAÇÕES
+// ============================================
+function configurarNotificacoes() {
+  const btnSalvarNotif = document.querySelector('.notif-save');
+  
+  if (btnSalvarNotif) {
+    btnSalvarNotif.addEventListener('click', () => {
+      const switches = document.querySelectorAll('.notif-item input[type="checkbox"]');
+      const preferencias = {};
+      
+      switches.forEach((sw, index) => {
+        preferencias[`notif_${index}`] = sw.checked;
+      });
+      
+      alert('✅ Preferências de notificações guardadas!');
+    });
+  }
+}
+
+// ============================================
+// EXPORTAR DADOS
+// ============================================
+function configurarExportarDados() {
+  const btnExportar = document.querySelector('.btn-export');
+  
+  if (btnExportar) {
+    btnExportar.addEventListener('click', async () => {
+      alert('Funcionalidade de exportação em desenvolvimento');
+    });
+  }
 }

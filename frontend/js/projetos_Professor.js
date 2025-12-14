@@ -1,31 +1,49 @@
-// frontend/js/projetos_Professor.js
+// =========================
+//  VARIÁVEIS GLOBAIS
+// =========================
 let userData = null;
 let teacherId = null;
 let disciplineId = null;
 let sprintEditando = null;
 let projetoEditando = null;
 
+// =========================
+//  INICIALIZAÇÃO
+// =========================
 document.addEventListener('DOMContentLoaded', () => {
   if (!verificarAutenticacao()) return;
-  carregarPerfilSidebar();
+
+  // Inicializar sidebar
+  inicializarSidebar({
+    userType: 'professor',
+    activePage: 'cursos',
+    userData: {
+      nome: userData.nome,
+      foto: userData.foto || null
+    }
+  });
+
   obterDisciplinaId();
   carregarInfoDisciplina();
   carregarProjetos();
   configurarEventos();
+  configurarBotaoSair();
 });
 
-// ==================== AUTENTICAÇÃO ====================
+// =========================
+//  AUTENTICAÇÃO
+// =========================
 function verificarAutenticacao() {
   const userStr = localStorage.getItem('user');
   if (!userStr) {
-    window.location.href = '/login';
+    window.location.href = 'login.html';
     return false;
   }
 
   const user = JSON.parse(userStr);
   if (user.tipo !== 'docente') {
     alert('Acesso negado. Apenas professores podem acessar esta página.');
-    window.location.href = '/login';
+    window.location.href = 'login.html';
     return false;
   }
 
@@ -34,68 +52,36 @@ function verificarAutenticacao() {
   return true;
 }
 
-// ==================== CARREGAR SIDEBAR ====================
-function carregarPerfilSidebar() {
-  const sidebarUserInfo = document.querySelector('.sidebar .user-info .user-top');
-  if (!sidebarUserInfo) return;
-
-  const img = sidebarUserInfo.querySelector('img');
-  let avatar = sidebarUserInfo.querySelector('.avatar-placeholder');
-
-  if (avatar) avatar.remove();
-
-  avatar = document.createElement('div');
-  avatar.className = 'avatar-placeholder';
-  avatar.style.cssText = `
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  `;
-
-  sidebarUserInfo.insertBefore(avatar, img);
-
-  if (userData.foto) {
-    img.src = userData.foto;
-    img.style.display = 'block';
-    avatar.style.display = 'none';
-  } else {
-    img.style.display = 'none';
-    avatar.style.display = 'flex';
-    avatar.textContent = (userData.nome || 'U')[0].toUpperCase();
-  }
-
-  const nameEl = sidebarUserInfo.querySelector('.user-details h3');
-  const typeEl = sidebarUserInfo.querySelector('.user-details p');
-  if (nameEl) nameEl.textContent = userData.nome;
-  if (typeEl) typeEl.textContent = 'Docente';
-}
-
-// ==================== OBTER ID DA DISCIPLINA ====================
+// =========================
+//  OBTER ID DA DISCIPLINA
+// =========================
 function obterDisciplinaId() {
+  // Primeiro tenta pegar da URL
   const urlParams = new URLSearchParams(window.location.search);
   disciplineId = urlParams.get('disciplineId');
+  
+  // Se não estiver na URL, tenta pegar do localStorage
+  if (!disciplineId) {
+    disciplineId = localStorage.getItem('cadeiraAtual');
+  }
   
   if (!disciplineId) {
     alert('Disciplina não identificada!');
     window.location.href = 'cadeiras_Professor.html';
     return false;
   }
+  
   return true;
 }
 
-// ==================== CARREGAR INFO DA DISCIPLINA ====================
+// =========================
+//  CARREGAR INFO DA DISCIPLINA
+// =========================
 async function carregarInfoDisciplina() {
   if (!disciplineId) return;
 
   try {
-    const res = await fetch(`/cadeiras/${disciplineId}`);
+    const res = await fetch(`http://localhost:3000/cadeiras/${disciplineId}`);
     const text = await res.text();
 
     let data;
@@ -121,7 +107,9 @@ async function carregarInfoDisciplina() {
   }
 }
 
-// ==================== CONFIGURAR EVENTOS ====================
+// =========================
+//  CONFIGURAR EVENTOS
+// =========================
 function configurarEventos() {
   // Botão voltar
   const btnVoltar = document.getElementById('btnVoltar');
@@ -167,7 +155,9 @@ function configurarEventos() {
   }
 }
 
-// ==================== CARREGAR PROJETOS ====================
+// =========================
+//  CARREGAR PROJETOS
+// =========================
 async function carregarProjetos() {
   if (!disciplineId) return;
 
@@ -178,7 +168,7 @@ async function carregarProjetos() {
       container.innerHTML = '<div style="text-align: center; padding: 20px;">Carregando...</div>';
     }
 
-    const res = await fetch(`/projetos/disciplina/${disciplineId}`);
+    const res = await fetch(`http://localhost:3000/projetos/disciplina/${disciplineId}`);
     const text = await res.text();
 
     let data;
@@ -198,7 +188,9 @@ async function carregarProjetos() {
   }
 }
 
-// ==================== ATUALIZAR CONTADORES ====================
+// =========================
+//  ATUALIZAR CONTADORES
+// =========================
 function atualizarContadores(projetos) {
   const totalProjetosEl = document.getElementById('totalProjetos');
   const totalEstudantesEl = document.getElementById('totalEstudantes');
@@ -221,7 +213,9 @@ function atualizarContadores(projetos) {
   if (totalEquipasEl) totalEquipasEl.textContent = totalEquipas;
 }
 
-// ==================== RENDERIZAR PROJETOS ====================
+// =========================
+//  RENDERIZAR PROJETOS
+// =========================
 function renderizarProjetos(projetos) {
   const container = document.getElementById('projetosContainer');
   if (!container) return;
@@ -244,7 +238,9 @@ function renderizarProjetos(projetos) {
   });
 }
 
-// ==================== CRIAR CARD PROJETO ====================
+// =========================
+//  CRIAR CARD PROJETO
+// =========================
 function criarCardProjeto(projeto) {
   const div = document.createElement('div');
   div.className = 'project-card';
@@ -293,10 +289,12 @@ function criarCardProjeto(projeto) {
   return div;
 }
 
-// ==================== CARREGAR SPRINTS ====================
+// =========================
+//  CARREGAR SPRINTS
+// =========================
 async function carregarSprints(projectId) {
   try {
-    const res = await fetch(`/projetos/${projectId}/sprints`);
+    const res = await fetch(`http://localhost:3000/projetos/${projectId}/sprints`);
     
     // Verificar se o projeto ainda existe (status 404 = projeto foi apagado)
     if (res.status === 404) {
@@ -320,7 +318,9 @@ async function carregarSprints(projectId) {
   }
 }
 
-// ==================== RENDERIZAR SPRINTS ====================
+// =========================
+//  RENDERIZAR SPRINTS
+// =========================
 function renderizarSprints(projectId, sprints) {
   const sprintsList = document.querySelector(`.sprints-list[data-project-id="${projectId}"]`);
   const sprintCount = document.querySelector(`[data-project-id="${projectId}"] .sprint-count`);
@@ -339,7 +339,9 @@ function renderizarSprints(projectId, sprints) {
   });
 }
 
-// ==================== CRIAR CARD SPRINT ====================
+// =========================
+//  CRIAR CARD SPRINT
+// =========================
 function criarCardSprint(sprint) {
   const div = document.createElement('div');
   const status = sprint.calculated_status || sprint.SP_Status || 'em-espera';
@@ -359,7 +361,9 @@ function criarCardSprint(sprint) {
   return div;
 }
 
-// ==================== HANDLE CLICKS ====================
+// =========================
+//  HANDLE CLICKS
+// =========================
 function handleClickProjetos(e) {
   // Adicionar sprint
   if (e.target.closest('.btn-add-sprint')) {
@@ -394,7 +398,9 @@ function handleClickProjetos(e) {
   }
 }
 
-// ==================== MODALS ====================
+// =========================
+//  MODALS
+// =========================
 function abrirModalProjeto() {
   projetoEditando = null;
   const modal = document.getElementById('modalNovoProjeto');
@@ -436,7 +442,9 @@ function fecharModals() {
   projetoEditando = null;
 }
 
-// ==================== SUBMIT HANDLERS ====================
+// =========================
+//  SUBMIT HANDLERS
+// =========================
 async function handleSubmitProjeto(e) {
   e.preventDefault();
 
@@ -478,10 +486,12 @@ async function handleSubmitSprint(e) {
   await criarSprint(sprintEditando, nome, inicio, fim, objetivos);
 }
 
-// ==================== CRUD PROJETOS ====================
+// =========================
+//  CRUD PROJETOS
+// =========================
 async function criarProjeto(nome, descricao, inicio, fim) {
   try {
-    const res = await fetch('/projetos', {
+    const res = await fetch('http://localhost:3000/projetos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -517,7 +527,7 @@ async function criarProjeto(nome, descricao, inicio, fim) {
 
 async function editarProjeto(projectId) {
   try {
-    const res = await fetch(`/projetos/${projectId}`);
+    const res = await fetch(`http://localhost:3000/projetos/${projectId}`);
     const text = await res.text();
 
     let data;
@@ -560,7 +570,7 @@ async function editarProjeto(projectId) {
 
 async function atualizarProjeto(projectId, nome, descricao, inicio, fim) {
   try {
-    const res = await fetch(`/projetos/${projectId}`, {
+    const res = await fetch(`http://localhost:3000/projetos/${projectId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -596,7 +606,7 @@ async function atualizarProjeto(projectId, nome, descricao, inicio, fim) {
 
 async function apagarProjeto(projectId) {
   try {
-    const res = await fetch(`/projetos/${projectId}`, {
+    const res = await fetch(`http://localhost:3000/projetos/${projectId}`, {
       method: 'DELETE'
     });
 
@@ -621,10 +631,12 @@ async function apagarProjeto(projectId) {
   }
 }
 
-// ==================== CRUD SPRINTS ====================
+// =========================
+//  CRUD SPRINTS
+// =========================
 async function criarSprint(projectId, nome, inicio, fim, objetivos) {
   try {
-    const res = await fetch(`/projetos/${projectId}/sprints`, {
+    const res = await fetch(`http://localhost:3000/projetos/${projectId}/sprints`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -660,7 +672,7 @@ async function criarSprint(projectId, nome, inicio, fim, objetivos) {
 
 async function apagarSprint(sprintId) {
   try {
-    const res = await fetch(`/projetos/sprints/${sprintId}`, {
+    const res = await fetch(`http://localhost:3000/projetos/sprints/${sprintId}`, {
       method: 'DELETE'
     });
 
@@ -691,7 +703,9 @@ async function apagarSprint(sprintId) {
   }
 }
 
-// ==================== UTILITÁRIOS ====================
+// =========================
+//  UTILITÁRIOS
+// =========================
 function formatarData(dateStr) {
   if (!dateStr) return '';
   const date = new Date(dateStr);
@@ -730,4 +744,23 @@ function getStatusLabel(status) {
     'arquivado': 'Arquivado'
   };
   return labels[status] || status;
+}
+
+// =========================
+//  BOTÃO SAIR
+// =========================
+function configurarBotaoSair() {
+  setTimeout(() => {
+    const botaoSair = document.querySelector('.bottom-menu li:last-child');
+    if (botaoSair) {
+      botaoSair.style.cursor = 'pointer';
+      botaoSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Tem certeza que deseja sair?')) {
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        }
+      });
+    }
+  }, 100);
 }

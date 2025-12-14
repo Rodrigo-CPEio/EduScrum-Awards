@@ -240,22 +240,32 @@
 }
 
 .sidebar .bottom-menu li {
+  margin-bottom: 8px;
+}
+
+.sidebar .bottom-menu a {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
   color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
   cursor: pointer;
   border-radius: 8px;
   transition: all 0.3s ease;
-  margin-bottom: 8px;
   font-size: 14px;
 }
 
-.sidebar .bottom-menu li:hover {
+.sidebar .bottom-menu a:hover {
   background: rgba(255, 255, 255, 0.1);
   color: white;
   transform: translateX(2px);
+}
+
+.sidebar .bottom-menu li.active a {
+  background: #3498db;
+  color: white;
+  font-weight: 600;
 }
 
 .sidebar .bottom-menu .icon {
@@ -277,7 +287,7 @@
   }
   
   .sidebar .menu a,
-  .sidebar .bottom-menu li {
+  .sidebar .bottom-menu a {
     font-size: 14px;
     padding: 10px 14px;
   }

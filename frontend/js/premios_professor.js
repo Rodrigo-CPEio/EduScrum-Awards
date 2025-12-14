@@ -13,7 +13,17 @@ let targetAtual = null;
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
   if (!verificarAutenticacao()) return;
-  carregarPerfilSidebar();
+  
+  // ⭐ INICIALIZAR SIDEBAR (OBRIGATÓRIO)
+  inicializarSidebar({
+    userType: 'professor',
+    activePage: 'premios',
+    userData: {
+      nome: userData.nome,
+      foto: userData.foto || null
+    }
+  });
+
   configurarBotaoSair();
   inicializarEventos();
   carregarPremios();
@@ -42,65 +52,22 @@ function verificarAutenticacao() {
 }
 
 // ============================================
-// CARREGAR SIDEBAR
-// ============================================
-function carregarPerfilSidebar() {
-  const sidebarUserInfo = document.querySelector('.sidebar .user-info .user-top');
-  if (!sidebarUserInfo) return;
-
-  const img = sidebarUserInfo.querySelector('img');
-  let avatar = sidebarUserInfo.querySelector('.avatar-placeholder');
-
-  if (avatar) avatar.remove();
-
-  avatar = document.createElement('div');
-  avatar.className = 'avatar-placeholder';
-  avatar.style.cssText = `
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  `;
-
-  sidebarUserInfo.insertBefore(avatar, img);
-
-  if (userData.foto) {
-    img.src = userData.foto;
-    img.style.display = 'block';
-    avatar.style.display = 'none';
-  } else {
-    img.style.display = 'none';
-    avatar.style.display = 'flex';
-    avatar.textContent = (userData.nome || 'U')[0].toUpperCase();
-  }
-
-  const nameEl = sidebarUserInfo.querySelector('.user-details h3');
-  const typeEl = sidebarUserInfo.querySelector('.user-details p');
-  if (nameEl) nameEl.textContent = userData.nome;
-  if (typeEl) typeEl.textContent = 'Docente';
-}
-
-// ============================================
-// BOTÃO SAIR
+// BOTÃO SAIR (OBRIGATÓRIO)
 // ============================================
 function configurarBotaoSair() {
-  const botaoSair = document.querySelector('.bottom-menu li:last-child a, .bottom-menu li:last-child');
-  if (botaoSair) {
-    botaoSair.style.cursor = 'pointer';
-    botaoSair.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (confirm('Tem certeza que deseja sair?')) {
-        localStorage.removeItem('user');
-        window.location.href = '/login';
-      }
-    });
-  }
+  setTimeout(() => {
+    const botaoSair = document.querySelector('.bottom-menu li:last-child');
+    if (botaoSair) {
+      botaoSair.style.cursor = 'pointer';
+      botaoSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Tem certeza que deseja sair?')) {
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+        }
+      });
+    }
+  }, 100);
 }
 
 // ============================================
@@ -142,7 +109,9 @@ function inicializarEventos() {
   if (abrir) abrir.onclick = () => modal.style.display = 'flex';
   if (fechar) fechar.onclick = () => modal.style.display = 'none';
   if (cancelar) cancelar.onclick = () => modal.style.display = 'none';
-  window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
+  window.onclick = e => { 
+    if (e.target === modal) modal.style.display = 'none';
+  };
 
   // Modal Atribuição de Prémios
   const modalAtribuicao = document.getElementById('modalAtribuicao');
@@ -153,10 +122,6 @@ function inicializarEventos() {
   if (fecharAtribuicao) fecharAtribuicao.onclick = fecharModalAtribuicao;
   if (cancelarAtribuicao) cancelarAtribuicao.onclick = fecharModalAtribuicao;
   if (btnConfirmarAtribuicao) btnConfirmarAtribuicao.onclick = confirmarAtribuicao;
-  window.onclick = e => { 
-    if (e.target === modal) modal.style.display = 'none';
-    if (e.target === modalAtribuicao) fecharModalAtribuicao();
-  };
 
   // Mostrar ou esconder campo "Condição"
   const tipoSelect = document.getElementById('tipo');
@@ -181,7 +146,7 @@ function inicializarEventos() {
     const tabTarget = activeTab?.dataset.tab; // 'estudantes' ou 'equipas'
     console.log('tabTarget:', tabTarget);
     
-    // Se não conseguir detetar, procura pela aba content ativa
+    // Determinar o target correto
     let targetValue = 'estudante'; // fallback padrão
     if (tabTarget === 'estudantes') {
       targetValue = 'estudante';
@@ -204,7 +169,7 @@ function inicializarEventos() {
       A_Points: document.getElementById('pontos').value,
       A_Type: document.getElementById('tipo').value,
       A_Trigger_Condition: document.getElementById('condicao').value || null,
-      A_T_ID: teacherId || 2, // Usar teacherId do localStorage
+      A_T_ID: teacherId || 2,
       A_Target: targetValue
     };
 
@@ -382,7 +347,7 @@ async function confirmarAtribuicao() {
       const endpoint = targetAtual === 'estudante' ? '/awardassignments/estudante' : '/awardassignments/equipa';
       const bodyData = {
         awardId: awardIdAtual,
-        teacherId: teacherId || 2, // Usar teacherId do localStorage
+        teacherId: teacherId || 2,
         reason: motivo
       };
       
@@ -411,7 +376,7 @@ async function confirmarAtribuicao() {
     
     alert(`Prémio atribuído com sucesso a ${selecionados.length} ${targetAtual === 'estudante' ? 'estudante(s)' : 'equipa(s)'}`);
     fecharModalAtribuicao();
-    carregarPremios(); // Recarregar prémios
+    carregarPremios();
   } catch (error) {
     console.error('Erro ao atribuir prémio:', error);
     alert('Erro ao atribuir prémio: ' + error.message);
