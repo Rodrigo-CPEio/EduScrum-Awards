@@ -17,7 +17,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const pointsRoutes = require("./routes/pointsRoutes");
 const studentAwardsRoutes = require("./routes/studentAwardsRoutes");
 const studentDashboardRoutes = require("./routes/studentDashboardRoutes");
-
+const studentProfileRoutes = require("./routes/studentProfileRoutes");
 
 const app = express();
 const PORT = 3000;
@@ -36,7 +36,7 @@ app.use('/api/teams', teamRoutes); // <-- AGORA FUNCIONA 100%
 app.use("/api/points", pointsRoutes);
 app.use("/api/awards", studentAwardsRoutes);
 app.use("/api/dashboard", studentDashboardRoutes);
-
+app.use("/api/students", studentProfileRoutes);
 // Ignorar favicon (opcional)
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
