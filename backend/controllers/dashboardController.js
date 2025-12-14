@@ -1,4 +1,4 @@
-const dashboardModel = require("../models/dashboardModel");
+const dashboardModel = require("../models/dashboardModel.js");
 
 module.exports = {
   async getStudentDashboard(req, res) {

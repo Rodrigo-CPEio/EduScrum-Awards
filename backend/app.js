@@ -14,11 +14,16 @@ const teamRoutes = require('./routes/teamRoutes');
 const awardsRoutes = require('./routes/awardsRoutes');
 const awardAssignmentRoutes = require('./routes/awardAssignmentRoutes');
 const studentRoutes = require("./routes/studentRoutes");
+const pointsRoutes = require("./routes/pointsRoutes");
+const studentAwardsRoutes = require("./routes/studentAwardsRoutes");
+const studentDashboardRoutes = require("./routes/studentDashboardRoutes");
+
 
 const app = express();
 const PORT = 3000;
 
 // ==================== MIDDLEWARE ====================
+// Middleware para processar JSON
 app.use(express.json());
 
 // ==================== ROTAS DE API (DEVEM VIR PRIMEIRO!) ====================
@@ -27,14 +32,16 @@ app.use('/usuarios', userRoutes);
 app.use('/cursos', cursosRoutes);
 app.use('/cadeiras', cadeirasRoutes);
 app.use('/projetos', projectRoutes);
-app.use('/api/teams', teamRoutes);
-app.use('/awards', awardsRoutes);
-app.use('/awardassignments', awardAssignmentRoutes);
+app.use('/api/teams', teamRoutes); // <-- AGORA FUNCIONA 100%
+app.use("/api/points", pointsRoutes);
+app.use("/api/awards", studentAwardsRoutes);
+app.use("/api/dashboard", studentDashboardRoutes);
 
 // Ignorar favicon (opcional)
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
-// ==================== FICHEIROS ESTÁTICOS DO FRONTEND ====================
+// ==================== FICHEIROS DO FRONTEND ====================
+// (DEPOIS das rotas API!)
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // ==================== PÁGINAS FRONTEND ====================
@@ -42,16 +49,17 @@ app.get('/', (req, res) => {
   res.send('Servidor Node.js funcionando corretamente 🚀');
 });
 
-// ===== LOGIN / REGISTO =====
+// Login / Registo
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'login.html'));
 });
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 app.get('/registrar', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'registrar.html'));
 });
 
-// ===== DASHBOARDS =====
+// Dashboards
 app.get('/dashboardE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Estudante.html'));
 });
@@ -60,7 +68,7 @@ app.get('/dashboardP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'dashboard_Professor.html'));
 });
 
-// ===== PROFESSOR — PÁGINAS =====
+// Professor — Páginas
 app.get('/cursoP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'curso_Professor.html'));
 });
@@ -93,7 +101,7 @@ app.get('/definicoesP', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'definicoes_Professor.html'));
 });
 
-// ===== ESTUDANTE — PÁGINAS =====
+// Estudante — Páginas
 app.get('/projetosE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'projeto_Estudante.html'));
 });
@@ -117,6 +125,15 @@ app.get('/definicoesE', (req, res) => {
 app.get('/notificacoesE', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'notificacoes_Estudiante.html'));
 });
+
+// ==================== ROTAS DE API ====================
+app.use('/usuarios', userRoutes);
+app.use('/cursos', cursosRoutes);
+app.use('/cadeiras', cadeirasRoutes);
+app.use('/projetos', projectRoutes);   // Rotas de projetos e sprints
+app.use('/api/teams', teamRoutes);     // Rotas de equipas
+app.use('/awards', awardsRoutes);
+app.use('/awardassignments', awardAssignmentRoutes);
 
 // ==================== INICIAR SERVIDOR ====================
 app.listen(PORT, () => {

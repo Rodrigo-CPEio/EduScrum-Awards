@@ -2,6 +2,7 @@ const user = JSON.parse(localStorage.getItem("user") || "{}");
 const studentId = Number(user.studentId);
 
 // DOM
+
 const studentNameEl = document.getElementById("studentName");
 const sidebarPointsEl = document.getElementById("sidebarPoints");
 const welcomeNameEl = document.getElementById("welcomeName");
